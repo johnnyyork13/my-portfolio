@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+html {
+  --fifty: #f0f9ff;
+  --one: #e0f2fe;
+  --two: #bae6fd;
+  --three: #7dd3fc;
+  --four: #38bdf8;
+  --five: #0ea5e9;
+  --six: #0284c7;
+  --seven: #0369a1;
+  --eight: #075985;
+  --nine: #0c4a6e;
+  --nineFifty: #082f49;
+  --fifty-secondary: #fffbeb;  
+  --one-secondary: #fef3c7;
+  --two-secondary: #fde68a;
+  --three-secondary: #fcd34d;
+  --four-secondary: #fbbf24;
+  --five-secondary: #f59e0b;
+  --six-secondary: #d97706;
+  --seven-secondary: #b45309;
+  --eight-secondary: #92400e;
+  --nine-secondary: #78350f;
+  --nineFifty-secondary: #451a03;
+  /* --fifty: ;
+  --one: ;
+  --two: ;
+  --three: ;
+  --four: ;
+  --five: ;
+  --six: ;
+  --seven: ;
+  --eight: ;
+  --nine: ;
+  --nineFifty: ;
+  --fifty-secondary: ;  
+  --one-secondary: ;
+  --two-secondary: ;
+  --three-secondary: ;
+  --four-secondary: ;
+  --five-secondary: ;
+  --six-secondary: ;
+  --seven-secondary: ;
+  --eight-secondary: ;
+  --nine-secondary: ;
+  --nineFifty-secondary: ; */
+  font-family: "Roboto", sans-serif !important;
+}
