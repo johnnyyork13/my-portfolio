@@ -23,8 +23,10 @@ const IntroContainer = styled(MainContainer)`
 `
 
 const IntroText = styled.p`
-    font-size: 3rem;
+    font-size: 3.3rem;
+    // font-weight: bold;
     margin-bottom: 7px;
+    text-shadow: 7px 4px rgba(0, 0, 0, 0.2);
 `
 
 const IntroLinkContainer = styled.div`

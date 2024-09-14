@@ -7,6 +7,7 @@ import Work from './components/Work'
 import About from './components/About'
 import Resume from './components/Resume'
 import Contact from './components/Contact'
+import Footer from './components/Footer'
 
 
 import './App.css'
@@ -23,6 +24,7 @@ function App() {
       <About />
       <Resume />
       <Contact />
+      <Footer />
     </AppContainer>
   )
 }

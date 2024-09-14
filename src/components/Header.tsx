@@ -36,13 +36,14 @@ const HeaderContainer = styled.div`
     justify-content: space-around;
     align-items: center;
     margin-top: 0px;
-    height: 64px;
+    height: 84px;
     background: rgb(252,211,77);
     background: linear-gradient(180deg, rgba(252,211,77,1) 23%, rgba(255,255,255,0.5907155098367471) 100%);
+    z-index: 100;
 `
 
 const Name = styled.div`
-
+    font-size: 1.7rem;
 `
 
 const Nav = styled.div`

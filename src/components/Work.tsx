@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { ContainerTitle, MainContainer } from "../styled-components/main";
+import { ContainerTitle, MainContainer, SecondaryButton } from "../styled-components/main";
 import ashleyTarotImg from '../assets/ashley-tarot.png';
 import bearbookImg from '../assets/bearbook.png';
 import vicewavesImg from '../assets/vicewaves.png';
@@ -8,6 +8,10 @@ import portfolioImg from '../assets/portfolio.png';
 import pokemonImg from '../assets/pokemon.png';
 
 export default function Work() {
+
+    function handleViewWebsite(url: string) {
+        window.open(url);
+    }
 
     return (
         <MainContainer>
@@ -22,7 +26,7 @@ export default function Work() {
                         <WorkCardDescription>
                             A tarot card reading website that utilizes AI to generate readings. Users can also schedule personal readings.
                         </WorkCardDescription>
-                        <ViewWebsiteButton>View Live</ViewWebsiteButton>
+                        <SecondaryButton onClick={() => handleViewWebsite("https://ashleytarot.com")}>View Live</SecondaryButton>
                     </WorkCardHoverContainer>
                 </WorkCard>
                 <WorkCard>
@@ -34,7 +38,7 @@ export default function Work() {
                         <WorkCardDescription>
                             A social media platform for Mercer Bears. Users can post, like, and comment, as well as add friends and view Mercer-related links.
                         </WorkCardDescription>
-                        <ViewWebsiteButton>View Live</ViewWebsiteButton>
+                        <SecondaryButton onClick={() => handleViewWebsite("https://johnnyyork13.github.io/bearbook")}>View Live</SecondaryButton>
                     </WorkCardHoverContainer>
                 </WorkCard>
                 <WorkCard>
@@ -46,7 +50,7 @@ export default function Work() {
                         <WorkCardDescription>
                             A Synthwave e-commerce website for purchasing gear related to the synthwave and retrowave genres.
                         </WorkCardDescription>
-                        <ViewWebsiteButton>View Live</ViewWebsiteButton>
+                        <SecondaryButton onClick={() => handleViewWebsite("https://vicewaves.com")}>View Live</SecondaryButton>
                     </WorkCardHoverContainer>
                 </WorkCard>
                 <WorkCard>
@@ -58,7 +62,7 @@ export default function Work() {
                         <WorkCardDescription>
                             A blog website that utilizes AI to generate blog posts.
                         </WorkCardDescription>
-                        <ViewWebsiteButton>View Live</ViewWebsiteButton>
+                        <SecondaryButton onClick={() => handleViewWebsite("https://johnnyyork13.github.io/bloggyAI")}>View Live</SecondaryButton>
                     </WorkCardHoverContainer>
                 </WorkCard>
                 <WorkCard>
@@ -68,9 +72,9 @@ export default function Work() {
                     </WorkCardText>
                     <WorkCardHoverContainer>
                         <WorkCardDescription>
-                            My personal portfolio website in pixel art style.
+                            My portfolio website in pixel art style.
                         </WorkCardDescription>
-                        <ViewWebsiteButton>View Live</ViewWebsiteButton>
+                        <SecondaryButton onClick={() => handleViewWebsite("https://johnnyyork13.github.io/portfolio")}>View Live</SecondaryButton>
                     </WorkCardHoverContainer>
                 </WorkCard>
                 <WorkCard>
@@ -82,7 +86,7 @@ export default function Work() {
                         <WorkCardDescription>
                             A Pokemon card deck builder that allows users to search for cards and add them to a deck.
                         </WorkCardDescription>
-                        <ViewWebsiteButton>View Live</ViewWebsiteButton>
+                        <SecondaryButton onClick={() => handleViewWebsite("https://johnnyyork13.github.io/pokemon-deck-builder")}>View Live</SecondaryButton>
                     </WorkCardHoverContainer>
                 </WorkCard>
             </WorkCardContainer>
@@ -92,10 +96,13 @@ export default function Work() {
 
 const animateImage = keyframes`
     0% {
+
         transform: scale(1);
+        filter: blur(0px);
     }
     100% {
-        transform: scale(1.15);
+        transform: scale(1.1);
+        filter: blur(3px);
     }
 `
 
@@ -124,9 +131,10 @@ const WorkCardHoverContainer = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    color: white;
+    color: var(--nineFifty-secondary);
+    font-weight: bold;
     font-size: 1.2rem;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(255,255,255,0.6);
     visibility: hidden;
     display: flex;
     flex-direction: column;
@@ -137,7 +145,7 @@ const WorkCardHoverContainer = styled.div`
 
 const WorkCard = styled.div`
     height: 250px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
     &:hover {
         img {
             animation: ${animateImage} .2s linear forwards;
@@ -147,13 +155,12 @@ const WorkCard = styled.div`
             visibility: visible;
         }
     }
-    cursor: pointer;
     position: relative;
 `
 
 const WorkCardText = styled.div`
     position: absolute;
-    bottom: -40px;
+    bottom: -50px;
     left: 0;
     width: 100%;
     height: 30px;
@@ -168,25 +175,10 @@ const WorkCardTitle = styled.p`
 
 const WorkCardDescription = styled.p`
     margin: 10px;
+    margin-bottom: 20px;
 `
 
 const WorkCardImage = styled.img`
     width: 100%;
     height: 250px;
-    object-fit: stretch;
-    filter: blur(1px);
-`
-
-const ViewWebsiteButton = styled.button`
-    background-color: white;
-    color: black;
-    border: none;
-    padding: 10px;
-    margin: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    &:hover {
-        background-color: var(--five-secondary);
-        color: white;
-    }
 `
