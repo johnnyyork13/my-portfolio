@@ -5,7 +5,7 @@ export default function Footer() {
 
     return (
         <FooterContainer>
-            <h1>Thanks.</h1>
+            <h1>Thanks. </h1>
         </FooterContainer>
     )
 }
