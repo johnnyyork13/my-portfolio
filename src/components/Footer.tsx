@@ -1,16 +1,12 @@
-import styled from "styled-components";
-import { MainContainer } from "../styled-components/main";
+import startMenu from '../assets/start-menu.png';
 
 export default function Footer() {
 
     return (
-        <FooterContainer>
-            <h1>Thanks. </h1>
-        </FooterContainer>
+        <div className="window fit-to-bottom">
+            <div className="title-bar">
+                <img src={startMenu} alt="Start Menu" className="start-menu" />
+            </div>
+        </div>
     )
 }
-
-
-const FooterContainer = styled(MainContainer)`
-    margin-top: 100px;
-`
