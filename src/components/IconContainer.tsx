@@ -8,9 +8,9 @@ export default function IconContainer(props: {
     setIcons: Function,
     setIsDragging: Function, 
     isDragging: {dragging: boolean, icon: string, coords: number[]}
+    isSelecting: boolean
+    selected: any
     }) {
-
-    const [grid, setGrid] = useState<any>([]);
 
     const arrangeIcons = () => {
         const GRID_COLUMNS = 15;
@@ -30,6 +30,7 @@ export default function IconContainer(props: {
                   coords={icon ? icon.coords : []}
                   setIsDragging={props.setIsDragging}
                   isDragging={props.isDragging}
+                  selected={props.selected}
                   />)
             } else {
               row.push(<div key={uuidv4()} className="empty-tile" draggable="false"></div>)
@@ -40,13 +41,13 @@ export default function IconContainer(props: {
         return grid;
       }
 
-    useEffect(() => {
-        setGrid(arrangeIcons());
-    }, [props.icons])
+    // useEffect(() => {
+      
+    // }, [props.icons])
 
     return (
         <Grid>
-            {grid}
+            {arrangeIcons()}
         </Grid>
     )
 }

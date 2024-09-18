@@ -1,53 +1,144 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-export default function Selection() {
+export default function Selection(props: {
+    isDragging: {dragging: boolean, icon: string, coords: number[]}
+    isSelecting: boolean,
+    setIsSelecting: Function,
+    selectionStart: number[],
+    setSelectionStart: Function,
+    currentSelectionPosition: number[],
+    setCurrentSelectionPosition: Function,
+}) {
 
     const boxRef = useRef<HTMLDivElement>(null);
-    const [stopSelection, setStopSelection] = useState(false);
+    // const [stopSelection, setStopSelection] = useState(false);
+    // const [startPosition, setStartPosition] = useState<number[]>([]);
+    // const [currentPosition, setCurrentPosition] = useState<number[]>([]);
+    const [adjustPosition, setAdjustPosition] = useState({
+        width: 0,
+        height: 0,
+        left: 0 as any,
+        top: 0 as any,
+    });
+    const [startSelection, setStartSelection] = useState(false);
+    // const [stopPosition, setStopPosition] = useState<number[]>([]);
+
+
+    function getMouseClickPosition(e: MouseEvent) {
+        props.setIsSelecting(true);
+        // setStartSelection(true);
+        props.setSelectionStart([e.clientX, e.clientY]);
+        boxRef.current!.style.display = "block";
+        // console.log("START", [e.clientX, e.clientY]);
+        // return [e.clientX, e.clientY]
+    }
+
+    function getMouseMovePosition(e: MouseEvent) {
+        props.setCurrentSelectionPosition([e.clientX, e.clientY]);
+        // console.log("MOVING", [e.clientX, e.clientY]);
+        // return [e.clientX, e.clientY]
+    }
+
+    function getStopSelectionPosition(e: MouseEvent) {
+        props.setIsSelecting(false);
+        props.setSelectionStart([]);
+        props.setCurrentSelectionPosition([]);
+        setAdjustPosition({
+            width: 0,
+            height: 0,
+            left: 0 as any,
+            top: 0 as any,
+        })
+        boxRef.current!.style.width = "0px";
+        boxRef.current!.style.height = "0px";
+        boxRef.current!.style.display = "none";
+        // console.log("STOP", [e.clientX, e.clientY]);
+        // return [e.clientX, e.clientY]
+    }
 
     useEffect(() => {
-        const selectionBox = boxRef.current;
-        if (selectionBox) {
-            let isDragging = false;
-            let startX = 0;
-            let startY = 0;
-            let endX = 0;
-            let endY = 0;
-            let offsetLeft = 0;
-            let offsetTop = 0;
-
-            document.addEventListener("mousedown", (e) => {
-                selectionBox.style.display = "block";
-                isDragging = true;
-                startX = e.clientX;
-                startY = e.clientY;
-                offsetLeft = selectionBox.offsetLeft;
-                offsetTop = selectionBox.offsetTop;
+        if (boxRef.current && !props.isDragging.dragging) {
+            document.addEventListener("mousedown", getMouseClickPosition);
+            if (props.isSelecting) {
+                document.addEventListener("mousemove", getMouseMovePosition);
+                document.addEventListener("mouseup", getStopSelectionPosition);
+            }
+        } else if (props.isDragging.dragging) {
+            setAdjustPosition({
+                width: 0,
+                height: 0,
+                left: 0 as any,
+                top: 0 as any,
             })
-
-            document.addEventListener("mousemove", (e) => {
-                if (isDragging) {
-                    endX = e.clientX;
-                    endY = e.clientY;
-                    selectionBox.style.left = `${Math.min(startX, endX) - offsetLeft}px`;
-                    selectionBox.style.top = `${Math.min(startY, endY) - offsetTop}px`;
-                    selectionBox.style.width = `${Math.abs(startX - endX)}px`;
-                    selectionBox.style.height = `${Math.abs(startY - endY)}px`;
-                }
-            })
-
-            document.addEventListener("mouseup", () => {
-                setStopSelection(false);
-                selectionBox.style.display = "none";
-            })
+            props.setSelectionStart([]);
+            props.setCurrentSelectionPosition([]);
+            boxRef.current!.style.display = "none";
         }
         return () => {
-            document.removeEventListener("mousedown", () => {});
-            document.removeEventListener("mousemove", () => {});
-            document.removeEventListener("mouseup", () => {});
+            document.removeEventListener("mousedown", getMouseClickPosition);
+            document.removeEventListener("mousemove", getMouseMovePosition);
+            document.removeEventListener("mouseup", getStopSelectionPosition);
         }
-    }, [stopSelection])
+    }, [props.isDragging.dragging, props.isSelecting])
+
+    useEffect(() => {
+        if (!props.isDragging.dragging) {
+            if (props.selectionStart.length > 0 && props.currentSelectionPosition[0] > 2 && props.currentSelectionPosition[1] > 2 &&
+                props.currentSelectionPosition[0] < window.innerWidth - 2 && props.currentSelectionPosition[1] < window.innerHeight - 2
+            ) {
+                const [x, y] = props.selectionStart;
+                boxRef.current!.style.left = x + "px";
+                boxRef.current!.style.top = y + "px";
+                
+            }
+            if (props.currentSelectionPosition.length > 0 && props.currentSelectionPosition[0] > 2 && props.currentSelectionPosition[1] > 2 &&
+                props.currentSelectionPosition[0] < window.innerWidth - 2 && props.currentSelectionPosition[1] < window.innerHeight - 2
+            ) {
+                const [x, y] = props.currentSelectionPosition;
+                if (x > props.selectionStart[0] && y > props.selectionStart[1]) {
+                    setAdjustPosition({
+                        width: x - props.selectionStart[0],
+                        height: y - props.selectionStart[1],
+                        left: false,
+                        top: false,
+                    })
+                } else if (x < props.selectionStart[0] && y < props.selectionStart[1]) {
+                    setAdjustPosition({
+                        width: props.selectionStart[0] - x,
+                        height: props.selectionStart[1] - y,
+                        left: x,
+                        top: y, 
+                    })
+                } else if (x < props.selectionStart[0] && y > props.selectionStart[1]) {
+                    setAdjustPosition({
+                        width: props.selectionStart[0] - x,
+                        height: y - props.selectionStart[1],
+                        left: x,
+                        top: false,
+                    })
+                } else if (x > props.selectionStart[0] && y < props.selectionStart[1]) {
+                    setAdjustPosition({
+                        width: x - props.selectionStart[0],
+                        height: props.selectionStart[1] - y,
+                        left: false,
+                        top: y,
+                    })
+                }
+                boxRef.current!.style.width = adjustPosition.width + "px";
+                boxRef.current!.style.height = adjustPosition.height + "px";
+                if (adjustPosition.left) {
+                    boxRef.current!.style.left = adjustPosition.left + "px";
+                }
+                if (adjustPosition.top) {
+                    boxRef.current!.style.top = adjustPosition.top + "px";
+                }
+            }
+        } 
+        
+    }, [props.selectionStart, props.currentSelectionPosition])
+
+    
 
     // useEffect(() => {
     //     const selectionBox = document.createElement("div");
@@ -57,6 +148,8 @@ export default function Selection() {
     //         document.body.removeChild(selectionBox);
     //     }
     // }, [])
+
+    // console.log("CHECK", startPosition, currentPosition);
 
     return (
         <Box ref={boxRef} className="selection-box">

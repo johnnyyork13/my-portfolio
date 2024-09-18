@@ -6,7 +6,9 @@ export default function Icon(props: {
     name: string, 
     coords: number[], 
     setIsDragging: Function, 
-    isDragging: {dragging: boolean, icon: string, coords: number[]}}) {
+    isDragging: {dragging: boolean, icon: string, coords: number[]},
+    selected: any
+}) {
 
     const iconRef = useRef<HTMLDivElement>(null);
 
@@ -14,6 +16,22 @@ export default function Icon(props: {
 
     const onFocus = () => {setIsFocused(true)};
     const onBlur = () => {setIsFocused(false)};
+
+    // console.log(props.selected);
+
+    const [iconSelected, setIconSelected] = useState(false);
+
+    useEffect(() => {
+        // console.log('selected', props.selected);
+        setIconSelected(() => {
+            for (const key in props.selected) {
+                if (props.selected[key].name === props.name) {
+                    return true;
+                }
+            }
+            return false;
+        })
+    }, [])
 
     function handleMouseDragEvent(e: any) {
         const img = new Image();
@@ -41,7 +59,7 @@ export default function Icon(props: {
 
     return (
         <IconContainer 
-            className={isFocused ? 'icon-focused' : ""} 
+            className={(isFocused || iconSelected) ? 'icon-focused' : ""} 
             tabIndex={0}
             onBlur={onBlur}
             onFocus={onFocus}
@@ -61,8 +79,11 @@ const IconContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: center;
     align-items: center;
     cursor: default;
+    position: relative;
+    z-index: 100;
     p {
         margin-top: 10px;
         color: white;
@@ -70,5 +91,6 @@ const IconContainer = styled.div`
         padding: 8px;
         padding-top: 4px;
         padding-bottom: 4px;
+        line-height: 15px;
     }
 `
