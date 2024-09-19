@@ -17,8 +17,6 @@ export default function Icon(props: {
     const onFocus = () => {setIsFocused(true)};
     const onBlur = () => {setIsFocused(false)};
 
-    // console.log(props.selected);
-
     const [iconSelected, setIconSelected] = useState(false);
 
     useEffect(() => {
@@ -31,7 +29,7 @@ export default function Icon(props: {
             }
             return false;
         })
-    }, [])
+    }, [props.selected])
 
     function handleMouseDragEvent(e: any) {
         const img = new Image();
@@ -48,12 +46,20 @@ export default function Icon(props: {
         })
     }
 
+    function handleIconDoubleClick(e: MouseEvent) {
+        console.log(props.name, 'double clicked');
+    }
+
     useEffect(() => {
         if (iconRef.current) {
             iconRef.current.addEventListener("dragstart", handleMouseDragEvent)
             // iconRef.current.addEventListener("mouseup", () => {
             //     iconRef.current?.removeEventListener("mousedown", handleMouseDragEvent);
             // })
+            iconRef.current.addEventListener("dblclick", handleIconDoubleClick);
+        }
+        return () => {
+            iconRef.current?.removeEventListener("dblclick", handleIconDoubleClick)
         }
     }, [])
 

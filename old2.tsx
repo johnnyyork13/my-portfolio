@@ -3,7 +3,6 @@ import { Wallpaper } from 'react-windows-xp';
 import styled from 'styled-components';
 import IconContainer from './components/IconContainer';
 import Selection from './components/Selection';
-import Email from './components/Email';
 import Footer from './components/Footer';
 
 // Icon image imports
@@ -33,11 +32,6 @@ function App() {
   const [selectionStart, setSelectionStart] = useState<number[]>([]);
   const [selectionCurrentPosition, setSelectionCurrentPosition] = useState<number[]>([]);
   const [selected, setSelected] = useState<any>(null);
-
-  //dialog boxes
-  const [currentDialogBox, setCurrentDialogBox] = useState("email");
-
-
 
   function calculateCoords(e: MouseEvent) {
     const GRID_COLUMNS = 15;
@@ -70,7 +64,6 @@ function App() {
       }
 
       setIcons(newIcons);
-      setIsDragging({dragging: false, icon: "", coords: []});
     }
   }
 
@@ -131,7 +124,6 @@ function App() {
         isSelecting={isSelecting}
         selected={selected}
       />
-      {currentDialogBox === "email" && <Email />}
       <Footer />
     </MainContainer>
   );
@@ -141,9 +133,6 @@ const MainContainer = styled.div`
   width: 100%;
   height: 90%;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export default App;

@@ -46,7 +46,7 @@ export default function IconContainer(props: {
 
     useEffect(() => {
         setGrid(arrangeIcons());
-    }, [props.icons, props.selected]); // Update only when icons change
+    }, [props.icons]); // Update only when icons change
 
     return (
         <Grid>
@@ -61,4 +61,5 @@ const Grid = styled.div`
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     grid-template-columns: repeat(15, 1fr);
+    border: 1px solid red; // Fixed typo from "sold" to "solid"
 `;
