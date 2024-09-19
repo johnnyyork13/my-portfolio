@@ -8,6 +8,7 @@ export default function Icon(props: {
     setIsDragging: Function, 
     isDragging: {dragging: boolean, icon: string, coords: number[]},
     selected: any
+    setOpenedDialogBoxes: Function
 }) {
 
     const iconRef = useRef<HTMLDivElement>(null);
@@ -47,7 +48,13 @@ export default function Icon(props: {
     }
 
     function handleIconDoubleClick(e: MouseEvent) {
-        console.log(props.name, 'double clicked');
+        props.setOpenedDialogBoxes((prev: string[]) => {
+            if (!prev.includes(props.name)) {
+                return [...prev, props.name];
+            } else {
+                return prev;
+            }
+        })
     }
 
     useEffect(() => {

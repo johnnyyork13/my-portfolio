@@ -1,17 +1,21 @@
 import styled from "styled-components";
-import DialogBoxHeader from "./DialogBoxHeader";
+import { Children } from "react";
 
 export default function Email() {
+    
+
+    
 
     return (
-        <>
-            <DialogBoxHeader title="Email"></DialogBoxHeader>
-                <div className="window-body">
-                    <div className="field-row-stacked" style={{width: "200px"}}>
-                        <label htmlFor="email-to">To:</label>
-                        <input type="text" id="email-to" />
-                    </div>
-                </div>
-        </>
+        <div className="window-body">
+            <div className="field-row-stacked" style={{width: "500px"}}>
+                <label htmlFor="from">From:</label>
+                <input type="text" id="from" />
+            </div>
+            <div className="field-row-stacked" style={{width: "500px"}}>
+                <label htmlFor="email-to">Message:</label>
+                <textarea id="email-to"></textarea>
+            </div>
+        </div>
     )
 }

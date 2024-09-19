@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import IconContainer from './components/IconContainer';
 import Selection from './components/Selection';
 import Email from './components/Email';
+import Notepad from './components/Notepad';
+import DialogBox from './components/DialogBox';
 import Footer from './components/Footer';
 
 // Icon image imports
@@ -33,11 +35,7 @@ function App() {
   const [selectionStart, setSelectionStart] = useState<number[]>([]);
   const [selectionCurrentPosition, setSelectionCurrentPosition] = useState<number[]>([]);
   const [selected, setSelected] = useState<any>(null);
-
-  //dialog boxes
-  const [currentDialogBox, setCurrentDialogBox] = useState("email");
-
-
+  const [openedDialogBoxes, setOpenedDialogBoxes] = useState<string[]>([]);
 
   function calculateCoords(e: MouseEvent) {
     const GRID_COLUMNS = 15;
@@ -72,6 +70,10 @@ function App() {
       setIcons(newIcons);
       setIsDragging({dragging: false, icon: "", coords: []});
     }
+  }
+
+  function checkOpenedDialogBoxes(title: string) {
+    return openedDialogBoxes.includes(title);
   }
 
   useEffect(() => {
@@ -130,8 +132,11 @@ function App() {
         setIsDragging={setIsDragging} 
         isSelecting={isSelecting}
         selected={selected}
+        setOpenedDialogBoxes={setOpenedDialogBoxes}
       />
-      {currentDialogBox === "email" && <Email />}
+      {/* {currentDialogBox === "email" && <Email setIsDragging={setIsDragging}/>} */}
+      {checkOpenedDialogBoxes("Email") && <DialogBox title="Email" setIsDragging={setIsDragging} children={<Email />} setOpenedDialogBoxes={setOpenedDialogBoxes}></DialogBox>}
+      {checkOpenedDialogBoxes("Notepad") && <DialogBox title="Notepad" setIsDragging={setIsDragging} children={<Notepad />} setOpenedDialogBoxes={setOpenedDialogBoxes}></DialogBox>}
       <Footer />
     </MainContainer>
   );

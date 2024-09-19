@@ -9,7 +9,8 @@ export default function IconContainer(props: {
     setIsDragging: Function,
     isDragging: { dragging: boolean, icon: string, coords: number[] },
     isSelecting: boolean,
-    selected: any
+    selected: any,
+    setOpenedDialogBoxes: Function
 }) {
     const [grid, setGrid] = useState<any>([]);
 
@@ -33,6 +34,7 @@ export default function IconContainer(props: {
                             setIsDragging={props.setIsDragging}
                             isDragging={props.isDragging}
                             selected={props.selected}
+                            setOpenedDialogBoxes={props.setOpenedDialogBoxes} 
                         />
                     );
                 } else {
