@@ -137,7 +137,7 @@ function App() {
       {/* {currentDialogBox === "email" && <Email setIsDragging={setIsDragging}/>} */}
       {checkOpenedDialogBoxes("Email") && <DialogBox title="Email" setIsDragging={setIsDragging} children={<Email />} setOpenedDialogBoxes={setOpenedDialogBoxes}></DialogBox>}
       {checkOpenedDialogBoxes("Notepad") && <DialogBox title="Notepad" setIsDragging={setIsDragging} children={<Notepad />} setOpenedDialogBoxes={setOpenedDialogBoxes}></DialogBox>}
-      <Footer />
+      <Footer openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
     </MainContainer>
   );
 }

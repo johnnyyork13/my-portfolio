@@ -17,7 +17,7 @@ export default function Notepad() {
 }
 
 const NotepadContainer = styled.div`
-    width: 500px;
+    width: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,7 +42,7 @@ const NotepadHeaderItem = styled.p`
 
 const NotepadBody = styled.textarea`
     box-sizing: border-box;
-    width: 98%;
+    width: 99%;
     height: 500px;
     resize: none;
     overflow: scroll;

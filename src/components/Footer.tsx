@@ -1,12 +1,37 @@
+import styled from 'styled-components';
 import startMenu from '../assets/start-menu.png';
+import TaskbarItem from './TaskbarItem';
 
-export default function Footer() {
+export default function Footer(props: {setOpenedDialogBoxes: Function, openedDialogBoxes: string[]}) {
+
+    const mappedTaskbarItems = props.openedDialogBoxes.map((dialog: string, index: number) => {
+        return <TaskbarItem key={index} title={dialog} setOpenedDialogBoxes={props.setOpenedDialogBoxes} />
+    })
 
     return (
-        <div className="window fit-to-bottom">
+        <FooterContainer className="window">
             <div className="title-bar">
-                <img src={startMenu} alt="Start Menu" className="start-menu" />
+                <TaskbarItems>
+                    <img src={startMenu} alt="Start Menu" className="start-menu" />
+                    {mappedTaskbarItems}
+                </TaskbarItems>
             </div>
-        </div>
+        </FooterContainer>
     )
 }
+
+const FooterContainer = styled.div`
+    position: fixed;
+    bottom: -2px;
+    left: -10px;
+    width: 110%;
+`
+
+const TaskbarItems = styled.div`
+    display: flex;
+    height: 40px;
+    position: relative;
+    z-index: 1;
+    align-items: center;
+
+`

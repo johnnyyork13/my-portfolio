@@ -1,5 +1,7 @@
 html {
     --xp-blue: rgb(11, 97, 255);
+    --taskbar-default: rgb(60, 129, 243);
+    --taskbar-selected: rgb(30, 82, 183);
 }
 
 html, body, #root {
@@ -16,16 +18,10 @@ html, body, #root {
     -ms-user-select: none;
 }
 
-.fit-to-bottom {
-    position: fixed;
-    bottom: -2px;
-    left: -10px;
-    width: 110%;
-}
-
 .start-menu {
     height: 33px;
-    margin-bottom: 0px;
+    margin-bottom: 0px; 
+    margin-right: 8px;
 }
 
 .start-menu:hover {
