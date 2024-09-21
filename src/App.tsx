@@ -14,6 +14,9 @@ import myPictures from './assets/my-pictures.png';
 import notepad from './assets/notepad.png';
 import email from './assets/email.png';
 
+//interface imports
+import { DialogBoxInterface } from './interfaces/default';
+
 import { useEffect, useRef, useState } from 'react';
 
 function App() {
@@ -35,7 +38,7 @@ function App() {
   const [selectionStart, setSelectionStart] = useState<number[]>([]);
   const [selectionCurrentPosition, setSelectionCurrentPosition] = useState<number[]>([]);
   const [selected, setSelected] = useState<any>(null);
-  const [openedDialogBoxes, setOpenedDialogBoxes] = useState<string[]>([]);
+  const [openedDialogBoxes, setOpenedDialogBoxes] = useState<DialogBoxInterface[]>([]);
 
   function calculateCoords(e: MouseEvent) {
     const GRID_COLUMNS = 15;
@@ -73,7 +76,12 @@ function App() {
   }
 
   function checkOpenedDialogBoxes(title: string) {
-    return openedDialogBoxes.includes(title);
+    for (let i = 0; i < openedDialogBoxes.length; i++) {
+      if (openedDialogBoxes[i].title === title && openedDialogBoxes[i].status === "open") {
+        return true;
+      }
+    }
+    return false;
   }
 
   useEffect(() => {
@@ -135,8 +143,8 @@ function App() {
         setOpenedDialogBoxes={setOpenedDialogBoxes}
       />
       {/* {currentDialogBox === "email" && <Email setIsDragging={setIsDragging}/>} */}
-      {checkOpenedDialogBoxes("Email") && <DialogBox title="Email" setIsDragging={setIsDragging} children={<Email />} setOpenedDialogBoxes={setOpenedDialogBoxes}></DialogBox>}
-      {checkOpenedDialogBoxes("Notepad") && <DialogBox title="Notepad" setIsDragging={setIsDragging} children={<Notepad />} setOpenedDialogBoxes={setOpenedDialogBoxes}></DialogBox>}
+      {checkOpenedDialogBoxes("Email") && <DialogBox title="Email" setIsDragging={setIsDragging} children={<Email openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>}
+      {checkOpenedDialogBoxes("Notepad") && <DialogBox title="Notepad" setIsDragging={setIsDragging} children={<Notepad openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>}
       <Footer openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
     </MainContainer>
   );

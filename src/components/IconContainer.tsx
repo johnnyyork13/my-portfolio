@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from 'uuid';
 import Icon from './Icon';
 import { useEffect, useState } from "react";
+import { DialogBoxInterface } from "../interfaces/default";
 
 export default function IconContainer(props: {
     icons: { img: string, name: string, coords: number[] }[],
@@ -13,6 +14,15 @@ export default function IconContainer(props: {
     setOpenedDialogBoxes: Function
 }) {
     const [grid, setGrid] = useState<any>([]);
+
+    function handleUnfocusDialogBoxes() {
+        props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
+          return prev.map((dialog: DialogBoxInterface) => {
+            return {...dialog, isFocused: false};
+          });
+        });
+}
+
 
     const arrangeIcons = () => {
         const GRID_COLUMNS = 15;
@@ -38,7 +48,7 @@ export default function IconContainer(props: {
                         />
                     );
                 } else {
-                    row.push(<div key={`${x}-${y}`} className="empty-tile" draggable="false"></div>);
+                    row.push(<div key={`${x}-${y}`} onClick={handleUnfocusDialogBoxes} className="empty-tile" draggable="false"></div>);
                 }
             }
             newGrid.push(row);

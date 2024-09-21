@@ -2,10 +2,12 @@ import styled from 'styled-components';
 import startMenu from '../assets/start-menu.png';
 import TaskbarItem from './TaskbarItem';
 
-export default function Footer(props: {setOpenedDialogBoxes: Function, openedDialogBoxes: string[]}) {
+import { DialogBoxInterface} from '../interfaces/default';
 
-    const mappedTaskbarItems = props.openedDialogBoxes.map((dialog: string, index: number) => {
-        return <TaskbarItem key={index} title={dialog} setOpenedDialogBoxes={props.setOpenedDialogBoxes} />
+export default function Footer(props: {setOpenedDialogBoxes: Function, openedDialogBoxes: DialogBoxInterface[]}) {
+
+    const mappedTaskbarItems = props.openedDialogBoxes.map((dialog: DialogBoxInterface, index: number) => {
+        return <TaskbarItem key={index} dialog={dialog} setOpenedDialogBoxes={props.setOpenedDialogBoxes} />
     })
 
     return (
@@ -33,5 +35,4 @@ const TaskbarItems = styled.div`
     position: relative;
     z-index: 1;
     align-items: center;
-
 `

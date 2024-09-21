@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { Children } from "react";
+import { DialogBoxInterface } from "../interfaces/default";
 
-export default function Email() {
+export default function Email(props: {
+    openedDialogBoxes: DialogBoxInterface[],
+}) {
     
-
+    
     
 
     return (

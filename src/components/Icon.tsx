@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { DialogBoxInterface } from "../interfaces/default";
 
 export default function Icon(props: {
     img: string, 
@@ -47,13 +48,21 @@ export default function Icon(props: {
         })
     }
 
-    function handleIconDoubleClick(e: MouseEvent) {
-        props.setOpenedDialogBoxes((prev: string[]) => {
-            if (!prev.includes(props.name)) {
-                return [...prev, props.name];
-            } else {
-                return prev;
+    function handleIconDoubleClick() {
+        props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
+            //make sure the dialog box isn't already open
+            const newDialog = {title: props.name, status: "open", isFocused: true};
+            let updatedDialogs = [];
+            let dialogBoxExists = false;
+            for (let i = 0; i < prev.length; i++) {
+                if (prev[i].title === props.name) {
+                    updatedDialogs.push({...prev[i], status: "open", isFocused: true});
+                    dialogBoxExists = true;
+                } else {
+                    updatedDialogs.push({...prev[i], isFocused: false});
+                }
             }
+            return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
         })
     }
 
