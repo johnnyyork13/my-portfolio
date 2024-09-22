@@ -143,6 +143,8 @@ export default function DialogBox(props: {
 const DialogBoxContainer = styled.div<{ $isFocused: boolean }>`
     position: absolute;
     z-index: ${props => props.$isFocused ? 100 : 99} !important;
+    display: flex;
+    flex-direction: column;
 `
 
 const TitleBar = styled.div<{ $isFocused: boolean }>`

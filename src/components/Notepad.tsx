@@ -57,9 +57,10 @@ const NotepadHeaderItem = styled.p`
 const NotepadBody = styled.textarea<({$maximized: boolean})>`
     position: relative;
     box-sizing: border-box;
-    width: 99%;
+    width: ${props => props.$maximized ? "99.6%" : "99%"};
     height: 100%;
     resize: none;
     overflow: scroll;
     padding: 5px;
+    font-size: 1.2rem;
 `
