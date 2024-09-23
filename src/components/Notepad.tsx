@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { DialogBoxInterface } from "../interfaces/default"
 import { useEffect, useState } from "react";
+import { DialogBoxHeader } from "../styled-components/main";
 
 export default function Notepad(props: {
     openedDialogBoxes: DialogBoxInterface[],
@@ -37,18 +38,16 @@ const NotepadContainer = styled.div<({$maximized: boolean})>`
     overflow: hidden;
 `
 
-const NotepadHeader = styled.div`
+const NotepadHeader = styled(DialogBoxHeader)`
+    border-bottom: none;
     width: 100%;
-    height: 20px;
-    margin-left: 15px;
-    display: flex;
-    padding: 6px;
-    padding-bottom: 3px;
+    &:first-child {
+        margin-left: 15px
+    }
 `
 
 const NotepadHeaderItem = styled.p`
     font-size: .9rem;
-    margin-right: 10px;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
