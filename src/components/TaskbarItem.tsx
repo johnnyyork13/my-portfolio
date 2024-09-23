@@ -37,22 +37,22 @@ export default function TaskbarItem(props: {dialog: DialogBoxInterface, setOpene
 }
 
 const TaskBarItemContainer = styled.div<{ $isFocused: boolean }>`
+    // box-shadow: rgba(255, 255, 255, 0.5) 2px 2px 3px;
+    box-shadow: ${props => props.$isFocused ? '' : 'rgba(0, 0, 0, 0.3) -1px 0px inset, rgba(255, 255, 255, 0.2) 1px 1px 1px inset'};
+    filter: brightness(110%);
     width: 150px;
     height: 20px;
-    // background-color: var(--xp-blue);
-    filter: ${props => props.$isFocused ? `brightness(100%)` : `brightness(140%)`};
-    box-shadow: ${props => props.$isFocused ? 
-        `box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px !important;` :
-        `box-shadow: none;`
-    }
+    background: none;
+    background-color: ${props => props.$isFocused ? `rgb(30, 82, 183)` : 'rgb(60, 129, 243)'};
     margin-left: 0px;
     padding-left: 10px;
     border-radius: 5px;
     color: white;
-    // background-color: var(--taskbar-default) !important;
     &:hover {
-        filter: ${props => props.$isFocused? `100%;` : `brightness(160%) !important;`}   
+        // background-color: rgb(53, 118, 243);
+        cursor: default;  
     }
+    ${props => props.$isFocused ? 'border-left: 2px solid rgba(0,0,0,.4);' : ''}
 `
 
 const Title = styled.p`

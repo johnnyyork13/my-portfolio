@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Children } from "react";
+import { Children, useEffect, useState } from "react";
 import { DialogBoxInterface } from "../interfaces/default";
 import sendButton from '../assets/dialog-icons/email_send.png'
 import saveButton from '../assets/dialog-icons/save.png'
@@ -25,7 +25,11 @@ export default function Email(props: {
     openedDialogBoxes: DialogBoxInterface[],
 }) {
     
-    
+    const [isMaximized, setIsMaximized] = useState<boolean>(false);
+
+    useEffect(() => {
+        setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "Email_Me.exe")?.maximize || false);
+    }, [props.openedDialogBoxes])
     
 
     return (
@@ -55,21 +59,21 @@ export default function Email(props: {
                 <Divider />
                 <Icon><img src={calendarButton} alt="calendar" /></Icon>
             </IconContainer>
-            <DialogInput className="field-row">
+            <DialogInput className="field-row" $isMaximized={isMaximized}>
                 <label htmlFor="to">
                 <img src={addressBook} alt="address book" />
                     To:
                 </label>
                 <input type="text" id="to" />
             </DialogInput>
-            <DialogInput className="field-row">
+            <DialogInput className="field-row" $isMaximized={isMaximized}>
                 <label htmlFor="from">
                 <img src={addressBook} alt="address book" />
                     From:
                 </label>
                 <input type="text" id="from" />
             </DialogInput>
-            <DialogInput className="field-row">
+            <DialogInput className="field-row" $isMaximized={isMaximized}>
                 <label htmlFor="subject">Subject:</label>
                 <input type="text" id="subject" />
             </DialogInput>
@@ -93,7 +97,7 @@ export default function Email(props: {
                 <img src={alignCenterButton} alt="align center" />
                 <img src={alignRightButton} alt="align right" />
             </MessageIconContainer>
-            <DialogInput className="field-row">
+            <DialogInput className="field-row" $isMaximized={isMaximized} style={{height: '100%'}}>
                 <textarea id="email-to"></textarea>
             </DialogInput>
         </EmailContainer>
@@ -101,7 +105,10 @@ export default function Email(props: {
 }
 
 const EmailContainer = styled.div`
+    height: 100%;
     margin-top: 0px;
+    display: flex;
+    flex-direction: column;
 `
 
 const IconContainer = styled.div`
@@ -133,8 +140,8 @@ const Divider = styled.div`
     margin-right: 5px;
 `
 
-const DialogInput = styled.div`
-    width: 500px;
+const DialogInput = styled.div<{ $isMaximized: boolean }>`
+    width: ${props => props.$isMaximized ? "100%" : "500px"};
     margin-bottom: 10px;
     img {
         margin-right: 5px;
@@ -148,7 +155,7 @@ const DialogInput = styled.div`
         width: 100%;    
     }
     textarea {
-        height: 150px;
+        height: ${props => props.$isMaximized ? "100%" : "150px"};
         resize: none;
         overflow-y: scroll;
     }

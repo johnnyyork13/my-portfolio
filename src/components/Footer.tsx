@@ -12,12 +12,12 @@ export default function Footer(props: {setOpenedDialogBoxes: Function, openedDia
 
     return (
         <FooterContainer className="window">
-            <div className="title-bar">
+            <TaskBarItemsContainer className="title-bar">
                 <TaskbarItems>
-                    <img src={startMenu} alt="Start Menu" className="start-menu" />
+                    <StartMenu src={startMenu} alt="Start Menu" className="start-menu" />
                     {mappedTaskbarItems}
                 </TaskbarItems>
-            </div>
+            </TaskBarItemsContainer>
         </FooterContainer>
     )
 }
@@ -29,10 +29,25 @@ const FooterContainer = styled.div`
     width: 110%;
 `
 
+const TaskBarItemsContainer = styled.div`
+    height: 25px;
+`
+
 const TaskbarItems = styled.div`
     display: flex;
-    height: 40px;
     position: relative;
     z-index: 1;
     align-items: center;
+`
+
+const StartMenu = styled.img`
+    height: 35px;
+    margin-bottom: 0px; 
+    margin-right: 8px;
+    &:hover {
+        filter: brightness(107%);
+    }
+    ::active {
+    filter: brightness(85%);    
+    }
 `

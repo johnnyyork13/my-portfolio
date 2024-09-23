@@ -105,7 +105,7 @@ const IconContainer = styled.div`
     align-items: center;
     cursor: default;
     position: relative;
-    z-index: 100;
+    z-index: 10;
     p {
         margin-top: 10px;
         color: white;

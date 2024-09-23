@@ -5,8 +5,10 @@ import IconContainer from './components/IconContainer';
 import Selection from './components/Selection';
 import Email from './components/Email';
 import Notepad from './components/Notepad';
+import Projects from './components/Projects';
 import DialogBox from './components/DialogBox';
 import Footer from './components/Footer';
+import StatusBar from './components/StatusBar';
 
 // Icon image imports
 import myComputer from './assets/my-computer.png';
@@ -24,9 +26,9 @@ function App() {
 
   const [icons, setIcons] = useState([
     { img: myComputer, name: "My Computer", coords: [0, 0] },
-    { img: myPictures, name: "My Pictures", coords: [0, 1] },
-    { img: notepad, name: "Notepad", coords: [0, 2] },
-    { img: email, name: "Email", coords: [0, 3] },
+    { img: myPictures, name: "My Projects", coords: [0, 1] },
+    { img: notepad, name: "About_Me.txt", coords: [0, 2] },
+    { img: email, name: "Email_Me.exe", coords: [0, 3] },
   ]);
 
   const [isDragging, setIsDragging] = useState({
@@ -50,12 +52,13 @@ function App() {
 
   function handleMouseMove(e: MouseEvent) {
     if (!isDragging.dragging) return; // Early exit if not dragging
-
     const newIcons = [...icons];
     const mouseCoordinates = calculateCoords(e);
     const iconToMoveIndex = newIcons.findIndex(icon => icon.name === isDragging.icon);
 
-    if (iconToMoveIndex !== -1) {
+    if (iconToMoveIndex !== -1 && mouseCoordinates[0] >= 0 && mouseCoordinates[1] >= 0
+      && mouseCoordinates[0] <= 14 && mouseCoordinates[1] <= 9
+    ) {
       const overlappingIcon = newIcons.find((icon, index) =>
         index !== iconToMoveIndex &&
         icon.coords[0] === mouseCoordinates[0] &&
@@ -143,9 +146,11 @@ function App() {
         setOpenedDialogBoxes={setOpenedDialogBoxes}
       />
       {/* {currentDialogBox === "email" && <Email setIsDragging={setIsDragging}/>} */}
-      {checkOpenedDialogBoxes("Email") && <DialogBox title="Email" setIsDragging={setIsDragging} children={<Email openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>}
-      {checkOpenedDialogBoxes("Notepad") && <DialogBox title="Notepad" setIsDragging={setIsDragging} children={<Notepad openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>}
+      {checkOpenedDialogBoxes("Email_Me.exe") && <DialogBox title="Email_Me.exe" setIsDragging={setIsDragging} children={<Email openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>}
+      {checkOpenedDialogBoxes("About_Me.txt") && <DialogBox title="About_Me.txt" setIsDragging={setIsDragging} children={<Notepad openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>}
+      {checkOpenedDialogBoxes("My Projects") && <DialogBox title="My Projects" setIsDragging={setIsDragging} children={<Projects openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>} 
       <Footer openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
+      <StatusBar />
     </MainContainer>
   );
 }

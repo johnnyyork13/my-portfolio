@@ -96,7 +96,7 @@ export default function DialogBox(props: {
         }
     }
 
-    function handleFocusDialogBox() {
+    function handleFocusDialogBox() {        
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.map((dialog: DialogBoxInterface) => {
                 if (dialog.title === props.title && dialog.status !== "minimized") {

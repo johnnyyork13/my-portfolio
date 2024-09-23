@@ -7,13 +7,12 @@ export default function Notepad(props: {
     openedDialogBoxes: DialogBoxInterface[],
 }) {
 
-    const [isMaximized, setIsMaximized] = useState<boolean>(() => {
-        return props.openedDialogBoxes.find(dialog => dialog.title === "Notepad")?.maximize || false;
-    });
+    const [isMaximized, setIsMaximized] = useState<boolean>(false);
 
     useEffect(() => {
-        setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "Notepad")?.maximize || false);
+        setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "About_Me.txt")?.maximize || false);
     }, [props.openedDialogBoxes])
+
 
     return (
         <NotepadContainer $maximized={isMaximized}>
@@ -56,7 +55,7 @@ const NotepadHeaderItem = styled.p`
 const NotepadBody = styled.textarea<({$maximized: boolean})>`
     position: relative;
     box-sizing: border-box;
-    width: ${props => props.$maximized ? "99.6%" : "99%"};
+    width: ${props => props.$maximized ? "99.5%" : "99%"};
     height: 100%;
     resize: none;
     overflow: scroll;
