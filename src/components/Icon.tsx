@@ -9,7 +9,9 @@ export default function Icon(props: {
     setIsDragging: Function, 
     isDragging: {dragging: boolean, icon: string, coords: number[]},
     selected: any
-    setOpenedDialogBoxes: Function
+    setOpenedDialogBoxes: Function,
+    setCurrentPath: Function,
+    currentPath: string[],
 }) {
 
     const iconRef = useRef<HTMLDivElement>(null);
@@ -64,6 +66,7 @@ export default function Icon(props: {
             }
             return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
         })
+        // props.setCurrentPath(props.currentPath);
     }
 
     useEffect(() => {

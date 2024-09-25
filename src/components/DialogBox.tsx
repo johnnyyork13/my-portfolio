@@ -6,8 +6,9 @@ export default function DialogBox(props: {
     title: string, 
     setIsDragging: Function, 
     children: any, 
-    setOpenedDialogBoxes: Function
-    openedDialogBoxes: DialogBoxInterface[]
+    setOpenedDialogBoxes: Function,
+    openedDialogBoxes: DialogBoxInterface[],
+    currentPath? : string[],
 }) {
 
     const dialogRef = useRef<HTMLDivElement>(null);
@@ -61,7 +62,6 @@ export default function DialogBox(props: {
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.map((dialog: DialogBoxInterface) => {
                 if (dialog.title === props.title) {
-                    console.log('here');
                     return {...dialog, status: "minimized", isFocused: false};
                 }
                 return dialog;

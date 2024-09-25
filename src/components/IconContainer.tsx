@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 import { DialogBoxInterface } from "../interfaces/default";
 
 export default function IconContainer(props: {
-    icons: { img: string, name: string, coords: number[] }[],
+    icons: { img: string, name: string, coords: number[], currentPath: string[]}[],
     setIcons: Function,
     setIsDragging: Function,
     isDragging: { dragging: boolean, icon: string, coords: number[] },
     isSelecting: boolean,
     selected: any,
-    setOpenedDialogBoxes: Function
+    setOpenedDialogBoxes: Function,
+    setCurrentPath: Function,
 }) {
     const [grid, setGrid] = useState<any>([]);
 
@@ -33,18 +34,19 @@ export default function IconContainer(props: {
             let row = [];
             for (let x = 0; x < GRID_COLUMNS; x++) {
                 const icon = props.icons.find(icon => icon.coords[0] === x && icon.coords[1] === y);
-                
                 if (icon) {
                     row.push(
                         <Icon 
                             key={`${icon.name}-${icon.coords.join('-')}`} // Use a stable key
                             img={icon.img} 
                             name={icon.name} 
+                            currentPath={icon.currentPath ? icon.currentPath : []}
                             coords={icon.coords}
                             setIsDragging={props.setIsDragging}
                             isDragging={props.isDragging}
                             selected={props.selected}
                             setOpenedDialogBoxes={props.setOpenedDialogBoxes} 
+                            setCurrentPath={props.setCurrentPath}
                         />
                     );
                 } else {

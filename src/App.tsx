@@ -5,16 +5,17 @@ import IconContainer from './components/IconContainer';
 import Selection from './components/Selection';
 import Email from './components/Email';
 import Notepad from './components/Notepad';
-import Projects from './components/Projects';
 import DialogBox from './components/DialogBox';
 import Footer from './components/Footer';
 import StatusBar from './components/StatusBar';
+import FileExplorer from './components/FileExplorer';
 
 // Icon image imports
 import myComputer from './assets/my-computer.png';
 import myPictures from './assets/my-pictures.png';
 import notepad from './assets/notepad.png';
 import email from './assets/email.png';
+import printer from './assets/printer.png';
 
 //interface imports
 import { DialogBoxInterface } from './interfaces/default';
@@ -25,10 +26,11 @@ function App() {
   const appRef = useRef<HTMLDivElement>(null);
 
   const [icons, setIcons] = useState([
-    { img: myComputer, name: "My Computer", coords: [0, 0] },
-    { img: myPictures, name: "My Projects", coords: [0, 1] },
-    { img: notepad, name: "About_Me.txt", coords: [0, 2] },
-    { img: email, name: "Email_Me.exe", coords: [0, 3] },
+    { img: myComputer, name: "My Computer", coords: [0, 0], currentPath: ["My Computer"]},
+    { img: myPictures, name: "My Projects", coords: [0, 1], currentPath: ["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]},
+    { img: notepad, name: "About_Me.txt", coords: [0, 2], currentPath: []},
+    { img: email, name: "Email_Me.exe", coords: [0, 3], currentPath: [] },
+    { img: printer, name: "View Resume", coords: [0, 4], currentPath: [] }
   ]);
 
   const [isDragging, setIsDragging] = useState({
@@ -41,6 +43,8 @@ function App() {
   const [selectionCurrentPosition, setSelectionCurrentPosition] = useState<number[]>([]);
   const [selected, setSelected] = useState<any>(null);
   const [openedDialogBoxes, setOpenedDialogBoxes] = useState<DialogBoxInterface[]>([]);
+
+  const [currentPath, setCurrentPath] = useState<string[]>([]);
 
   function calculateCoords(e: MouseEvent) {
     const GRID_COLUMNS = 15;
@@ -144,11 +148,53 @@ function App() {
         isSelecting={isSelecting}
         selected={selected}
         setOpenedDialogBoxes={setOpenedDialogBoxes}
+        setCurrentPath={setCurrentPath}
       />
       {/* {currentDialogBox === "email" && <Email setIsDragging={setIsDragging}/>} */}
-      {checkOpenedDialogBoxes("Email_Me.exe") && <DialogBox title="Email_Me.exe" setIsDragging={setIsDragging} children={<Email openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>}
-      {checkOpenedDialogBoxes("About_Me.txt") && <DialogBox title="About_Me.txt" setIsDragging={setIsDragging} children={<Notepad openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>}
-      {checkOpenedDialogBoxes("My Projects") && <DialogBox title="My Projects" setIsDragging={setIsDragging} children={<Projects openedDialogBoxes={openedDialogBoxes}/>} setOpenedDialogBoxes={setOpenedDialogBoxes} openedDialogBoxes={openedDialogBoxes}></DialogBox>} 
+      {checkOpenedDialogBoxes("My Computer") && 
+        <DialogBox 
+          title="My Computer" 
+          setIsDragging={setIsDragging} 
+          setOpenedDialogBoxes={setOpenedDialogBoxes} 
+          openedDialogBoxes={openedDialogBoxes}
+          children={
+            <FileExplorer 
+              startPath={["My Computer"]}
+              openedDialogBoxes={openedDialogBoxes}/>
+          }>
+        </DialogBox>} 
+      {checkOpenedDialogBoxes("My Projects") && 
+      <DialogBox 
+        title="My Projects" 
+        setIsDragging={setIsDragging} 
+        setOpenedDialogBoxes={setOpenedDialogBoxes} 
+        openedDialogBoxes={openedDialogBoxes}
+        children={
+          <FileExplorer 
+            startPath={["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]}
+            openedDialogBoxes={openedDialogBoxes}/>
+          }>
+      </DialogBox>} 
+      {checkOpenedDialogBoxes("Email_Me.exe") && 
+        <DialogBox 
+          title="Email_Me.exe" 
+          setIsDragging={setIsDragging} 
+          children={
+            <Email 
+              openedDialogBoxes={openedDialogBoxes}/>} 
+              setOpenedDialogBoxes={setOpenedDialogBoxes} 
+              openedDialogBoxes={openedDialogBoxes}>
+          </DialogBox>}
+      {checkOpenedDialogBoxes("About_Me.txt") && 
+        <DialogBox 
+          title="About_Me.txt" 
+          setIsDragging={setIsDragging} 
+          children={
+            <Notepad 
+              openedDialogBoxes={openedDialogBoxes}/>} 
+              setOpenedDialogBoxes={setOpenedDialogBoxes} 
+              openedDialogBoxes={openedDialogBoxes}>
+        </DialogBox>}
       <Footer openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
       <StatusBar />
     </MainContainer>

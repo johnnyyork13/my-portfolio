@@ -8,7 +8,7 @@ import myDocumentsIcon from '../assets/dialog-icons/my-documents.png'
 import sharedDocumentsIcon from '../assets/dialog-icons/shared-documents.png'
 import sidebarDropdownArrowIcon from '../assets/dialog-icons/sidebar-dropdown-arrow.png'
 
-export default function DialogSidebar() {
+export default function DialogSidebar(){
 
     return (
         <Sidebar>
@@ -61,7 +61,7 @@ export default function DialogSidebar() {
 }
 
 const Sidebar = styled.div`
-    width: 300px;
+    width: 210px;
     background: linear-gradient(rgb(116, 138, 255) 0%, rgb(64, 87, 211) 100%);
     display: flex;
     flex-direction: column;
