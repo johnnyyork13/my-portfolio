@@ -4,17 +4,23 @@ import { DialogBoxInterface } from "../interfaces/default";
 
 export default function DialogBox(props: {
     title: string, 
+    titleImage: string,
     setIsDragging: Function, 
     children: any, 
     setOpenedDialogBoxes: Function,
     openedDialogBoxes: DialogBoxInterface[],
     currentPath? : string[],
+    isError?: boolean,
+    setIsError?: Function,
 }) {
 
     const dialogRef = useRef<HTMLDivElement>(null);
     const [isFocused, setIsFocused] = useState(false);
 
     function handleCloseDialogBox() {
+        if (props.isError) {
+            props.setIsError && props.setIsError(false);
+        }
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.filter((dialog: DialogBoxInterface) => dialog.title !== props.title);
         })
@@ -128,10 +134,10 @@ export default function DialogBox(props: {
                 draggable={false}
                 $isFocused={isFocused}
             >
-                <TitleBarText className="title-bar-text">{props.title}</TitleBarText>
+                <TitleBarText className="title-bar-text"><img src={props.titleImage} alt={props.title} />{props.title}</TitleBarText>
                 <div className="title-bar-controls">
                     <button aria-label="Minimize" onClick={handleMinimizeDialogBox}></button>
-                    <button aria-label="Maximize" onClick={handleMaximizeDialogBox}></button>
+                    <MaximizeButton $disable={props.isError ? true : false} aria-label="Maximize" onClick={() => !props.isError && handleMaximizeDialogBox()}></MaximizeButton>
                     <button aria-label="Close" onClick={handleCloseDialogBox}></button>
                 </div>
             </TitleBar>
@@ -152,7 +158,19 @@ const TitleBar = styled.div<{ $isFocused: boolean }>`
 `
 
 const TitleBarText = styled.div`
+    display: flex;
+    align-items: center;
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    img {
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+    }
+`
+
+const MaximizeButton = styled.button<({ $disable: boolean })>`
+    filter: ${props => props.$disable ? "grayscale(1)" : "none"};
+    pointer-events: ${props => props.$disable ? "none" : "all"};
 `

@@ -9,7 +9,6 @@ import viewsIcon from '../assets/dialog-icons/views.png'
 import monitorIcon from '../assets/dialog-icons/monitor.png'
 import goIcon from '../assets/dialog-icons/go.png'
 import selectArrow from '../assets/dialog-icons/select-arrow.png'
-import { useEffect, useState } from "react"
 
 export default function DialogHeader(props: {
     currentPath: string[],
@@ -68,7 +67,7 @@ export default function DialogHeader(props: {
                     <img src={navParentIcon} alt="parent"/>
                 </Icon>
                 <Divider />
-                <Icon>
+                <Icon className="grayscale">
                     <img src={searchIcon} alt="search" />
                     <p>Search</p>
                 </Icon>
@@ -77,7 +76,7 @@ export default function DialogHeader(props: {
                     <p>Folders</p>
                 </Icon>
                 <Divider />
-                <Icon>
+                <Icon className="grayscale">
                     <img src={viewsIcon} alt="views" />
                     <DropDownArrow />
                 </Icon>

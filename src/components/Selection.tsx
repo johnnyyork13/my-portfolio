@@ -9,6 +9,7 @@ export default function Selection(props: {
     setSelectionStart: Function,
     currentSelectionPosition: number[],
     setCurrentSelectionPosition: Function,
+    isError: boolean,
 }) {
 
     const boxRef = useRef<HTMLDivElement>(null);
@@ -53,7 +54,7 @@ export default function Selection(props: {
     }
 
     useEffect(() => {
-        if (boxRef.current && !props.isDragging.dragging) {
+        if (boxRef.current && !props.isDragging.dragging && !props.isError) {
             document.addEventListener("mousedown", getMouseClickPosition);
             if (props.isSelecting) {
                 document.addEventListener("mousemove", getMouseMovePosition);
@@ -70,10 +71,10 @@ export default function Selection(props: {
             document.removeEventListener("mousemove", getMouseMovePosition);
             document.removeEventListener("mouseup", getStopSelectionPosition);
         }
-    }, [props.isDragging.dragging, props.isSelecting])
+    }, [props.isDragging.dragging, props.isSelecting, props.isError])
 
     useEffect(() => {
-        if (!props.isDragging.dragging) {
+        if (!props.isDragging.dragging && !props.isError) {
             let adjustPosition = ({
                 width: 0,
                 height: 0,
@@ -132,7 +133,7 @@ export default function Selection(props: {
             }
         } 
         
-    }, [props.selectionStart, props.currentSelectionPosition])
+    }, [props.selectionStart, props.currentSelectionPosition, props.isError])
 
     
 

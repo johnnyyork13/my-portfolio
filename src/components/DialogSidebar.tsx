@@ -7,12 +7,18 @@ import networkPlacesIcon from '../assets/dialog-icons/network-places.png'
 import myDocumentsIcon from '../assets/dialog-icons/my-documents.png'
 import sharedDocumentsIcon from '../assets/dialog-icons/shared-documents.png'
 import sidebarDropdownArrowIcon from '../assets/dialog-icons/sidebar-dropdown-arrow.png'
+import windowsUpdateIcon from '../assets/dialog-icons/update.png'
+import helpIcon from '../assets/dialog-icons/help.png'
 
-export default function DialogSidebar(){
+export default function DialogSidebar(props: {
+    alternate?: boolean,
+    handlerFunction?: Function,
+    handlerValue?: boolean,
+}){
 
     return (
         <Sidebar>
-            <SidebarSection>
+            {!props.alternate && <SidebarSection>
                 <SidebarSectionHeader>
                     <p>System Tasks</p>
                     <img src={sidebarDropdownArrowIcon} alt="dropdown arrow" />
@@ -31,8 +37,8 @@ export default function DialogSidebar(){
                         <p>Change a setting</p>
                     </SidebarSectionItem>
                 </SidebarSectionBody>
-            </SidebarSection>
-            <SidebarSection>
+            </SidebarSection>}
+            {!props.alternate && <SidebarSection>
                 <SidebarSectionHeader>
                     <p>Other Places</p>
                     <img src={sidebarDropdownArrowIcon} alt="dropdown arrow" />
@@ -55,7 +61,35 @@ export default function DialogSidebar(){
                         <p>Control panel</p>
                     </SidebarSectionItem>
                 </SidebarSectionBody>
-            </SidebarSection>
+            </SidebarSection>}
+            {props.alternate && <SidebarSection>
+                <SidebarSectionHeader>
+                    <p>Control Panel</p>
+                    <img src={sidebarDropdownArrowIcon} alt="dropdown arrow" />
+                </SidebarSectionHeader>
+                <SidebarSectionBody>
+                    <SidebarSectionItem onClick={() => props.handlerFunction && props.handlerFunction((prev: boolean) => !prev)}>
+                        <img src={controlPanelIcon} alt="control panel" />
+                        <p>{props.handlerValue === true ? 'Switch to Category View' : 'Switch to Classic View'}</p>
+                    </SidebarSectionItem>
+                </SidebarSectionBody>
+                </SidebarSection>}
+            {props.alternate && <SidebarSection>
+                    <SidebarSectionHeader>
+                        <p>See Also</p>
+                        <img src={sidebarDropdownArrowIcon} alt="dropdown arrow" />
+                    </SidebarSectionHeader>
+                    <SidebarSectionBody>
+                        <SidebarSectionItem>
+                            <img src={windowsUpdateIcon} alt="windows update" style={{width: '16px', height: '16px'}}/>
+                            <p>Windows Update</p>
+                        </SidebarSectionItem>
+                        <SidebarSectionItem>
+                            <img src={helpIcon} alt="Help"/>
+                            <p>Help and Support</p>
+                        </SidebarSectionItem>
+                    </SidebarSectionBody>
+                </SidebarSection>}
         </Sidebar>
     )
 }

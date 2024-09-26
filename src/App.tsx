@@ -9,13 +9,17 @@ import DialogBox from './components/DialogBox';
 import Footer from './components/Footer';
 import StatusBar from './components/StatusBar';
 import FileExplorer from './components/FileExplorer';
+import MySkills from './components/MySkills';
+import ErrorDialogBox from './components/ErrorDialogBox';
 
 // Icon image imports
 import myComputer from './assets/my-computer.png';
 import myPictures from './assets/my-pictures.png';
 import notepad from './assets/notepad.png';
 import email from './assets/email.png';
-import printer from './assets/printer.png';
+import controlPanelIcon from './assets/control-panel.png';
+import pdfIcon from './assets/dialog-icons/file_html.png';
+import errorIcon from './assets/dialog-icons/dialog_error.png';
 
 //interface imports
 import { DialogBoxInterface } from './interfaces/default';
@@ -25,12 +29,15 @@ import { useEffect, useRef, useState } from 'react';
 function App() {
   const appRef = useRef<HTMLDivElement>(null);
 
+
   const [icons, setIcons] = useState([
     { img: myComputer, name: "My Computer", coords: [0, 0], currentPath: ["My Computer"]},
-    { img: myPictures, name: "My Projects", coords: [0, 1], currentPath: ["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]},
-    { img: notepad, name: "About_Me.txt", coords: [0, 2], currentPath: []},
-    { img: email, name: "Email_Me.exe", coords: [0, 3], currentPath: [] },
-    { img: printer, name: "View Resume", coords: [0, 4], currentPath: [] }
+    { img: controlPanelIcon, name: "My Skills", coords: [0, 1], currentPath: [] },
+    { img: myPictures, name: "My Projects", coords: [0, 2], currentPath: ["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]},
+    { img: notepad, name: "About_Me.txt", coords: [0, 3], currentPath: []},
+    { img: email, name: "Email_Me.exe", coords: [0, 4], currentPath: [] },
+    { img: pdfIcon, name: "My_Resume.pdf", coords: [0, 5], currentPath: [] },
+
   ]);
 
   const [isDragging, setIsDragging] = useState({
@@ -43,6 +50,7 @@ function App() {
   const [selectionCurrentPosition, setSelectionCurrentPosition] = useState<number[]>([]);
   const [selected, setSelected] = useState<any>(null);
   const [openedDialogBoxes, setOpenedDialogBoxes] = useState<DialogBoxInterface[]>([]);
+  const [isError, setIsError] = useState(false);
 
   const [currentPath, setCurrentPath] = useState<string[]>([]);
 
@@ -107,6 +115,14 @@ function App() {
     }
   }, [isDragging]);
 
+  function errorMouseDown(e: any) {
+    if (e.target && e.target.children[0]) e.target.children[0].children[0].classList.add("error-dialog-click");
+    setTimeout(() => {
+      if (e.target && e.target.children[0]) e.target.children[0].children[0].classList.remove("error-dialog-click");
+    }, 500);
+  }
+
+
   function getSelectedCoords() {
     const GRID_COLUMNS = 15;
     const GRID_ROWS = 10;
@@ -138,6 +154,7 @@ function App() {
         setSelectionStart={setSelectionStart}
         currentSelectionPosition={selectionCurrentPosition}
         setCurrentSelectionPosition={setSelectionCurrentPosition}
+        isError={isError}
       />
       <Wallpaper className="background-wallpaper" fullScreen={true} draggable="false" />
       <IconContainer 
@@ -154,47 +171,88 @@ function App() {
       {checkOpenedDialogBoxes("My Computer") && 
         <DialogBox 
           title="My Computer" 
+          titleImage={myComputer}
           setIsDragging={setIsDragging} 
           setOpenedDialogBoxes={setOpenedDialogBoxes} 
           openedDialogBoxes={openedDialogBoxes}
           children={
             <FileExplorer 
+              reference="My Computer"
               startPath={["My Computer"]}
-              openedDialogBoxes={openedDialogBoxes}/>
+              openedDialogBoxes={openedDialogBoxes}
+              setOpenedDialogBoxes={setOpenedDialogBoxes}
+              setIsError={setIsError}
+              />
           }>
         </DialogBox>} 
       {checkOpenedDialogBoxes("My Projects") && 
       <DialogBox 
         title="My Projects" 
+        titleImage={myPictures}
         setIsDragging={setIsDragging} 
         setOpenedDialogBoxes={setOpenedDialogBoxes} 
         openedDialogBoxes={openedDialogBoxes}
         children={
           <FileExplorer 
+            reference="My Projects"
             startPath={["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]}
-            openedDialogBoxes={openedDialogBoxes}/>
+            openedDialogBoxes={openedDialogBoxes}
+            setOpenedDialogBoxes={setOpenedDialogBoxes}
+            />
           }>
       </DialogBox>} 
       {checkOpenedDialogBoxes("Email_Me.exe") && 
         <DialogBox 
           title="Email_Me.exe" 
+          titleImage={email}
           setIsDragging={setIsDragging} 
+          setOpenedDialogBoxes={setOpenedDialogBoxes} 
+          openedDialogBoxes={openedDialogBoxes}
           children={
             <Email 
-              openedDialogBoxes={openedDialogBoxes}/>} 
-              setOpenedDialogBoxes={setOpenedDialogBoxes} 
-              openedDialogBoxes={openedDialogBoxes}>
+              openedDialogBoxes={openedDialogBoxes}/>}>
           </DialogBox>}
       {checkOpenedDialogBoxes("About_Me.txt") && 
         <DialogBox 
           title="About_Me.txt" 
+          titleImage={notepad}
           setIsDragging={setIsDragging} 
+          setOpenedDialogBoxes={setOpenedDialogBoxes} 
+          openedDialogBoxes={openedDialogBoxes}
           children={
             <Notepad 
-              openedDialogBoxes={openedDialogBoxes}/>} 
-              setOpenedDialogBoxes={setOpenedDialogBoxes} 
-              openedDialogBoxes={openedDialogBoxes}>
+              openedDialogBoxes={openedDialogBoxes}/>} >
         </DialogBox>}
+        {checkOpenedDialogBoxes("My Skills") && 
+        <DialogBox 
+          title="My Skills" 
+          titleImage={controlPanelIcon}
+          setIsDragging={setIsDragging} 
+          setOpenedDialogBoxes={setOpenedDialogBoxes} 
+          openedDialogBoxes={openedDialogBoxes}
+          children={
+            <MySkills 
+              openedDialogBoxes={openedDialogBoxes}/>}>
+        </DialogBox>}
+        {checkOpenedDialogBoxes("Error") &&
+        <ErrorContainer onClick={errorMouseDown}>
+          <DialogBox
+            title="Error"
+            titleImage={errorIcon}
+            setIsDragging={setIsDragging}
+            setOpenedDialogBoxes={setOpenedDialogBoxes}
+            openedDialogBoxes={openedDialogBoxes}
+            isError={true}
+            setIsError={setIsError}
+            children={
+              <ErrorDialogBox
+                openedDialogBoxes={openedDialogBoxes}
+                setOpenedDialogBoxes={setOpenedDialogBoxes}
+                setIsError={setIsError}
+                />
+            }/>
+        </ErrorContainer>
+        }
       <Footer openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
       <StatusBar />
     </MainContainer>
@@ -209,5 +267,20 @@ const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const ErrorContainer = styled.div`
+  position: absolute;
+  z-index: 400;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  background-color: rgba(0,0,0,0.01);
+  mouse-events: none;
+`
+
 
 export default App;
