@@ -11,10 +11,12 @@ import StatusBar from './components/StatusBar';
 import FileExplorer from './components/FileExplorer';
 import MySkills from './components/MySkills';
 import ErrorDialogBox from './components/ErrorDialogBox';
+import StartMenu from './components/StartMenu';
+import Clippy from './components/Clippy';
 
 // Icon image imports
 import myComputer from './assets/my-computer.png';
-import myPictures from './assets/my-pictures.png';
+import myDocuments from './assets/my-documents.png';
 import notepad from './assets/notepad.png';
 import email from './assets/email.png';
 import controlPanelIcon from './assets/control-panel.png';
@@ -28,12 +30,12 @@ import { useEffect, useRef, useState } from 'react';
 
 function App() {
   const appRef = useRef<HTMLDivElement>(null);
-
+  const url = "http://localhost:3000";
 
   const [icons, setIcons] = useState([
     { img: myComputer, name: "My Computer", coords: [0, 0], currentPath: ["My Computer"]},
     { img: controlPanelIcon, name: "My Skills", coords: [0, 1], currentPath: [] },
-    { img: myPictures, name: "My Projects", coords: [0, 2], currentPath: ["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]},
+    { img: myDocuments, name: "My Projects", coords: [0, 2], currentPath: ["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]},
     { img: notepad, name: "About_Me.txt", coords: [0, 3], currentPath: []},
     { img: email, name: "Email_Me.exe", coords: [0, 4], currentPath: [] },
     { img: pdfIcon, name: "My_Resume.pdf", coords: [0, 5], currentPath: [] },
@@ -51,6 +53,9 @@ function App() {
   const [selected, setSelected] = useState<any>(null);
   const [openedDialogBoxes, setOpenedDialogBoxes] = useState<DialogBoxInterface[]>([]);
   const [isError, setIsError] = useState(false);
+  const [openStartMenu, setOpenStartMenu] = useState(false);
+  const [movingClippy, setMovingClippy] = useState(false);
+  const [showClippy, setShowClippy] = useState(true);
 
   const [currentPath, setCurrentPath] = useState<string[]>([]);
 
@@ -145,7 +150,8 @@ function App() {
   }, [selectionCurrentPosition, isSelecting, icons]); // Ensure dependencies are correct
 
   return (
-    <MainContainer ref={appRef}>
+    <MainContainer ref={appRef} onClick={() => setOpenStartMenu(false)}>
+      {showClippy && <Clippy url={url} setMovingClippy={setMovingClippy} setShowClippy={setShowClippy}/>}
       <Selection 
         isDragging={isDragging} 
         isSelecting={isSelecting}
@@ -155,6 +161,7 @@ function App() {
         currentSelectionPosition={selectionCurrentPosition}
         setCurrentSelectionPosition={setSelectionCurrentPosition}
         isError={isError}
+        movingClippy={movingClippy}
       />
       <Wallpaper className="background-wallpaper" fullScreen={true} draggable="false" />
       <IconContainer 
@@ -188,7 +195,7 @@ function App() {
       {checkOpenedDialogBoxes("My Projects") && 
       <DialogBox 
         title="My Projects" 
-        titleImage={myPictures}
+        titleImage={myDocuments}
         setIsDragging={setIsDragging} 
         setOpenedDialogBoxes={setOpenedDialogBoxes} 
         openedDialogBoxes={openedDialogBoxes}
@@ -253,7 +260,8 @@ function App() {
             }/>
         </ErrorContainer>
         }
-      <Footer openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
+      {openStartMenu && <StartMenu />}
+      <Footer setOpenStartMenu={setOpenStartMenu} openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
       <StatusBar />
     </MainContainer>
   );

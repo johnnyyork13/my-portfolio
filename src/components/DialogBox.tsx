@@ -136,8 +136,8 @@ export default function DialogBox(props: {
             >
                 <TitleBarText className="title-bar-text"><img src={props.titleImage} alt={props.title} />{props.title}</TitleBarText>
                 <div className="title-bar-controls">
-                    <button aria-label="Minimize" onClick={handleMinimizeDialogBox}></button>
-                    <MaximizeButton $disable={props.isError ? true : false} aria-label="Maximize" onClick={() => !props.isError && handleMaximizeDialogBox()}></MaximizeButton>
+                    {!props.isError && <button aria-label="Minimize" onClick={handleMinimizeDialogBox}></button>}
+                    {!props.isError && <button aria-label="Maximize" onClick={handleMaximizeDialogBox}></button>}
                     <button aria-label="Close" onClick={handleCloseDialogBox}></button>
                 </div>
             </TitleBar>
@@ -168,9 +168,4 @@ const TitleBarText = styled.div`
         height: 16px;
         margin-right: 5px;
     }
-`
-
-const MaximizeButton = styled.button<({ $disable: boolean })>`
-    filter: ${props => props.$disable ? "grayscale(1)" : "none"};
-    pointer-events: ${props => props.$disable ? "none" : "all"};
 `

@@ -4,7 +4,11 @@ import TaskbarItem from './TaskbarItem';
 
 import { DialogBoxInterface} from '../interfaces/default';
 
-export default function Footer(props: {setOpenedDialogBoxes: Function, openedDialogBoxes: DialogBoxInterface[]}) {
+export default function Footer(props: {
+    setOpenStartMenu: Function,
+    setOpenedDialogBoxes: Function, 
+    openedDialogBoxes: DialogBoxInterface[]
+}) {
 
     const mappedTaskbarItems = props.openedDialogBoxes.map((dialog: DialogBoxInterface, index: number) => {
         return <TaskbarItem key={index} dialog={dialog} setOpenedDialogBoxes={props.setOpenedDialogBoxes} />
@@ -14,7 +18,7 @@ export default function Footer(props: {setOpenedDialogBoxes: Function, openedDia
         <FooterContainer className="window">
             <TaskBarItemsContainer className="title-bar">
                 <TaskbarItems>
-                    <StartMenu src={startMenu} alt="Start Menu" className="start-menu" />
+                    <StartMenu src={startMenu} alt="Start Menu" className="start-menu" onClick={(e) => {e.stopPropagation(); props.setOpenStartMenu((prev: boolean) => !prev)}}/>
                     {mappedTaskbarItems}
                 </TaskbarItems>
             </TaskBarItemsContainer>
@@ -27,6 +31,7 @@ const FooterContainer = styled.div`
     bottom: -2px;
     left: -10px;
     width: 110%;
+    z-index: 100;
 `
 
 const TaskBarItemsContainer = styled.div`

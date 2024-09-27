@@ -10,6 +10,7 @@ export default function Selection(props: {
     currentSelectionPosition: number[],
     setCurrentSelectionPosition: Function,
     isError: boolean,
+    movingClippy: boolean,
 }) {
 
     const boxRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,7 @@ export default function Selection(props: {
     }
 
     useEffect(() => {
-        if (boxRef.current && !props.isDragging.dragging && !props.isError) {
+        if (boxRef.current && !props.isDragging.dragging && !props.isError && !props.movingClippy) {
             document.addEventListener("mousedown", getMouseClickPosition);
             if (props.isSelecting) {
                 document.addEventListener("mousemove", getMouseMovePosition);
@@ -71,10 +72,10 @@ export default function Selection(props: {
             document.removeEventListener("mousemove", getMouseMovePosition);
             document.removeEventListener("mouseup", getStopSelectionPosition);
         }
-    }, [props.isDragging.dragging, props.isSelecting, props.isError])
+    }, [props.isDragging.dragging, props.isSelecting, props.isError, props.movingClippy])
 
     useEffect(() => {
-        if (!props.isDragging.dragging && !props.isError) {
+        if (!props.isDragging.dragging && !props.isError && !props.movingClippy) {
             let adjustPosition = ({
                 width: 0,
                 height: 0,
@@ -133,7 +134,7 @@ export default function Selection(props: {
             }
         } 
         
-    }, [props.selectionStart, props.currentSelectionPosition, props.isError])
+    }, [props.selectionStart, props.currentSelectionPosition, props.isError, props.movingClippy])
 
     
 
