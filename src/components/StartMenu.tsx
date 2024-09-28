@@ -72,6 +72,7 @@ import internetHeartsIcon from '../assets/start-menu/internet-hearts.png';
 import internetReversiIcon from '../assets/start-menu/internet-reversi.png';
 import internetSpadesIcon from '../assets/start-menu/internet-spades.png';
 import msnIcon from '../assets/start-menu/msn.png';
+import pdfIcon from '../assets/dialog-icons/file_html.png';
 
 import myResume from '../assets/JohnnyYorkResume.pdf';
 
@@ -82,6 +83,7 @@ import { DialogBoxInterface } from "../interfaces/default";
 export default function StartMenu(props: {
     setOpenedDialogBoxes: Function,
     setOpenStartMenu: Function,
+    setIsError: Function,
 }) {
 
     const [showAllPrograms, setShowAllPrograms] = useState(false);
@@ -118,6 +120,26 @@ export default function StartMenu(props: {
         })
     }
 
+    function handleProgramNotAvailable() {
+        props.setOpenStartMenu(false);
+        props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
+            //make sure the dialog box isn't already open
+            const newDialog = {title: 'Error', status: "open", isFocused: true};
+            let updatedDialogs = [];
+            let dialogBoxExists = false;
+            for (let i = 0; i < prev.length; i++) {
+                if (prev[i].title === 'Error') {
+                    updatedDialogs.push({...prev[i], status: "open", isFocused: true});
+                    dialogBoxExists = true;
+                } else {
+                    updatedDialogs.push({...prev[i], isFocused: false});
+                }
+            }
+            return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
+        })
+        props.setIsError && props.setIsError(true);
+    }
+
     return (
         <StartMenuContainer onClick={(e) => e.stopPropagation()}>
             <StartMenuHeader>
@@ -129,33 +151,50 @@ export default function StartMenu(props: {
             <StartMenuBody>
                 <StartMenuLeft>
                     <div>
-                        <MenuIcon $doubleText={true}>
+                        {/* <MenuIcon $doubleText={true} onClick={handleProgramNotAvailable} className="grayscale">
                             <img src={internetIcon} alt="Internet" />
                             <MenuLeftTextSpecial>
                                 <p>Internet</p>
                                 <p>Internet Explorer</p>
                             </MenuLeftTextSpecial>
-                        </MenuIcon>
-                        <MenuIcon $doubleText={true}>
+                        </MenuIcon> */}
+                        <MenuIcon $doubleText={true} onClick={() => handleStartMenuItemClick('Email_Me.exe')}>
                             <img src={emailIcon} alt="Email" />
                             <MenuLeftTextSpecial>
                                 <p>Email</p>
                                 <p>Outlook Express</p>
                             </MenuLeftTextSpecial>
                         </MenuIcon>
-                        <Divider />
-                        <MenuIcon>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('Notepad')}>
                             <img src={notepadIcon} alt="Notepad" />
                             <p>Notepad</p>
                         </MenuIcon>
-                        <MenuIcon>
+                        <Divider />
+                        <MenuIcon onClick={() => handleStartMenuItemClick('My Projects')}>
+                            <img src={myDocumentsIcon} alt="My Projects" />
+                            <p>My Projects</p>
+                        </MenuIcon>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('My Skills')}>
+                            <img src={controlPanelIcon} alt="My Skills" />
+                            <p>My Skills</p>
+                        </MenuIcon>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('My_Resume.pdf')}>
+                            <img src={pdfIcon} alt="My Resume" style={{width: '32px', height: '32px'}}/>
+                            <p>My_Resume.pdf</p>
+                        </MenuIcon>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('About_Me.txt')}>
+                            <img src={notepadIcon} alt="About Me"/>
+                            <p>About_Me.txt</p>
+                        </MenuIcon>
+                        
+                        {/* <MenuIcon onClick={handleProgramNotAvailable}>
                             <img src={windowsMediaPlayerIcon} alt="Windows Media Player" />
                             <p>Windows Media Player</p>
                         </MenuIcon>
-                        <MenuIcon>
+                        <MenuIcon onClick={handleProgramNotAvailable}>
                             <img src={windowsMessengerIcon} alt="Windows Messenger" />
                             <p>Windows Messenger</p>
-                        </MenuIcon>
+                        </MenuIcon> */}
                     </div>
                     <AllProgramsButton>
                         <Divider />

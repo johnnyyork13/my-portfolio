@@ -101,9 +101,8 @@ export default function Clippy(props: {
                     </div>}
                 </ClippyText>
                 <UserInputContainer onSubmit={(e) => e.preventDefault()}>
-                    <UserInput tabIndex={0} value={userInput} onChange={(e) => setUserInput(e.target.value)}/>
-                    <button type="submit" tabIndex={1} onClick={handleUserSubmitMessage}>Send</button>
-                </UserInputContainer>
+                    <UserInput tabIndex={0} value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder='Ask me something!'/>
+                    <button type="submit" tabIndex={1} onClick={handleUserSubmitMessage}>Send</button>                </UserInputContainer>
                 <TriangleShadow />
                 <Triangle />
             </ChatContainer>

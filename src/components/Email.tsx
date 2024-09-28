@@ -7,7 +7,6 @@ import cutButton from '../assets/dialog-icons/cut.png'
 import copyButton from '../assets/dialog-icons/copy.png'
 import pasteButton from '../assets/dialog-icons/paste.png'
 import addressBook from '../assets/dialog-icons/address_book.png'
-import documentPropertiesButton from '../assets/dialog-icons/document_properties.png'
 import calendarButton from '../assets/dialog-icons/calendar.png'
 import alignCenterButton from '../assets/dialog-icons/align_centre.png'
 import alignLeftButton from '../assets/dialog-icons/align_left.png'
@@ -23,13 +22,71 @@ import { DialogBoxHeader } from "../styled-components/main";
 
 export default function Email(props: {
     openedDialogBoxes: DialogBoxInterface[],
+    url: string,
 }) {
     
     const [isMaximized, setIsMaximized] = useState<boolean>(false);
+    const [sendEmail, setSendEmail] = useState<boolean>(false);
+    const [user, setUser] = useState({
+        from: "",
+        subject: "",
+        message: "",
+    });
+    const [error, setError] = useState({
+        from: false,
+        subject: false,
+        message: false,
+    })
 
     useEffect(() => {
         setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "Email_Me.exe")?.maximize || false);
     }, [props.openedDialogBoxes])
+
+    useEffect(() => {
+        if (sendEmail) {
+            async function sendUserEmail() {
+                console.log('sending email');
+                const url = props.url + "/email";
+                await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(user)
+                }).then((res) => res.json())
+                .then(() => {
+                    setSendEmail(false);
+                    setUser({
+                        from: "",
+                        subject: "",
+                        message: "",
+                    })
+                })
+            }
+            sendUserEmail();
+        }
+    }, [sendEmail])
+
+    function handleUserInputChange(e: any) {
+        setUser({...user, [e.target.name]: e.target.value});
+    }
+
+    function handleSendEmail() {
+        let allFieldsHaveValues = true;
+        for (const key in user) {
+            if (user[key as keyof typeof user] === "") {
+                setError({...error, [key]: true});
+                allFieldsHaveValues = false;
+                return;
+            } else {
+                setError({...error, [key]: false});
+            }
+        }
+
+        if (allFieldsHaveValues) {
+            setSendEmail(true);
+        }
+    }
     
 
     return (
@@ -45,7 +102,7 @@ export default function Email(props: {
                 <p>Help</p>
             </DialogBoxHeader>
             <IconContainer>
-                <Icon>
+                <Icon onClick={handleSendEmail}>
                     <img src={sendButton} alt="send" />
                     <p>Send</p>
                 </Icon>
@@ -64,18 +121,18 @@ export default function Email(props: {
                 <img src={addressBook} alt="address book" />
                     To:
                 </label>
-                <input type="text" id="to" />
+                <input type="text" id="to" placeholder="johnnyyork13@hotmail.com" disabled/>
             </DialogInput>
             <DialogInput className="field-row" $isMaximized={isMaximized}>
                 <label htmlFor="from">
                 <img src={addressBook} alt="address book" />
                     From:
                 </label>
-                <input type="text" id="from" />
+                <input type="text" id="from" name="from" onChange={handleUserInputChange}/>
             </DialogInput>
             <DialogInput className="field-row" $isMaximized={isMaximized}>
                 <label htmlFor="subject">Subject:</label>
-                <input type="text" id="subject" />
+                <input type="text" id="subject" name="subject" onChange={handleUserInputChange}/>
             </DialogInput>
             <MessageIconContainer>
                 <select>
@@ -98,7 +155,7 @@ export default function Email(props: {
                 <img src={alignRightButton} alt="align right" />
             </MessageIconContainer>
             <DialogInput className="field-row" $isMaximized={isMaximized} style={{height: '100%'}}>
-                <textarea id="email-to"></textarea>
+                <textarea id="email-to" name="message" onChange={handleUserInputChange}></textarea>
             </DialogInput>
         </EmailContainer>
     )

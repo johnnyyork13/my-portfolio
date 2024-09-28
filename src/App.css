@@ -20,8 +20,6 @@ html, body, #root {
     -ms-user-select: none;
 }
 
-
-
 .icon-focused p {
     background-color: var(--xp-blue);
 }

@@ -5,6 +5,7 @@ import IconContainer from './components/IconContainer';
 import Selection from './components/Selection';
 import Email from './components/Email';
 import Notepad from './components/Notepad';
+import NotepadEmpty from './components/NotepadEmpty';
 import DialogBox from './components/DialogBox';
 import Footer from './components/Footer';
 import StatusBar from './components/StatusBar';
@@ -217,7 +218,9 @@ function App() {
           openedDialogBoxes={openedDialogBoxes}
           children={
             <Email 
-              openedDialogBoxes={openedDialogBoxes}/>}>
+              openedDialogBoxes={openedDialogBoxes}
+              url={url}
+              />}>
           </DialogBox>}
       {checkOpenedDialogBoxes("About_Me.txt") && 
         <DialogBox 
@@ -230,6 +233,17 @@ function App() {
             <Notepad 
               openedDialogBoxes={openedDialogBoxes}/>} >
         </DialogBox>}
+      {checkOpenedDialogBoxes("Notepad") && 
+      <DialogBox 
+        title="Notepad" 
+        titleImage={notepad}
+        setIsDragging={setIsDragging} 
+        setOpenedDialogBoxes={setOpenedDialogBoxes} 
+        openedDialogBoxes={openedDialogBoxes}
+        children={
+          <NotepadEmpty 
+            openedDialogBoxes={openedDialogBoxes}/>} >
+      </DialogBox>}
         {checkOpenedDialogBoxes("My Skills") && 
         <DialogBox 
           title="My Skills" 
@@ -260,7 +274,7 @@ function App() {
             }/>
         </ErrorContainer>
         }
-      {openStartMenu && <StartMenu setOpenedDialogBoxes={setOpenedDialogBoxes} setOpenStartMenu={setOpenStartMenu}/>}
+      {openStartMenu && <StartMenu setOpenedDialogBoxes={setOpenedDialogBoxes} setOpenStartMenu={setOpenStartMenu} setIsError={setIsError}/>}
       <Footer setOpenStartMenu={setOpenStartMenu} openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
       <StatusBar />
     </MainContainer>

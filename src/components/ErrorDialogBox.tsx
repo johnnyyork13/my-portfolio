@@ -22,7 +22,7 @@ export default function ErrorDialogBox(props: {
     return (
         <ErrorContainer onClick={(e) => handleErrorPropagation(e)}>
             <Error>
-                <p>There was an error. Please try again.</p>
+                <p>The system cannot find the file specified.</p>
                 <button onClick={removeErrorFromDialogBoxes}>Ok</button>
             </Error>
         </ErrorContainer>
@@ -34,6 +34,7 @@ const ErrorContainer = styled.div`
 `
 
 const Error = styled.div`
+    max-width: 350px;
     padding: 20px;
     display: flex;
     flex-direction: column;
