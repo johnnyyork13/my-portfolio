@@ -260,7 +260,7 @@ function App() {
             }/>
         </ErrorContainer>
         }
-      {openStartMenu && <StartMenu />}
+      {openStartMenu && <StartMenu setOpenedDialogBoxes={setOpenedDialogBoxes} setOpenStartMenu={setOpenStartMenu}/>}
       <Footer setOpenStartMenu={setOpenStartMenu} openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
       <StatusBar />
     </MainContainer>

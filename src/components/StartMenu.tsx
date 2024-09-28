@@ -73,11 +73,16 @@ import internetReversiIcon from '../assets/start-menu/internet-reversi.png';
 import internetSpadesIcon from '../assets/start-menu/internet-spades.png';
 import msnIcon from '../assets/start-menu/msn.png';
 
+import myResume from '../assets/JohnnyYorkResume.pdf';
 
 import { useState } from "react";
+import { DialogBoxInterface } from "../interfaces/default";
 
 
-export default function StartMenu() {
+export default function StartMenu(props: {
+    setOpenedDialogBoxes: Function,
+    setOpenStartMenu: Function,
+}) {
 
     const [showAllPrograms, setShowAllPrograms] = useState(false);
     const [showAccessories, setShowAccessories] = useState(false);
@@ -89,6 +94,29 @@ export default function StartMenu() {
     const [showStartup, setShowStartup] = useState(false);
     const [showRecentDocuments, setShowRecentDocuments] = useState(false);
     const [showConnectTo, setShowConnectTo] = useState(false);
+
+    function handleStartMenuItemClick(name: string) {
+        props.setOpenStartMenu(false);
+        if (name === "My_Resume.pdf") {
+            window.open(myResume);
+            return;
+        }
+        props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
+            //make sure the dialog box isn't already open
+            const newDialog = {title: name, status: "open", isFocused: true};
+            let updatedDialogs = [];
+            let dialogBoxExists = false;
+            for (let i = 0; i < prev.length; i++) {
+                if (prev[i].title === name) {
+                    updatedDialogs.push({...prev[i], status: "open", isFocused: true});
+                    dialogBoxExists = true;
+                } else {
+                    updatedDialogs.push({...prev[i], isFocused: false});
+                }
+            }
+            return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
+        })
+    }
 
     return (
         <StartMenuContainer onClick={(e) => e.stopPropagation()}>
@@ -416,23 +444,23 @@ export default function StartMenu() {
                         <p>Recent Documents</p>
                         <BlackRightArrow />
                         {showRecentDocuments && <RecentDocumentsWindow onMouseEnter={() => setShowRecentDocuments(true)} onMouseLeave={() => setShowRecentDocuments(false)}>
-                            <AllProgramsIcon>
-                                <img src={notepadIcon} alt="About Me" />
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('About_Me.txt')}>
+                                <img src={notepadIcon} alt="About Me"/>
                                 <p>About_Me.txt</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('My Projects')}>
                                 <img src={myDocumentsIcon} alt="My Projects" />
                                 <p>My Projects</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('My Skills')}>
                                 <img src={controlPanelIcon} alt="My Skills" />
                                 <p>My Skills</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('My_Resume.pdf')}>
                                 <img src={programAccessIcon} alt="My Resume" />
                                 <p>My Resume</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('Email_Me.exe')}>
                                 <img src={emailIcon} alt="My Email" />
                                 <p>Email_Me.exe</p>
                             </AllProgramsIcon>

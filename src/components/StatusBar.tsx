@@ -1,6 +1,4 @@
-import virusIcon from '../assets/dialog-icons/virus.png';
 import lanIcon from '../assets/dialog-icons/net_lan.png';
-import dialogErrorIcon from '../assets/dialog-icons/dialog_error.png';
 import messengerIcon from '../assets/dialog-icons/messenger.png';
 import ejectIcon from '../assets/dialog-icons/eject.png';
 import speakerIcon from '../assets/dialog-icons/speaker.png';
@@ -32,6 +30,7 @@ export default function StatusBar() {
 
 
 const StatusBarContainer = styled.div`
+    z-index: 100;
     position: fixed;
     bottom: 0;
     right: 0;

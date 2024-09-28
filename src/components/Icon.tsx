@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { DialogBoxInterface } from "../interfaces/default";
+import myResume from '../assets/JohnnyYorkResume.pdf';
 
 export default function Icon(props: {
     img: string, 
@@ -51,6 +52,10 @@ export default function Icon(props: {
     }
 
     function handleIconDoubleClick() {
+        if (props.name === "My_Resume.pdf") {
+            window.open(myResume);
+            return;
+        }
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             //make sure the dialog box isn't already open
             const newDialog = {title: props.name, status: "open", isFocused: true};

@@ -69,6 +69,7 @@ export default function Clippy(props: {
             }
 
             function handleMouseUp() {
+                props.setMovingClippy(false);
                 document.removeEventListener("mousemove", handleMouseMove);
                 document.removeEventListener("mouseup", handleMouseUp);
             }
@@ -93,16 +94,18 @@ export default function Clippy(props: {
                 <CloseClippy onClick={() => props.setShowClippy(false)}>X</CloseClippy>
                 <ClippyText>
                     {!showLoading && mappedResponse.length > 0 && mappedResponse[mappedResponse.length - 1].content}
-                    {showLoading && <p className="clippy-loading">
+                    {showLoading && <div className="clippy-loading">
                         <div className="clippy-dot-one clippy-dot"></div>
                         <div className="clippy-dot-two clippy-dot"></div>
                         <div className="clippy-dot-three clippy-dot"></div>
-                    </p>}
+                    </div>}
                 </ClippyText>
-                <UserInputContainer onSubmit={(e) => e.preventDefault()} onClick={(e) => console.log('here')}>
+                <UserInputContainer onSubmit={(e) => e.preventDefault()}>
                     <UserInput tabIndex={0} value={userInput} onChange={(e) => setUserInput(e.target.value)}/>
                     <button type="submit" tabIndex={1} onClick={handleUserSubmitMessage}>Send</button>
                 </UserInputContainer>
+                <TriangleShadow />
+                <Triangle />
             </ChatContainer>
             <ClippyImage src={clippy} draggable={false} alt="Clippy"/>
         </ClippyContainer>
@@ -137,8 +140,24 @@ const ChatContainer = styled.div`
     margin-bottom: 20px;
 `
 
-const CloseClippy = styled.button`
+const Triangle = styled.div`
     position: absolute;
+    bottom: -30px;
+    left: 60px;
+    width: 0;
+    height: 0;
+    border-left: 1px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 30px solid rgb(233, 240, 174);
+`
+
+const TriangleShadow = styled(Triangle)`
+    border-top: 30px solid rgba(0, 0, 0, 0.4);
+    left: 63px;
+`
+
+const CloseClippy = styled.button`
+    position: absolute;import virusIcon from '../assets/dialog-icons/virus.png';
     right: -20px;
     top: 0;
     background: none;
@@ -166,6 +185,7 @@ const UserInputContainer = styled.form`
     input {
         width: 100%;
         border-bottom-left-radius: 10px;
+
     }
     button {
         border: .5px solid black;
@@ -176,7 +196,7 @@ const UserInputContainer = styled.form`
     }
 `
 
-const ClippyText = styled.p`
+const ClippyText = styled.div`
     margin: 10px;
     font-weight: bolder;
 `
