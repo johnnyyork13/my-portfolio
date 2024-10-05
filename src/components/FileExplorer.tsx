@@ -14,7 +14,7 @@ export default function FileExplorer(props: {
     startPath: string[],
     reference: string,
     setOpenedDialogBoxes: Function,
-    setIsError?: Function,
+    setIsError: Function,
 }) {
 
     const [isMaximized, setIsMaximized] = useState<boolean>(false);

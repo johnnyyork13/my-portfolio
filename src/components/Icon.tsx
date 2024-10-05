@@ -11,8 +11,6 @@ export default function Icon(props: {
     isDragging: {dragging: boolean, icon: string, coords: number[]},
     selected: any
     setOpenedDialogBoxes: Function,
-    setCurrentPath: Function,
-    currentPath: string[],
 }) {
 
     const iconRef = useRef<HTMLDivElement>(null);
@@ -52,7 +50,7 @@ export default function Icon(props: {
     }
 
     function handleIconDoubleClick() {
-        if (props.name === "My_Resume.pdf") {
+        if (props.name === "my-resume.pdf") {
             window.open(myResume);
             return;
         }
@@ -71,7 +69,6 @@ export default function Icon(props: {
             }
             return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
         })
-        // props.setCurrentPath(props.currentPath);
     }
 
     useEffect(() => {

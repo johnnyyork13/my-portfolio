@@ -1,11 +1,13 @@
 import styled from "styled-components"
 import { DialogBoxInterface } from "../interfaces/default";
-import { createElement, useEffect, useRef } from "react";
+import errorSound from '../assets/sounds/error.wav';
 
 export default function ErrorDialogBox(props: {
     openedDialogBoxes: DialogBoxInterface[],
     setOpenedDialogBoxes: Function,
     setIsError: Function,
+    message: string,
+    errorRef: any,
 }) {
 
     function handleErrorPropagation(e: any) {
@@ -13,16 +15,17 @@ export default function ErrorDialogBox(props: {
     }
 
     function removeErrorFromDialogBoxes() {
-        props.setIsError && props.setIsError(false);
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.filter((dialog: DialogBoxInterface) => dialog.title !== 'Error');
         })
+        props.setIsError(false);
     }
 
     return (
         <ErrorContainer onClick={(e) => handleErrorPropagation(e)}>
+            <audio ref={props.errorRef} src={errorSound} autoPlay></audio>
             <Error>
-                <p>The system cannot find the file specified.</p>
+                <p>{props.message}</p>
                 <button onClick={removeErrorFromDialogBoxes}>Ok</button>
             </Error>
         </ErrorContainer>

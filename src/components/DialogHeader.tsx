@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { DialogBoxHeader } from "../styled-components/main"
+import { DialogBoxHeader, Divider, HeaderIcon, HeaderIconContainer } from "../styled-components/main"
 import navBackIcon from '../assets/dialog-icons/nav_back.png'
 import navForwardIcon from '../assets/dialog-icons/nav_forward.png'
 import navParentIcon from '../assets/dialog-icons/nav_parent_dir.png'
@@ -52,35 +52,35 @@ export default function DialogHeader(props: {
                 <p>Tools</p>
                 <p>Help</p>
             </ProjectHeader>
-            <IconContainer>
-                <Icon className={props.pathIndex > 0 ? "" : 'grayscale'} onClick={handleNavigateBack}>
+            <HeaderIconContainer>
+                <HeaderIcon className={props.pathIndex > 0 ? "" : 'grayscale'} onClick={handleNavigateBack}>
                     <img src={navBackIcon} alt="back" />
                     <p>Back</p>
-                </Icon>
+                </HeaderIcon>
                 <DropDownArrow />
-                <Icon className={props.pathIndex + 1 <= props.pathHistory.length -1 ? '' : 'grayscale'} onClick={handleNavigateForward}>
+                <HeaderIcon className={props.pathIndex + 1 <= props.pathHistory.length -1 ? '' : 'grayscale'} onClick={handleNavigateForward}>
                     <img src={navForwardIcon} alt="forward" />
                     <p>Forward</p>
-                </Icon>
+                </HeaderIcon>
                 <DropDownArrow />
-                <Icon className={props.currentPath.length > 1 ? "" : 'grayscale'} onClick={handleNavigateParent}>
+                <HeaderIcon className={props.currentPath.length > 1 ? "" : 'grayscale'} onClick={handleNavigateParent}>
                     <img src={navParentIcon} alt="parent"/>
-                </Icon>
+                </HeaderIcon>
                 <Divider />
-                <Icon className="grayscale">
+                <HeaderIcon className="grayscale">
                     <img src={searchIcon} alt="search" />
                     <p>Search</p>
-                </Icon>
-                <Icon className="grayscale">
+                </HeaderIcon>
+                <HeaderIcon className="grayscale">
                     <img src={foldersIcon} alt="folders" />
                     <p>Folders</p>
-                </Icon>
+                </HeaderIcon>
                 <Divider />
-                <Icon className="grayscale">
+                <HeaderIcon className="grayscale">
                     <img src={viewsIcon} alt="views" />
                     <DropDownArrow />
-                </Icon>
-            </IconContainer>
+                </HeaderIcon>
+            </HeaderIconContainer>
             <AddressBar>
                 <p className="grayscale">Address</p>
                 <FilePath>
@@ -107,28 +107,6 @@ const ProjectHeader = styled(DialogBoxHeader)`
 
 `
 
-const IconContainer = styled.div`
-    display: flex;
-    align-items: center;
-    height: 40px;
-`
-
-const Icon = styled.div`
-    border: 1px solid rgb(0,0,0,0.01);
-    border-radius: 5px;
-    margin-right: 10px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    img {
-        margin-right: 5px;
-    }
-    &:hover {
-        border: 1px solid rgb(0,0,0,0.1);
-        box-shadow: rgba(0, 0, 0, 0.1) 0px -1px 1px inset;
-    }
-`
-
 const DropDownArrow = styled.div`
     border-left: 3px solid rgb(200,200,200);
     border-bottom: 3px solid rgb(200,200,200);
@@ -138,12 +116,6 @@ const DropDownArrow = styled.div`
     margin-right: 5px;
     transform: rotate(-45deg);
     margin-left: 5px;
-`
-
-const Divider = styled.div`
-    border-left: 1px solid rgb(200,200,200);
-    width: 1px;
-    height: 100%;
 `
 
 const AddressBar = styled.div`

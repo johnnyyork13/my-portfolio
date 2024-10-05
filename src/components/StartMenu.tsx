@@ -120,25 +120,25 @@ export default function StartMenu(props: {
         })
     }
 
-    function handleProgramNotAvailable() {
-        props.setOpenStartMenu(false);
-        props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
-            //make sure the dialog box isn't already open
-            const newDialog = {title: 'Error', status: "open", isFocused: true};
-            let updatedDialogs = [];
-            let dialogBoxExists = false;
-            for (let i = 0; i < prev.length; i++) {
-                if (prev[i].title === 'Error') {
-                    updatedDialogs.push({...prev[i], status: "open", isFocused: true});
-                    dialogBoxExists = true;
-                } else {
-                    updatedDialogs.push({...prev[i], isFocused: false});
-                }
-            }
-            return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
-        })
-        props.setIsError && props.setIsError(true);
-    }
+    // function handleProgramNotAvailable() {
+    //     props.setOpenStartMenu(false);
+    //     props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
+    //         //make sure the dialog box isn't already open
+    //         const newDialog = {title: 'Error', status: "open", isFocused: true};
+    //         let updatedDialogs = [];
+    //         let dialogBoxExists = false;
+    //         for (let i = 0; i < prev.length; i++) {
+    //             if (prev[i].title === 'Error') {
+    //                 updatedDialogs.push({...prev[i], status: "open", isFocused: true});
+    //                 dialogBoxExists = true;
+    //             } else {
+    //                 updatedDialogs.push({...prev[i], isFocused: false});
+    //             }
+    //         }
+    //         return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
+    //     })
+    //     props.setIsError && props.setIsError(true);
+    // }
 
     return (
         <StartMenuContainer onClick={(e) => e.stopPropagation()}>
@@ -561,14 +561,14 @@ export default function StartMenu(props: {
                 </StartMenuRight>
             </StartMenuBody>
             <StartMenuFooter>
-                <MenuIcon>
+                <ShutdownIcon>
                     <img src={logOffIcon} alt="Log Off" />
                     <p>Log Off</p>
-                </MenuIcon>
-                <MenuIcon>
+                </ShutdownIcon>
+                <ShutdownIcon>
                     <img src={shutdownIcon} alt="Turn Off" />
                     <p>Turn Off Computer</p>
-                </MenuIcon>
+                </ShutdownIcon>
             </StartMenuFooter>
         </StartMenuContainer>
     )
@@ -786,6 +786,18 @@ const MenuIcon = styled.div<({$doubleText?: boolean})>`
     }
     &:hover > div {
         visibility: visible;  
+    }
+`
+
+const ShutdownIcon = styled(MenuIcon)`
+    padding: 4px;
+    &:hover {
+        background-color: rgba(60, 80, 210, 0.5);
+    }
+    &:active {
+        img, p {
+            transform: translate(1px, 1px);
+        }
     }
 `
 

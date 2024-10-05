@@ -10,7 +10,7 @@ export default function Notepad(props: {
     const [isMaximized, setIsMaximized] = useState<boolean>(false);
 
     useEffect(() => {
-        setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "About_Me.txt")?.maximize || false);
+        setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "about-me.txt")?.maximize || false);
     }, [props.openedDialogBoxes])
 
     const aboutMeText = `Hello! I'm Johnny York, and I am a growing full-stack developer. 

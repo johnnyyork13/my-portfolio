@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import clippy from '../assets/clippy.png';
 import { useEffect, useRef, useState } from 'react';
 
@@ -15,11 +15,19 @@ export default function Clippy(props: {
 
     const clippyRef = useRef<HTMLImageElement>(null);
 
-
     const [userInput, setUserInput] = useState('');
     const [sendUserInput, setSendUserInput] = useState(true);
     const [updatedMessages, setUpdatedMessages] = useState<Message[]>([]); 
     const [showLoading, setShowLoading] = useState(false);
+
+    //set clippy's default location based on screen size
+    useEffect(() => {
+        if (clippyRef.current) {
+            const dialog = clippyRef.current;
+            dialog.style.left = window.innerWidth / 3 + "px";
+            dialog.style.top = window.innerHeight / 3 + "px";
+        }
+    }, [])
 
     useEffect(() => {
         try {

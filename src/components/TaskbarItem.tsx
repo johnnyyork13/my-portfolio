@@ -1,8 +1,10 @@
 import styled from "styled-components"
 import { DialogBoxInterface } from "../interfaces/default"
-import { useEffect } from "react";
 
-export default function TaskbarItem(props: {dialog: DialogBoxInterface, setOpenedDialogBoxes: Function}) {
+export default function TaskbarItem(props: {
+    dialog: DialogBoxInterface, 
+    setOpenedDialogBoxes: Function,
+}) {
 
     function toggleMinimizeDialogBox() {
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
@@ -40,7 +42,6 @@ const TaskBarItemContainer = styled.div<{ $isFocused: boolean }>`
     // box-shadow: rgba(255, 255, 255, 0.5) 2px 2px 3px;
     box-shadow: ${props => props.$isFocused ? '' : 'rgba(0, 0, 0, 0.3) -1px 0px inset, rgba(255, 255, 255, 0.2) 1px 1px 1px inset'};
     filter: brightness(110%);
-    width: 150px;
     height: 20px;
     background: none;
     background-color: ${props => props.$isFocused ? `rgb(30, 82, 183)` : 'rgb(60, 129, 243)'};

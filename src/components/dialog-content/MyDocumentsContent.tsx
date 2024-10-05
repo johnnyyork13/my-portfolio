@@ -1,7 +1,5 @@
 import { DialogIcon, DialogIcons, MainDialogIconContainer } from "../../styled-components/main"
 import folderIcon from '../../assets/folder.png'
-import { useEffect, useState } from "react";
-import { DialogBoxInterface } from "../../interfaces/default";
 
 export default function MyDocumentsContent(props: {
     isMaximized: boolean,

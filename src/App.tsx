@@ -30,17 +30,20 @@ import { DialogBoxInterface } from './interfaces/default';
 import { useEffect, useRef, useState } from 'react';
 
 function App() {
+  
+  // const url = "http://localhost:3000";
+  const url = "https://app-ciepuk5waq-uc.a.run.app";
+
   const appRef = useRef<HTMLDivElement>(null);
-  const url = "http://localhost:3000";
+  const errorRef = useRef<HTMLAudioElement>(null);
 
   const [icons, setIcons] = useState([
     { img: myComputer, name: "My Computer", coords: [0, 0], currentPath: ["My Computer"]},
     { img: controlPanelIcon, name: "My Skills", coords: [0, 1], currentPath: [] },
     { img: myDocuments, name: "My Projects", coords: [0, 2], currentPath: ["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]},
-    { img: notepad, name: "About_Me.txt", coords: [0, 3], currentPath: []},
-    { img: email, name: "Email_Me.exe", coords: [0, 4], currentPath: [] },
-    { img: pdfIcon, name: "My_Resume.pdf", coords: [0, 5], currentPath: [] },
-
+    { img: notepad, name: "about-me.txt", coords: [0, 3], currentPath: []},
+    { img: email, name: "Email", coords: [0, 4], currentPath: [] },
+    { img: pdfIcon, name: "my-resume.pdf", coords: [0, 5], currentPath: [] },
   ]);
 
   const [isDragging, setIsDragging] = useState({
@@ -53,12 +56,30 @@ function App() {
   const [selectionCurrentPosition, setSelectionCurrentPosition] = useState<number[]>([]);
   const [selected, setSelected] = useState<any>(null);
   const [openedDialogBoxes, setOpenedDialogBoxes] = useState<DialogBoxInterface[]>([]);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState({status: false, message: ""});
   const [openStartMenu, setOpenStartMenu] = useState(false);
   const [movingClippy, setMovingClippy] = useState(false);
   const [showClippy, setShowClippy] = useState(true);
 
-  const [currentPath, setCurrentPath] = useState<string[]>([]);
+  useEffect(() => {
+    if (isError.status) {
+      setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
+        //make sure the dialog box isn't already open
+        const newDialog: DialogBoxInterface = {title: 'Error', status: "open", isFocused: true, maximize: false};
+        let updatedDialogs: DialogBoxInterface[] = [];
+        let dialogBoxExists = false;
+        for (let i = 0; i < prev.length; i++) {
+            if (prev[i].title === 'Error') {
+                updatedDialogs.push({...prev[i], status: "open", isFocused: true});
+                dialogBoxExists = true;
+            } else {
+                updatedDialogs.push({...prev[i], isFocused: false});
+            }
+        }
+        return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
+      })
+    }
+  }, [isError])
 
   function calculateCoords(e: MouseEvent) {
     const GRID_COLUMNS = 15;
@@ -126,6 +147,7 @@ function App() {
     setTimeout(() => {
       if (e.target && e.target.children[0]) e.target.children[0].children[0].classList.remove("error-dialog-click");
     }, 500);
+    errorRef.current!.play();
   }
 
 
@@ -173,7 +195,6 @@ function App() {
         isSelecting={isSelecting}
         selected={selected}
         setOpenedDialogBoxes={setOpenedDialogBoxes}
-        setCurrentPath={setCurrentPath}
       />
       {/* {currentDialogBox === "email" && <Email setIsDragging={setIsDragging}/>} */}
       {checkOpenedDialogBoxes("My Computer") && 
@@ -206,12 +227,13 @@ function App() {
             startPath={["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]}
             openedDialogBoxes={openedDialogBoxes}
             setOpenedDialogBoxes={setOpenedDialogBoxes}
+            setIsError={setIsError}
             />
           }>
       </DialogBox>} 
-      {checkOpenedDialogBoxes("Email_Me.exe") && 
+      {checkOpenedDialogBoxes("Email") && 
         <DialogBox 
-          title="Email_Me.exe" 
+          title="Email" 
           titleImage={email}
           setIsDragging={setIsDragging} 
           setOpenedDialogBoxes={setOpenedDialogBoxes} 
@@ -220,11 +242,12 @@ function App() {
             <Email 
               openedDialogBoxes={openedDialogBoxes}
               url={url}
+              setIsError={setIsError}
               />}>
           </DialogBox>}
-      {checkOpenedDialogBoxes("About_Me.txt") && 
+      {checkOpenedDialogBoxes("about-me.txt") && 
         <DialogBox 
-          title="About_Me.txt" 
+          title="about-me.txt" 
           titleImage={notepad}
           setIsDragging={setIsDragging} 
           setOpenedDialogBoxes={setOpenedDialogBoxes} 
@@ -270,6 +293,8 @@ function App() {
                 openedDialogBoxes={openedDialogBoxes}
                 setOpenedDialogBoxes={setOpenedDialogBoxes}
                 setIsError={setIsError}
+                message={isError.message}
+                errorRef={errorRef}
                 />
             }/>
         </ErrorContainer>

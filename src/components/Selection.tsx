@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 export default function Selection(props: {
@@ -9,7 +9,7 @@ export default function Selection(props: {
     setSelectionStart: Function,
     currentSelectionPosition: number[],
     setCurrentSelectionPosition: Function,
-    isError: boolean,
+    isError: {status: boolean, message: string},
     movingClippy: boolean,
 }) {
 
@@ -41,7 +41,7 @@ export default function Selection(props: {
         // return [e.clientX, e.clientY]
     }
 
-    function getStopSelectionPosition(e: MouseEvent) {
+    function getStopSelectionPosition() {
         props.setIsSelecting(false);
         props.setSelectionStart([]);
         props.setCurrentSelectionPosition([]);
@@ -55,7 +55,7 @@ export default function Selection(props: {
     }
 
     useEffect(() => {
-        if (boxRef.current && !props.isDragging.dragging && !props.isError && !props.movingClippy) {
+        if (boxRef.current && !props.isDragging.dragging && !props.isError.status && !props.movingClippy) {
             document.addEventListener("mousedown", getMouseClickPosition);
             if (props.isSelecting) {
                 document.addEventListener("mousemove", getMouseMovePosition);
@@ -72,10 +72,10 @@ export default function Selection(props: {
             document.removeEventListener("mousemove", getMouseMovePosition);
             document.removeEventListener("mouseup", getStopSelectionPosition);
         }
-    }, [props.isDragging.dragging, props.isSelecting, props.isError, props.movingClippy])
+    }, [props.isDragging.dragging, props.isSelecting, props.isError.status, props.movingClippy])
 
     useEffect(() => {
-        if (!props.isDragging.dragging && !props.isError && !props.movingClippy) {
+        if (!props.isDragging.dragging && !props.isError.status && !props.movingClippy) {
             let adjustPosition = ({
                 width: 0,
                 height: 0,
@@ -134,7 +134,7 @@ export default function Selection(props: {
             }
         } 
         
-    }, [props.selectionStart, props.currentSelectionPosition, props.isError, props.movingClippy])
+    }, [props.selectionStart, props.currentSelectionPosition, props.isError.status, props.movingClippy])
 
     
 

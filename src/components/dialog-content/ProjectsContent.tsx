@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
 import htmlIcon from '../../assets/dialog-icons/file_html.png'
 import githubIcon from '../../assets/dialog-icons/github-icon.svg'
 import linkedInIcon from '../../assets/dialog-icons/linkedin-icon.svg'
 
-import { DialogBoxBodyContainer, DialogIcon, DialogIcons, DialogIconsHeader, MainDialogIconContainer } from "../../styled-components/main";
-import { DialogBoxInterface } from '../../interfaces/default';
+import {DialogIcon, DialogIcons, DialogIconsHeader, MainDialogIconContainer } from "../../styled-components/main";
 
 export default function ProjectsContent(props: {
     isMaximized: boolean,
@@ -42,7 +40,7 @@ export default function ProjectsContent(props: {
                         </DialogIcon>
                         <DialogIcon 
                             onClick={(e) => props.handleIconClick(e, 'Port_Folio.html')} 
-                            onDoubleClick={() => window.open("")}
+                            onDoubleClick={() => window.open("https://johnnyyork13.github.io/port-folio")}
                             $selected={props.selectedIcon === 'Port_Folio.html' ? true : false}>
                             <img src={htmlIcon} alt="html" />
                             <p>Port_Folio.html</p>

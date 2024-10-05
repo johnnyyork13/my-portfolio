@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { v4 as uuidv4 } from 'uuid';
 import Icon from './Icon';
 import { useEffect, useState } from "react";
 import { DialogBoxInterface } from "../interfaces/default";
@@ -12,7 +11,6 @@ export default function IconContainer(props: {
     isSelecting: boolean,
     selected: any,
     setOpenedDialogBoxes: Function,
-    setCurrentPath: Function,
 }) {
     const [grid, setGrid] = useState<any>([]);
 
@@ -40,13 +38,11 @@ export default function IconContainer(props: {
                             key={`${icon.name}-${icon.coords.join('-')}`} // Use a stable key
                             img={icon.img} 
                             name={icon.name} 
-                            currentPath={icon.currentPath ? icon.currentPath : []}
                             coords={icon.coords}
                             setIsDragging={props.setIsDragging}
                             isDragging={props.isDragging}
                             selected={props.selected}
                             setOpenedDialogBoxes={props.setOpenedDialogBoxes} 
-                            setCurrentPath={props.setCurrentPath}
                         />
                     );
                 } else {

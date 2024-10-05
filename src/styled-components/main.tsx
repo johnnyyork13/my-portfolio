@@ -75,3 +75,40 @@ export const DialogIcon = styled.div<{ $selected?: boolean }>`
         background-color: ${props => props.$selected ? "var(--xp-blue)" : "white"};
     }
 `
+
+export const HeaderIconContainer = styled.div`
+    display: flex;
+    align-items: center;
+    height: 40px;
+`
+
+export const HeaderIcon = styled.div<{ $clicked?: boolean }>`
+    border: 1px solid rgb(0,0,0,0.01);
+    border-radius: 5px;
+    margin-right: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    img {
+        margin-right: 5px;
+    }
+    &:hover {
+        border: 1px solid rgb(0,0,0,0.1);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px -1px 1px inset;
+    }
+    &:active {
+        background-color: rgb(220,220,220);
+        p, img {
+            transform: translate(1px, 1px);
+        }
+    }
+    p {
+        cursor: default;    
+    }
+`
+
+export const Divider = styled.div`
+    border-left: 1px solid rgb(200,200,200);
+    width: 1px;
+    height: 100%;
+`
