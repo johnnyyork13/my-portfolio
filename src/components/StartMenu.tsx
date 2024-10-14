@@ -78,9 +78,11 @@ import myResume from '../assets/JohnnyYorkResume.pdf';
 
 import { useState } from "react";
 import { DialogBoxInterface } from "../interfaces/default";
+import { BlackRightArrow } from "../styled-components/main";
 
 
 export default function StartMenu(props: {
+    setShowLogin: Function,
     setOpenedDialogBoxes: Function,
     setOpenStartMenu: Function,
     setIsError: Function,
@@ -99,7 +101,7 @@ export default function StartMenu(props: {
 
     function handleStartMenuItemClick(name: string) {
         props.setOpenStartMenu(false);
-        if (name === "My_Resume.pdf") {
+        if (name === "my-resume.pdf") {
             window.open(myResume);
             return;
         }
@@ -158,7 +160,7 @@ export default function StartMenu(props: {
                                 <p>Internet Explorer</p>
                             </MenuLeftTextSpecial>
                         </MenuIcon> */}
-                        <MenuIcon $doubleText={true} onClick={() => handleStartMenuItemClick('Email_Me.exe')}>
+                        <MenuIcon $doubleText={true} onClick={() => handleStartMenuItemClick('Email')}>
                             <img src={emailIcon} alt="Email" />
                             <MenuLeftTextSpecial>
                                 <p>Email</p>
@@ -178,13 +180,13 @@ export default function StartMenu(props: {
                             <img src={controlPanelIcon} alt="My Skills" />
                             <p>My Skills</p>
                         </MenuIcon>
-                        <MenuIcon onClick={() => handleStartMenuItemClick('My_Resume.pdf')}>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('my-resume.pdf')}>
                             <img src={pdfIcon} alt="My Resume" style={{width: '32px', height: '32px'}}/>
-                            <p>My_Resume.pdf</p>
+                            <p>my-resume.pdf</p>
                         </MenuIcon>
-                        <MenuIcon onClick={() => handleStartMenuItemClick('About_Me.txt')}>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('about-me.txt')}>
                             <img src={notepadIcon} alt="About Me"/>
-                            <p>About_Me.txt</p>
+                            <p>about-me.txt</p>
                         </MenuIcon>
                         
                         {/* <MenuIcon onClick={handleProgramNotAvailable}>
@@ -483,9 +485,9 @@ export default function StartMenu(props: {
                         <p>Recent Documents</p>
                         <BlackRightArrow />
                         {showRecentDocuments && <RecentDocumentsWindow onMouseEnter={() => setShowRecentDocuments(true)} onMouseLeave={() => setShowRecentDocuments(false)}>
-                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('About_Me.txt')}>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('about-me.txt')}>
                                 <img src={notepadIcon} alt="About Me"/>
-                                <p>About_Me.txt</p>
+                                <p>about-me.txt</p>
                             </AllProgramsIcon>
                             <AllProgramsIcon onClick={() => handleStartMenuItemClick('My Projects')}>
                                 <img src={myDocumentsIcon} alt="My Projects" />
@@ -495,13 +497,13 @@ export default function StartMenu(props: {
                                 <img src={controlPanelIcon} alt="My Skills" />
                                 <p>My Skills</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('My_Resume.pdf')}>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('my-resume.pdf')}>
                                 <img src={programAccessIcon} alt="My Resume" />
-                                <p>My Resume</p>
+                                <p>my-resume.pdf</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('Email_Me.exe')}>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('Email')}>
                                 <img src={emailIcon} alt="My Email" />
-                                <p>Email_Me.exe</p>
+                                <p>Email</p>
                             </AllProgramsIcon>
                         </RecentDocumentsWindow>}
                     </MenuIconSmall>
@@ -561,7 +563,7 @@ export default function StartMenu(props: {
                 </StartMenuRight>
             </StartMenuBody>
             <StartMenuFooter>
-                <ShutdownIcon>
+                <ShutdownIcon onClick={() => props.setShowLogin(true)}>
                     <img src={logOffIcon} alt="Log Off" />
                     <p>Log Off</p>
                 </ShutdownIcon>
@@ -831,13 +833,3 @@ const Divider = styled.div`
     border-bottom: 3px solid transparent;
 `
 
-const BlackRightArrow = styled.div`
-    width: 0;
-    height: 0;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-    border-left: 4px solid black;
-    position: absolute;
-    right: 15px;
-    z-index: 1;
-`

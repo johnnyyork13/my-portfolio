@@ -17,7 +17,8 @@ import italicButton from '../assets/dialog-icons/italic.png'
 import underlineButton from '../assets/dialog-icons/underline.png'
 import strikeThroughButton from '../assets/dialog-icons/strikethrough.png'
 import undoButton from '../assets/dialog-icons/undo-large.png'
-import { DialogBoxHeader, Divider, HeaderIcon, HeaderIconContainer } from "../styled-components/main";
+import {Divider, HeaderIcon, HeaderIconContainer } from "../styled-components/main";
+import MenuBar from "./MenuBar";
 
 export default function Email(props: {
     openedDialogBoxes: DialogBoxInterface[],
@@ -83,40 +84,31 @@ export default function Email(props: {
 
     return (
         <EmailContainer className="window-body">
-            <EmailDialogBoxHeader>
-                <p>File</p>
-                <p>Edit</p>
-                <p>View</p>
-                <p>Insert</p>
-                <p>Format</p>
-                <p>Tools</p>
-                <p>Actions</p>
-                <p>Help</p>
-            </EmailDialogBoxHeader>
+            <MenuBar />
             <EmailIconContainer>
                 <EmailIcon onClick={handleSendEmail}>
                     <img src={sendButton} alt="send" />
                     <p>Send</p>
                 </EmailIcon>
                 <Divider />
-                <EmailIcon>
+                <EmailIcon className="grayscale">
                     <img src={cutButton} alt="cut" />
                     <p>Cut</p>
                 </EmailIcon>
-                <EmailIcon>
+                <EmailIcon className="grayscale">
                     <img src={copyButton} alt="copy" />
                     <p>Copy</p>
                 </EmailIcon>
-                <EmailIcon>
+                <EmailIcon className="grayscale">
                     <img src={pasteButton} alt="paste" />
                     <p>Paste</p>
                 </EmailIcon>
-                <EmailIcon>
+                <EmailIcon className="grayscale">
                     <img src={undoButton} alt="undo"/>
                     <p>Undo</p>    
                 </EmailIcon>
                 <Divider />
-                <EmailIcon>
+                <EmailIcon className="grayscale">
                     <img src={calendarButton} alt="calendar" />
                     <p>Calendar</p>
                 </EmailIcon>
@@ -171,10 +163,6 @@ const EmailContainer = styled.div`
     margin-top: 0px;
     display: flex;
     flex-direction: column;
-`
-
-const EmailDialogBoxHeader = styled(DialogBoxHeader)`
-    border-left: 2px dotted rgb(200,200,200);
 `
 
 const EmailIconContainer = styled(HeaderIconContainer)`

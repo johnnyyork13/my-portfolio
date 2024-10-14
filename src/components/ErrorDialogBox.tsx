@@ -8,6 +8,7 @@ export default function ErrorDialogBox(props: {
     setIsError: Function,
     message: string,
     errorRef: any,
+    allowAudio: boolean,
 }) {
 
     function handleErrorPropagation(e: any) {
@@ -23,7 +24,7 @@ export default function ErrorDialogBox(props: {
 
     return (
         <ErrorContainer onClick={(e) => handleErrorPropagation(e)}>
-            <audio ref={props.errorRef} src={errorSound} autoPlay></audio>
+            {props.allowAudio && <audio ref={props.errorRef} src={errorSound} autoPlay></audio>}
             <Error>
                 <p>{props.message}</p>
                 <button onClick={removeErrorFromDialogBoxes}>Ok</button>

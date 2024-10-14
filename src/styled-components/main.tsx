@@ -112,3 +112,14 @@ export const Divider = styled.div`
     width: 1px;
     height: 100%;
 `
+
+export const BlackRightArrow = styled.div`
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid black;
+    position: absolute;
+    right: 15px;
+    z-index: 1;
+`

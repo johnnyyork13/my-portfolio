@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { DialogBoxHeader, Divider, HeaderIcon, HeaderIconContainer } from "../styled-components/main"
+import { BlackRightArrow, DialogBoxHeader, Divider, HeaderIcon, HeaderIconContainer } from "../styled-components/main"
 import navBackIcon from '../assets/dialog-icons/nav_back.png'
 import navForwardIcon from '../assets/dialog-icons/nav_forward.png'
 import navParentIcon from '../assets/dialog-icons/nav_parent_dir.png'
@@ -9,6 +9,7 @@ import viewsIcon from '../assets/dialog-icons/views.png'
 import monitorIcon from '../assets/dialog-icons/monitor.png'
 import goIcon from '../assets/dialog-icons/go.png'
 import selectArrow from '../assets/dialog-icons/select-arrow.png'
+import MenuBar from "./MenuBar"
 
 export default function DialogHeader(props: {
     currentPath: string[],
@@ -44,14 +45,8 @@ export default function DialogHeader(props: {
 
     return (
         <DialogHeaderContainer>
-            <ProjectHeader>
-                <p>File</p>
-                <p>Edit</p>
-                <p>View</p>
-                <p>Favorites</p>
-                <p>Tools</p>
-                <p>Help</p>
-            </ProjectHeader>
+            <MenuBar />
+
             <HeaderIconContainer>
                 <HeaderIcon className={props.pathIndex > 0 ? "" : 'grayscale'} onClick={handleNavigateBack}>
                     <img src={navBackIcon} alt="back" />
@@ -103,9 +98,7 @@ const DialogHeaderContainer = styled.div`
 
 `
 
-const ProjectHeader = styled(DialogBoxHeader)`
 
-`
 
 const DropDownArrow = styled.div`
     border-left: 3px solid rgb(200,200,200);
