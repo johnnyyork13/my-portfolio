@@ -5,6 +5,10 @@ html {
     --grey: rgb(130,130,130);
 }
 
+html p {
+    user-select: none !important;
+}
+
 html, body, #root {
     height: 100%;
     overflow: hidden;
@@ -50,6 +54,24 @@ html, body, #root {
 .grayscale, .grayscale p {
     filter: grayscale(1);
     color: var(--grey);
+}
+
+.grayscale-all > div:not(.error-container) {
+    animation-name: grayscaleAll;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes grayscaleAll {
+    0% {
+        filter: grayscale(0);
+    }
+    50% {
+        filter: grayscale(0);
+    }
+    100% {
+        filter: grayscale(1);
+    }
 }
 
 .error-dialog-click {

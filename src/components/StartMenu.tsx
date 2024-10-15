@@ -82,10 +82,10 @@ import { BlackRightArrow } from "../styled-components/main";
 
 
 export default function StartMenu(props: {
-    setShowLogin: Function,
     setOpenedDialogBoxes: Function,
     setOpenStartMenu: Function,
     setIsError: Function,
+    setLogOffModal: Function,
 }) {
 
     const [showAllPrograms, setShowAllPrograms] = useState(false);
@@ -120,6 +120,11 @@ export default function StartMenu(props: {
             }
             return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
         })
+    }
+
+    function handleOpenLogOffModal(modalType: string) {
+        props.setOpenStartMenu(false);
+        props.setLogOffModal({show: true, modalType: modalType});
     }
 
     // function handleProgramNotAvailable() {
@@ -498,7 +503,7 @@ export default function StartMenu(props: {
                                 <p>My Skills</p>
                             </AllProgramsIcon>
                             <AllProgramsIcon onClick={() => handleStartMenuItemClick('my-resume.pdf')}>
-                                <img src={programAccessIcon} alt="My Resume" />
+                                <img src={pdfIcon} alt="My Resume" />
                                 <p>my-resume.pdf</p>
                             </AllProgramsIcon>
                             <AllProgramsIcon onClick={() => handleStartMenuItemClick('Email')}>
@@ -563,11 +568,11 @@ export default function StartMenu(props: {
                 </StartMenuRight>
             </StartMenuBody>
             <StartMenuFooter>
-                <ShutdownIcon onClick={() => props.setShowLogin(true)}>
+                <ShutdownIcon onClick={() => handleOpenLogOffModal("logoff")}>
                     <img src={logOffIcon} alt="Log Off" />
                     <p>Log Off</p>
                 </ShutdownIcon>
-                <ShutdownIcon>
+                <ShutdownIcon onClick={() => handleOpenLogOffModal("shutdown")}>
                     <img src={shutdownIcon} alt="Turn Off" />
                     <p>Turn Off Computer</p>
                 </ShutdownIcon>

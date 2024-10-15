@@ -34,7 +34,13 @@ import startupSound from '../assets/sounds/startup.wav';
 export default function Desktop(props: {
     setShowLogin: Function,
     setInitialLogin: Function,
-    allowAudio: boolean
+    allowAudio: boolean,
+    maxGrayscale: boolean,
+    setMaxGrayscale: Function,
+    setLogOffModal: Function,
+    logOffModal: {show: boolean, modalType: string},
+    setIsError: Function,
+    isError: {status: boolean, message: string},
 }) {
     // const url = "http://localhost:3000";
   const url = "https://app-ciepuk5waq-uc.a.run.app";
@@ -61,17 +67,18 @@ export default function Desktop(props: {
   const [selectionCurrentPosition, setSelectionCurrentPosition] = useState<number[]>([]);
   const [selected, setSelected] = useState<any>(null);
   const [openedDialogBoxes, setOpenedDialogBoxes] = useState<DialogBoxInterface[]>([]);
-  const [isError, setIsError] = useState({status: false, message: ""});
+  
   const [openStartMenu, setOpenStartMenu] = useState(false);
   const [movingClippy, setMovingClippy] = useState(false);
   const [showClippy, setShowClippy] = useState(true);
+
 
   useEffect(() => {
     props.setInitialLogin(false);
   }, [])
 
   useEffect(() => {
-    if (isError.status) {
+    if (props.isError.status) {
       setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
         //make sure the dialog box isn't already open
         const newDialog: DialogBoxInterface = {title: 'Error', status: "open", isFocused: true, maximize: false};
@@ -88,7 +95,7 @@ export default function Desktop(props: {
         return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
       })
     }
-  }, [isError])
+  }, [props.isError])
 
   function calculateCoords(e: MouseEvent) {
     const GRID_COLUMNS = 15;
@@ -182,7 +189,7 @@ export default function Desktop(props: {
   }, [selectionCurrentPosition, isSelecting, icons]); // Ensure dependencies are correct
 
   return (
-    <MainContainer ref={appRef} onClick={() => setOpenStartMenu(false)}>
+    <MainContainer ref={appRef} onClick={() => setOpenStartMenu(false)} className={props.maxGrayscale ? "grayscale-all" : ""}>
       {props.allowAudio && <audio src={startupSound} autoPlay></audio>}
       {showClippy && <Clippy url={url} setMovingClippy={setMovingClippy} setShowClippy={setShowClippy}/>}
       <Selection 
@@ -193,8 +200,9 @@ export default function Desktop(props: {
         setSelectionStart={setSelectionStart}
         currentSelectionPosition={selectionCurrentPosition}
         setCurrentSelectionPosition={setSelectionCurrentPosition}
-        isError={isError}
+        isError={props.isError}
         movingClippy={movingClippy}
+        logOffModal={props.logOffModal}
       />
       <Wallpaper className="background-wallpaper" fullScreen={true} draggable="false" />
       <IconContainer 
@@ -220,7 +228,7 @@ export default function Desktop(props: {
               startPath={["My Computer"]}
               openedDialogBoxes={openedDialogBoxes}
               setOpenedDialogBoxes={setOpenedDialogBoxes}
-              setIsError={setIsError}
+              setIsError={props.setIsError}
               />
           }>
         </DialogBox>} 
@@ -237,7 +245,7 @@ export default function Desktop(props: {
             startPath={["My Computer", "C:\\My Documents", "C:\\My Documents\\My Projects"]}
             openedDialogBoxes={openedDialogBoxes}
             setOpenedDialogBoxes={setOpenedDialogBoxes}
-            setIsError={setIsError}
+            setIsError={props.setIsError}
             />
           }>
       </DialogBox>} 
@@ -252,7 +260,7 @@ export default function Desktop(props: {
             <Email 
               openedDialogBoxes={openedDialogBoxes}
               url={url}
-              setIsError={setIsError}
+              setIsError={props.setIsError}
               />}>
           </DialogBox>}
       {checkOpenedDialogBoxes("about-me.txt") && 
@@ -289,7 +297,7 @@ export default function Desktop(props: {
               openedDialogBoxes={openedDialogBoxes}/>}>
         </DialogBox>}
         {checkOpenedDialogBoxes("Error") &&
-        <ErrorContainer onClick={errorMouseDown}>
+        <ErrorContainer onClick={errorMouseDown} className="error-container">
           <DialogBox
             title="Error"
             titleImage={errorIcon}
@@ -297,20 +305,20 @@ export default function Desktop(props: {
             setOpenedDialogBoxes={setOpenedDialogBoxes}
             openedDialogBoxes={openedDialogBoxes}
             isError={true}
-            setIsError={setIsError}
+            setIsError={props.setIsError}
             children={
               <ErrorDialogBox
                 openedDialogBoxes={openedDialogBoxes}
                 setOpenedDialogBoxes={setOpenedDialogBoxes}
-                setIsError={setIsError}
-                message={isError.message}
+                setIsError={props.setIsError}
+                message={props.isError.message}
                 errorRef={errorRef}
                 allowAudio={props.allowAudio}
                 />
             }/>
         </ErrorContainer>
         }
-      {openStartMenu && <StartMenu setShowLogin={props.setShowLogin} setOpenedDialogBoxes={setOpenedDialogBoxes} setOpenStartMenu={setOpenStartMenu} setIsError={setIsError}/>}
+      {openStartMenu && <StartMenu setLogOffModal={props.setLogOffModal} setOpenedDialogBoxes={setOpenedDialogBoxes} setOpenStartMenu={setOpenStartMenu} setIsError={props.setIsError}/>}
       <Footer setOpenStartMenu={setOpenStartMenu} openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
       <StatusBar />
     </MainContainer>
@@ -328,7 +336,7 @@ const MainContainer = styled.div`
 
 const ErrorContainer = styled.div`
   position: absolute;
-  z-index: 400;
+  z-index: 501;
   width: 100%;
   height: 100%;
   display: flex;

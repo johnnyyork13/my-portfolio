@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import userImageIcon from '../assets/start-menu/user-image.png';
-import windowsLoginLogo from '../assets/windows-login-logo.png';
+import windowsLoginLogo from '../assets/xp-logo-transparent.png';
 import shutdownIcon from '../assets/start-menu/turn-off.png';
 import logoffSound from '../assets/sounds/logoff.wav';
 
@@ -19,7 +19,7 @@ export default function Login(props: {
                 <RadialGradient />
                 <LoginSectionLeft>
                     <img src={windowsLoginLogo} alt="windows-login-logo" />
-                    <p>To begin, click my user name</p>
+                    <p>To begin, click on your user name</p>
                 </LoginSectionLeft>
                 <Divider />
                 <LoginSectionRight>
@@ -104,12 +104,11 @@ const LoginSectionLeft = styled(LoginSection)`
     align-items: flex-end;
     color: white;
     img {
-        height: 130px;
-
+        height: 150px;
     }
     p {
-        font-size: 1.4rem;
-        margin-top: 10px;
+        font-size: 1.1rem;
+        margin-top: 15px;
         font-weight: bold;
     }
 `

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { BlackRightArrow, DialogBoxHeader, Divider, HeaderIcon, HeaderIconContainer } from "../styled-components/main"
+import {Divider, HeaderIcon, HeaderIconContainer } from "../styled-components/main"
 import navBackIcon from '../assets/dialog-icons/nav_back.png'
 import navForwardIcon from '../assets/dialog-icons/nav_forward.png'
 import navParentIcon from '../assets/dialog-icons/nav_parent_dir.png'

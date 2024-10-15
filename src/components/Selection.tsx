@@ -11,6 +11,7 @@ export default function Selection(props: {
     setCurrentSelectionPosition: Function,
     isError: {status: boolean, message: string},
     movingClippy: boolean,
+    logOffModal: {show: boolean, modalType: string},
 }) {
 
     const boxRef = useRef<HTMLDivElement>(null);
@@ -55,7 +56,7 @@ export default function Selection(props: {
     }
 
     useEffect(() => {
-        if (boxRef.current && !props.isDragging.dragging && !props.isError.status && !props.movingClippy) {
+        if (boxRef.current && !props.isDragging.dragging && !props.isError.status && !props.movingClippy && !props.logOffModal.show) {
             document.addEventListener("mousedown", getMouseClickPosition);
             if (props.isSelecting) {
                 document.addEventListener("mousemove", getMouseMovePosition);
@@ -72,10 +73,10 @@ export default function Selection(props: {
             document.removeEventListener("mousemove", getMouseMovePosition);
             document.removeEventListener("mouseup", getStopSelectionPosition);
         }
-    }, [props.isDragging.dragging, props.isSelecting, props.isError.status, props.movingClippy])
+    }, [props.isDragging.dragging, props.isSelecting, props.isError.status, props.movingClippy, props.logOffModal.show])
 
     useEffect(() => {
-        if (!props.isDragging.dragging && !props.isError.status && !props.movingClippy) {
+        if (!props.isDragging.dragging && !props.isError.status && !props.movingClippy && !props.logOffModal.show) {
             let adjustPosition = ({
                 width: 0,
                 height: 0,
@@ -134,7 +135,7 @@ export default function Selection(props: {
             }
         } 
         
-    }, [props.selectionStart, props.currentSelectionPosition, props.isError.status, props.movingClippy])
+    }, [props.selectionStart, props.currentSelectionPosition, props.isError.status, props.movingClippy, props.logOffModal.show])
 
     
 

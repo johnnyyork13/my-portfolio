@@ -79,7 +79,7 @@ const TabContainer = styled.div`
 
 const StartMenu = styled.img`
     height: 35px;
-    margin-bottom: 0px; 
+    margin-bottom: 2px; 
     margin-right: 8px;
     &:hover {
         filter: brightness(107%);
