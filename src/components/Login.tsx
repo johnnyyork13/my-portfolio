@@ -49,7 +49,7 @@ const LoginContainer = styled.div`
     width: 100%;
     height: 100%;
     background-color: white;
-    z-index: 500;
+    z-index: 1;
     display: flex;
     flex-direction: column;
 `

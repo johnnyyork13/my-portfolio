@@ -63,7 +63,7 @@ const AllowAudio = styled.div<({$color: string})>`
   position: absolute;
   top: 5px;
   right: 10px;
-  z-index: 1000;
+  z-index: 2;
   color: ${props => props.$color};
   display: flex;
   align-items: center;

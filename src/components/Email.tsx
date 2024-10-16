@@ -19,6 +19,7 @@ import strikeThroughButton from '../assets/dialog-icons/strikethrough.png'
 import undoButton from '../assets/dialog-icons/undo-large.png'
 import {Divider, HeaderIcon, HeaderIconContainer } from "../styled-components/main";
 import MenuBar from "./MenuBar";
+import LoadingDialogBox from "./LoadingDialogBox";
 
 export default function Email(props: {
     openedDialogBoxes: DialogBoxInterface[],
@@ -33,6 +34,7 @@ export default function Email(props: {
         subject: "",
         message: "",
     });
+    const [showLoadingBox, setShowLoadingBox] = useState(false);
 
     useEffect(() => {
         setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "Email")?.maximize || false);
@@ -40,6 +42,7 @@ export default function Email(props: {
 
     useEffect(() => {
         if (sendEmail) {
+            setShowLoadingBox(true);
             async function sendUserEmail() {
                 const url = props.url + "/email";
                 await fetch(url, {
@@ -50,11 +53,7 @@ export default function Email(props: {
                     body: JSON.stringify(user)
                 }).then((res) => res.json())
                 .then(() => {
-                    setUser({
-                        from: "",
-                        subject: "",
-                        message: "",
-                    })
+                    setUser((prev) => ({...prev, subject: "", message: ""}));
                     setSendEmail(false);
                 })
             }
@@ -84,6 +83,7 @@ export default function Email(props: {
 
     return (
         <EmailContainer className="window-body">
+            {showLoadingBox && <LoadingDialogBox setShowLoadingBox={setShowLoadingBox}/>}
             <MenuBar />
             <EmailIconContainer>
                 <EmailIcon onClick={handleSendEmail}>
@@ -125,11 +125,11 @@ export default function Email(props: {
                 <img src={addressBook} alt="address book" />
                     From:
                 </label>
-                <input type="text" id="from" name="from" onChange={handleUserInputChange} value={user.from}/>
+                <input type="text" id="from" name="from" onChange={handleUserInputChange} value={user.from} disabled={showLoadingBox ? true : false}/>
             </DialogInput>
             <DialogInput className="field-row" $isMaximized={isMaximized}>
                 <label htmlFor="subject">Subject:</label>
-                <input type="text" id="subject" name="subject" onChange={handleUserInputChange} value={user.subject}/>
+                <input type="text" id="subject" name="subject" onChange={handleUserInputChange} value={user.subject} disabled={showLoadingBox ? true : false}/>
             </DialogInput>
             <MessageIconContainer>
                 <select>
@@ -152,7 +152,7 @@ export default function Email(props: {
                 <img src={alignRightButton} alt="align right" />
             </MessageIconContainer>
             <DialogInput className="field-row" $isMaximized={isMaximized} style={{height: '100%'}}>
-                <textarea id="email-to" name="message" onChange={handleUserInputChange} value={user.message}></textarea>
+                <textarea id="email-to" name="message" onChange={handleUserInputChange} value={user.message} disabled={showLoadingBox ? true : false}></textarea>
             </DialogInput>
         </EmailContainer>
     )
