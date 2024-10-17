@@ -1,10 +1,12 @@
 import './App.css';
 import Login from './components/Login';
 import Desktop from './components/Desktop';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import styled from 'styled-components';
 
 import LogOffModal from './components/LogOffModal';
@@ -14,6 +16,7 @@ function App() {
   const [showLogin, setShowLogin] = useState(true);
   const [initialLogin, setInitialLogin] = useState(true);
   const [allowAudio, setAllowAudio] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [logOffModal, setLogOffModal] = useState({
     show: false,
     modalType: "",
@@ -26,6 +29,14 @@ function App() {
     setShowLoadingScreen(false);
   }, 7000);
 
+  useEffect(() => {
+    if (isFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }, [isFullscreen])
+
   return (
     <div>
       {showLoadingScreen && <WindowsLoadingScreen />}
@@ -37,10 +48,16 @@ function App() {
           setShowLogin={setShowLogin}  
           setIsError={setIsError}
         />}
-      <AllowAudio onClick={() => setAllowAudio((prev) => !prev)} $color={showLogin ? 'white' : 'black'}>
-        {allowAudio ? <VolumeUpIcon /> : <VolumeOffIcon />}
-        <span>{allowAudio ? 'Disable Audio' : 'Enable Audio'}</span>
-      </AllowAudio>
+      <Controls $color={showLogin ? 'white' : 'black'}>
+        <ControlsSection onClick={() => setAllowAudio((prev) => !prev)}>
+          {allowAudio ? <VolumeUpIcon /> : <VolumeOffIcon />}
+          <span>{allowAudio ? 'Disable Audio' : 'Enable Audio'}</span>
+        </ControlsSection>
+        <ControlsSection onClick={() => setIsFullscreen((prev) => !prev)}>
+          {isFullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+          <span>{isFullscreen ? 'Exit Fullscreen' : 'Go Fullscreen'}</span>
+        </ControlsSection>
+      </Controls>
       {showLogin ? 
         <Login setShowLogin={setShowLogin} initialLogin={initialLogin} allowAudio={allowAudio}/> 
       : 
@@ -54,12 +71,13 @@ function App() {
           logOffModal={logOffModal}
           setIsError={setIsError}
           isError={isError}
+          setIsFullscreen={setIsFullscreen}
           />}
     </div>
   )
 }
   
-const AllowAudio = styled.div<({$color: string})>`
+const Controls = styled.div<({$color: string})>`
   position: absolute;
   top: 5px;
   right: 10px;
@@ -69,8 +87,14 @@ const AllowAudio = styled.div<({$color: string})>`
   align-items: center;
   cursor: pointer;
   span {
-    margin-left: 5px;
+    margin-left: 1px;
   }
+`
+
+const ControlsSection = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
 `
 
 export default App;

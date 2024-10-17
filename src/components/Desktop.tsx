@@ -41,6 +41,7 @@ export default function Desktop(props: {
     logOffModal: {show: boolean, modalType: string},
     setIsError: Function,
     isError: {status: boolean, message: string},
+    setIsFullscreen: Function,
 }) {
     // const url = "http://localhost:3000";
   const url = "https://app-ciepuk5waq-uc.a.run.app";
@@ -81,7 +82,7 @@ export default function Desktop(props: {
     if (props.isError.status) {
       setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
         //make sure the dialog box isn't already open
-        const newDialog: DialogBoxInterface = {title: 'Error', status: "open", isFocused: true, maximize: false};
+        const newDialog: DialogBoxInterface = {title: 'Error', status: "open", isFocused: true, maximize: false, icon: errorIcon};
         let updatedDialogs: DialogBoxInterface[] = [];
         let dialogBoxExists = false;
         for (let i = 0; i < prev.length; i++) {
@@ -246,6 +247,7 @@ export default function Desktop(props: {
             openedDialogBoxes={openedDialogBoxes}
             setOpenedDialogBoxes={setOpenedDialogBoxes}
             setIsError={props.setIsError}
+            setIsFullscreen={props.setIsFullscreen}
             />
           }>
       </DialogBox>} 

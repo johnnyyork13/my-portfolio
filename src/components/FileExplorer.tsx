@@ -15,6 +15,7 @@ export default function FileExplorer(props: {
     reference: string,
     setOpenedDialogBoxes: Function,
     setIsError: Function,
+    setIsFullscreen?: Function,
 }) {
 
     const [isMaximized, setIsMaximized] = useState<boolean>(false);
@@ -61,7 +62,7 @@ export default function FileExplorer(props: {
                 {currentPath[currentPath.length - 1] === `C:\\My Documents` && 
                     <MyDocumentsContent isMaximized={isMaximized} selectedIcon={selectedIcon} handleIconClick={handleIconClick} handleIconDoubleClick={handleIconDoubleClick} />}
                 {currentPath[currentPath.length - 1] === "C:\\My Documents\\My Projects" && 
-                    <ProjectsContent isMaximized={isMaximized} selectedIcon={selectedIcon} handleIconClick={handleIconClick} />}
+                    <ProjectsContent setIsFullscreen={props.setIsFullscreen ? props.setIsFullscreen : Function}isMaximized={isMaximized} selectedIcon={selectedIcon} handleIconClick={handleIconClick} />}
             </DialogBoxBodyContainer>
         </FileExplorerContainer>
     )
