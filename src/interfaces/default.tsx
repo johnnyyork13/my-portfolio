@@ -7,4 +7,5 @@ export interface DialogBoxInterface {
     status: string,
     isFocused: boolean,
     maximize: boolean,
+    icon: string,
 }

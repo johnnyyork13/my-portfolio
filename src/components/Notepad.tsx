@@ -13,15 +13,17 @@ export default function Notepad(props: {
         setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "about-me.txt")?.maximize || false);
     }, [props.openedDialogBoxes])
 
-    const aboutMeText = `Hello! I'm Johnny York, and I am a growing full-stack developer. 
+    const aboutMeText = `Hey, I'm Johnny York, a growing full-stack developer. 
 
 I enjoy building unique web applications that challenge my skills and creativity.
 
 Currently, I am completing my final semester at Mercer University, where I am studying Software Application Development and Human-Computer Interaction.
 
-When I'm not coding, I enjoy playing the piano, riding my motorcycle, and woodworking in my shop.
+When I'm not coding, I enjoy the playing the piano, guitar, riding my motorcycle, and woodworking.
 
-I look forward to connecting with you, and I hope you enjoy my portfolio! Thanks!
+I like to think of myself as an extremely driven person, and although I have a lot to learn, I feel confident that I can be a valuable asset to any team.
+
+I look forward to connecting with you, and I hope you enjoy my Windows XP-style portfolio! Thanks!
 
 - Johnny
     `
@@ -30,7 +32,7 @@ I look forward to connecting with you, and I hope you enjoy my portfolio! Thanks
     return (
         <NotepadContainer $maximized={isMaximized}>
             <MenuBarNotepad />
-            <NotepadBody $maximized={isMaximized} defaultValue={aboutMeText}></NotepadBody>
+            <NotepadBody $maximized={isMaximized} defaultValue={aboutMeText} style={{fontFamily: "Courier Prime"}}></NotepadBody>
         </NotepadContainer>
     )
 }

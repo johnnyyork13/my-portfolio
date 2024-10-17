@@ -21,7 +21,7 @@ export default function TaskbarItem(props: {
         })
     }
 
-    // console.log(props.dialog);
+    console.log(props.dialog.icon);
 
     // useEffect(() => {
     //     console.log(props.dialog.title, props.dialog.isFocused);
@@ -33,6 +33,7 @@ export default function TaskbarItem(props: {
             onClick={toggleMinimizeDialogBox}
             $isFocused={props.dialog.isFocused}
         >
+            <img src={props.dialog.icon} alt={props.dialog.title} />
             <Title>{props.dialog.title}</Title>
         </TaskBarItemContainer>
     )
@@ -49,12 +50,19 @@ const TaskBarItemContainer = styled.div<{ $isFocused: boolean }>`
     padding-left: 10px;
     border-radius: 5px;
     color: white;
+    justify-content: flex-start;
     &:hover {
         // background-color: rgb(53, 118, 243);
         cursor: default;  
+    }
+    img {
+        width: 15px;
+        height: 15px;
+        margin-right: 5px;
     }
     ${props => props.$isFocused ? 'border-left: 2px solid rgba(0,0,0,.4);' : ''}
 `
 
 const Title = styled.p`
+    font-size: .7rem;
 `

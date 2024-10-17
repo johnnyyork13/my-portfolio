@@ -17,7 +17,7 @@ export default function NotepadEmpty(props: {
     return (
         <NotepadContainer $maximized={isMaximized}>
             <MenuBarNotepad />
-            <NotepadBody $maximized={isMaximized} defaultValue={""}></NotepadBody>
+            <NotepadBody $maximized={isMaximized} defaultValue={""} style={{fontFamily: "Courier Prime"}}></NotepadBody>
         </NotepadContainer>
     )
 }

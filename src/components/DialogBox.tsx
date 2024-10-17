@@ -126,6 +126,7 @@ export default function DialogBox(props: {
             draggable={false}
             onClick={handleFocusDialogBox}
             $isFocused={isFocused}
+            $offsetPosition={props.openedDialogBoxes.findIndex(dialog => dialog.title === props.title)}
         >
             <TitleBar 
                 className="title-bar" 
@@ -146,7 +147,7 @@ export default function DialogBox(props: {
     )
 }
 
-const DialogBoxContainer = styled.div<{ $isFocused: boolean }>`
+const DialogBoxContainer = styled.div<{ $isFocused: boolean, $offsetPosition: number }>`
     position: absolute;
     z-index: ${props => props.$isFocused ? 100 : 99} !important;
     display: flex;
