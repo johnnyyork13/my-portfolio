@@ -14,6 +14,7 @@ export default function IconContainer(props: {
 }) {
     const [grid, setGrid] = useState<any>([]);
 
+    //unfocuses all of the dialog boxes when the user clicks on an empty tile
     function handleUnfocusDialogBoxes() {
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
           return prev.map((dialog: DialogBoxInterface) => {
@@ -22,7 +23,7 @@ export default function IconContainer(props: {
         });
 }
 
-
+    //arranges the icons in a grid depending on their current coordinates
     const arrangeIcons = () => {
         const GRID_COLUMNS = 15;
         const GRID_ROWS = 10;

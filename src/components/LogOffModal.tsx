@@ -14,6 +14,7 @@ export default function LogOffModal(props: {
     setIsError: Function,
 }) {
 
+    //grayscales the background when the modal is opened
     useEffect(() => {
         props.setMaxGrayscale(true);
         return () => {

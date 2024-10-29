@@ -11,6 +11,7 @@ export default function ProjectsContent(props: {
     setIsFullscreen: Function,
 }) {
 
+    //opens new tab with the requested url
     function handleIconDoubleClick(url: string) {
         window.open(url);
         props.setIsFullscreen(false);

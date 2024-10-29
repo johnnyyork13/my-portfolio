@@ -36,10 +36,12 @@ export default function Email(props: {
     });
     const [showLoadingBox, setShowLoadingBox] = useState(false);
 
+    //checks if email is currently maximized
     useEffect(() => {
         setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "Email")?.maximize || false);
     }, [props.openedDialogBoxes])
 
+    //sends email request to server
     useEffect(() => {
         if (sendEmail) {
             setShowLoadingBox(true);
@@ -65,6 +67,7 @@ export default function Email(props: {
         setUser({...user, [e.target.name]: e.target.value});
     }
 
+    //form validation
     function handleSendEmail() {
         let allFieldsHaveValues = true;
         for (const key in user) {

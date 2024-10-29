@@ -99,6 +99,7 @@ export default function StartMenu(props: {
     const [showRecentDocuments, setShowRecentDocuments] = useState(false);
     const [showConnectTo, setShowConnectTo] = useState(false);
 
+    //handles when a program is selected in the start menu that has a corresponding dialog box or window to open
     function handleStartMenuItemClick(name: string) {
         props.setOpenStartMenu(false);
         if (name === "my-resume.pdf") {
@@ -122,30 +123,11 @@ export default function StartMenu(props: {
         })
     }
 
+    //displays logoff or shutdown modal when corresponding buttons are clicked
     function handleOpenLogOffModal(modalType: string) {
         props.setOpenStartMenu(false);
         props.setLogOffModal({show: true, modalType: modalType});
     }
-
-    // function handleProgramNotAvailable() {
-    //     props.setOpenStartMenu(false);
-    //     props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
-    //         //make sure the dialog box isn't already open
-    //         const newDialog = {title: 'Error', status: "open", isFocused: true};
-    //         let updatedDialogs = [];
-    //         let dialogBoxExists = false;
-    //         for (let i = 0; i < prev.length; i++) {
-    //             if (prev[i].title === 'Error') {
-    //                 updatedDialogs.push({...prev[i], status: "open", isFocused: true});
-    //                 dialogBoxExists = true;
-    //             } else {
-    //                 updatedDialogs.push({...prev[i], isFocused: false});
-    //             }
-    //         }
-    //         return dialogBoxExists ? updatedDialogs : [...updatedDialogs, newDialog];
-    //     })
-    //     props.setIsError && props.setIsError(true);
-    // }
 
     return (
         <StartMenuContainer onClick={(e) => e.stopPropagation()}>
@@ -158,13 +140,6 @@ export default function StartMenu(props: {
             <StartMenuBody>
                 <StartMenuLeft>
                     <div>
-                        {/* <MenuIcon $doubleText={true} onClick={handleProgramNotAvailable} className="grayscale">
-                            <img src={internetIcon} alt="Internet" />
-                            <MenuLeftTextSpecial>
-                                <p>Internet</p>
-                                <p>Internet Explorer</p>
-                            </MenuLeftTextSpecial>
-                        </MenuIcon> */}
                         <MenuIcon $doubleText={true} onClick={() => handleStartMenuItemClick('Email')}>
                             <img src={emailIcon} alt="Email" />
                             <MenuLeftTextSpecial>

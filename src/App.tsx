@@ -25,10 +25,12 @@ function App() {
   const [isError, setIsError] = useState({status: false, message: ""});
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
+  //removes windows loading screen after 7 seconds
   setTimeout(() => {
     setShowLoadingScreen(false);
   }, 7000);
 
+  //toggles fullscreen mode
   useEffect(() => {
     if (isFullscreen) {
       document.documentElement.requestFullscreen();

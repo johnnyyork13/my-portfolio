@@ -6,6 +6,7 @@ export default function TaskbarItem(props: {
     setOpenedDialogBoxes: Function,
 }) {
 
+    //toggles the dialog box between open and minimized when it is clicked on in the taskbar
     function toggleMinimizeDialogBox() {
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.map((dialog: DialogBoxInterface) => {
@@ -20,12 +21,6 @@ export default function TaskbarItem(props: {
             })
         })
     }
-
-    console.log(props.dialog.icon);
-
-    // useEffect(() => {
-    //     console.log(props.dialog.title, props.dialog.isFocused);
-    // }, [props.dialog.isFocused])
 
     return (
         <TaskBarItemContainer 

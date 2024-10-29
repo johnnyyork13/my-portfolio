@@ -26,6 +26,7 @@ export default function DialogBox(props: {
         })
     }
     
+    //handles moving the dialog box around the screen
     function handleStartMovingDialogBox(e: React.MouseEvent) {
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.map((dialog: DialogBoxInterface) => {
@@ -64,6 +65,7 @@ export default function DialogBox(props: {
         }
     }
 
+    //minimizes the dialog box to the taskbar
     function handleMinimizeDialogBox() {
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.map((dialog: DialogBoxInterface) => {
@@ -75,6 +77,7 @@ export default function DialogBox(props: {
         });
     }
 
+    //maximizes the dialog box to fit the screen
     function handleMaximizeDialogBox() {
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.map((dialog: DialogBoxInterface) => {
@@ -102,6 +105,7 @@ export default function DialogBox(props: {
         }
     }
 
+    //focuses the dialog box when it is clicked on
     function handleFocusDialogBox() {        
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.map((dialog: DialogBoxInterface) => {
@@ -113,6 +117,7 @@ export default function DialogBox(props: {
         })
     }
 
+    //sets the focus of the dialog box when it is opened
     useEffect(() => {
         if (props.openedDialogBoxes.length > 0) {
             setIsFocused(props.openedDialogBoxes.find(dialog => dialog.title === props.title)!.isFocused);

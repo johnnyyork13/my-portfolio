@@ -14,16 +14,13 @@ export default function Icon(props: {
 }) {
 
     const iconRef = useRef<HTMLDivElement>(null);
-
     const [isFocused, setIsFocused] = useState(false);
-
     const onFocus = () => {setIsFocused(true)};
     const onBlur = () => {setIsFocused(false)};
-
     const [iconSelected, setIconSelected] = useState(false);
 
+    //check if the icon is selected, if so, add the 'icon-focused' class
     useEffect(() => {
-        // console.log('selected', props.selected);
         setIconSelected(() => {
             for (const key in props.selected) {
                 if (props.selected[key].name === props.name) {
@@ -34,13 +31,11 @@ export default function Icon(props: {
         })
     }, [props.selected])
 
+    //drag event handler for the icon
     function handleMouseDragEvent(e: any) {
         const img = new Image();
         img.src = props.img;
         e.dataTransfer.setDragImage(img, 0, 0);
-        // e.dataTransfer.clearData();
-        // e.dataTransfer.setData("text/plain", <p>{props.name}</p>);
-        // e.dataTransfer.setData("text", props.name);
         props.setIsDragging({
             dragging: true,
             icon: props.name,
@@ -49,6 +44,8 @@ export default function Icon(props: {
         })
     }
 
+    //double click event handler for the icon. If the icon is the resume icon, it opens the resume in a new tab
+    //otherwise, it opens a new dialog box if it isn't already open
     function handleIconDoubleClick() {
         if (props.name === "my-resume.pdf") {
             window.open(myResume);
@@ -71,12 +68,10 @@ export default function Icon(props: {
         })
     }
 
+    //load and unload the event listeners for the icon
     useEffect(() => {
         if (iconRef.current) {
             iconRef.current.addEventListener("dragstart", handleMouseDragEvent)
-            // iconRef.current.addEventListener("mouseup", () => {
-            //     iconRef.current?.removeEventListener("mousedown", handleMouseDragEvent);
-            // })
             iconRef.current.addEventListener("dblclick", handleIconDoubleClick);
         }
         return () => {

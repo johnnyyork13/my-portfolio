@@ -29,6 +29,7 @@ export default function Clippy(props: {
         }
     }, [])
 
+    //send user input to clippy and update messages
     useEffect(() => {
         try {
             if (sendUserInput) {
@@ -59,7 +60,7 @@ export default function Clippy(props: {
         }
     }, [sendUserInput]) 
     
-
+    //move clippy around the screen
     function handleStartMovingDialogBox(e: React.MouseEvent) {
         props.setMovingClippy(true);
         if (clippyRef.current) {
@@ -92,6 +93,7 @@ export default function Clippy(props: {
         setSendUserInput(true);
     }
 
+    //return only clippy's responses in the chatbox
     const mappedResponse = updatedMessages.filter((response: {role: string, content: string}) => {
         return response.role === 'assistant';
     })

@@ -15,6 +15,7 @@ export default function ErrorDialogBox(props: {
         e.stopPropagation()
     }
 
+    // Remove the error dialog box from the currently opened dialog boxes
     function removeErrorFromDialogBoxes() {
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.filter((dialog: DialogBoxInterface) => dialog.title !== 'Error');

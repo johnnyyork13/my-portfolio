@@ -21,13 +21,6 @@ export default function MyComputerContent(props: {
                         <div></div>
                     </DialogIconsHeader>
                     <DialogIcons>
-                        {/* <DialogIcon
-                            onClick={(e) => props.handleIconClick(e, 'Shared Documents')}
-                            
-                            $selected={props.selectedIcon === 'Shared Documents' ? true : false}>
-                            <img src={folderIcon} alt="Folder" />
-                            <p>Shared Documents</p>
-                        </DialogIcon> */}
                         <DialogIcon
                             onClick={(e) => props.handleIconClick(e, 'My Documents')}
                             onDoubleClick={(e) => props.handleIconDoubleClick(e, ['My Computer', 'C:\\My Documents'])}

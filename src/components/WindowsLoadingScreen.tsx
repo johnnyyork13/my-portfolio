@@ -3,8 +3,6 @@ import windowsLoginLogo from '../assets/xp-logo-transparent.png';
 
 export default function WindowsLoadingScreen() {
 
-
-
     return (
         <LoadingContainer>
             <LogoContainer>

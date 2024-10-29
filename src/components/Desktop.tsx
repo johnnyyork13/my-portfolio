@@ -73,11 +73,12 @@ export default function Desktop(props: {
   const [movingClippy, setMovingClippy] = useState(false);
   const [showClippy, setShowClippy] = useState(true);
 
-
+  //set initial login to false so the windows logo doesn't show again if the user logs off or changes users
   useEffect(() => {
     props.setInitialLogin(false);
   }, [])
 
+  //toggles the display of the error dialog box when an error occurs
   useEffect(() => {
     if (props.isError.status) {
       setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
@@ -98,6 +99,7 @@ export default function Desktop(props: {
     }
   }, [props.isError])
 
+  //helper function that calculates the coordinates of the mouse pointer
   function calculateCoords(e: MouseEvent) {
     const GRID_COLUMNS = 15;
     const GRID_ROWS = 10;
@@ -106,6 +108,7 @@ export default function Desktop(props: {
     return [x, y];
   }
 
+  //handles the mouse move event when the user is dragging an icon
   function handleMouseMove(e: MouseEvent) {
     if (!isDragging.dragging) return; // Early exit if not dragging
     const newIcons = [...icons];
@@ -134,6 +137,7 @@ export default function Desktop(props: {
     }
   }
 
+  //checks if a dialog box with the same title is already open
   function checkOpenedDialogBoxes(title: string) {
     for (let i = 0; i < openedDialogBoxes.length; i++) {
       if (openedDialogBoxes[i].title === title && openedDialogBoxes[i].status === "open") {
@@ -143,6 +147,7 @@ export default function Desktop(props: {
     return false;
   }
 
+  //handles the mouse down event when the user is dragging an icon
   useEffect(() => {
     if (isDragging.dragging) {
       const handleDragEnd = () => {
@@ -159,6 +164,7 @@ export default function Desktop(props: {
     }
   }, [isDragging]);
 
+  //animates the error dialog box if a user clicks outside of its boundaries
   function errorMouseDown(e: any) {
     if (e.target && e.target.children[0]) e.target.children[0].children[0].classList.add("error-dialog-click");
     setTimeout(() => {
@@ -167,7 +173,7 @@ export default function Desktop(props: {
     errorRef.current!.play();
   }
 
-
+  //gets the coordinates of the selected icon so it can be moved around the screen
   function getSelectedCoords() {
     const GRID_COLUMNS = 15;
     const GRID_ROWS = 10;
@@ -178,6 +184,7 @@ export default function Desktop(props: {
     return [x1, y1, x2, y2];
   }
 
+  //updates the selected icons when the user is selecting multiple icons
   useEffect(() => {
     if (isSelecting) {
       const [x1, y1, x2, y2] = getSelectedCoords();

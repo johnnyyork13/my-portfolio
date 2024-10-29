@@ -20,6 +20,7 @@ export default function DialogHeader(props: {
     setPathIndex: Function,
 }) {
 
+    //updates file path to navigate to parent directory in current path state and updates path history state 
     function handleNavigateParent() {
         if (props.currentPath.length > 1) {
             props.setPathIndex((prev: number) => prev + 1);
@@ -28,6 +29,7 @@ export default function DialogHeader(props: {
         }
     }
 
+    //updates file path to navigate back in the path history state
     function handleNavigateBack() {
         if (props.pathIndex - 1 >= 0) {
             props.setCurrentPath(props.pathHistory[props.pathIndex - 1]);
@@ -35,6 +37,7 @@ export default function DialogHeader(props: {
         }
     }
 
+    //updates file path to navigate forward in the path history state
     function handleNavigateForward() {
         if (props.pathIndex + 1 <= props.pathHistory.length - 1) {
             props.setCurrentPath(props.pathHistory[props.pathIndex + 1]);

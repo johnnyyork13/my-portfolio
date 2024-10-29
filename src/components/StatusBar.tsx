@@ -9,6 +9,7 @@ export default function StatusBar() {
 
     const [currentTime, setCurrentTime] = useState("");
 
+    //shows the time in the status bar when the application is loaded
     useEffect(() => {
         setCurrentTime(() => {
             return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });

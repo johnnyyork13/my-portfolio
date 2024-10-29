@@ -39,6 +39,7 @@ export default function FileExplorer(props: {
         setPathIndex((prev: number) => prev + 1);
     }
 
+    //toggles maximized state of child components
     useEffect(() => {
         if (props.reference === "My Computer") {
             setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "My Computer")?.maximize || false);
@@ -47,6 +48,7 @@ export default function FileExplorer(props: {
         }
     }, [props.openedDialogBoxes])
 
+    //set default values for currentPath and pathHistory states
     useEffect(() => {
         setCurrentPath(props.startPath);
         setPathHistory([props.startPath]);

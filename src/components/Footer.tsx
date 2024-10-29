@@ -10,6 +10,7 @@ export default function Footer(props: {
     openedDialogBoxes: DialogBoxInterface[]
 }) {
 
+    //opens start menu and removes focus from all dialog boxes
     function handleStartMenuClick(e: React.MouseEvent) {
         e.stopPropagation();
         props.setOpenStartMenu((prev: boolean) => !prev);
@@ -23,6 +24,7 @@ export default function Footer(props: {
         })
     }
 
+    //maps all opened dialog boxes to TaskbarItem components
     const mappedTaskbarItems = props.openedDialogBoxes.map((dialog: DialogBoxInterface, index: number) => {
         return <TaskbarItem 
                     key={index} 
