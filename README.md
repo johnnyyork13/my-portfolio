@@ -1,4 +1,4 @@
-Windows XP-inspired portfolio that showcases my abilities and past projects.
+My Windows XP-inspired portfolio that showcases my abilities and past projects.
 
 Please enjoy, and don't forget to talk to Clippy!
 
