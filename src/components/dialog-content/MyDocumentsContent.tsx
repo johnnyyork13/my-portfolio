@@ -1,12 +1,18 @@
 import { DialogIcon, DialogIcons, MainDialogIconContainer } from "../../styled-components/main"
 import folderIcon from '../../assets/folder.png'
+import { useEffect } from "react";
 
 export default function MyDocumentsContent(props: {
     isMaximized: boolean,
     selectedIcon: string,
     handleIconClick: (e: any, name: string) => void,
     handleIconDoubleClick: (e: any, path: string[]) => void,
+    setFileExplorerLoaded: Function
 }) {
+
+    useEffect(() => {
+        props.setFileExplorerLoaded(true);
+    }, [])
 
     return (
         <MainDialogIconContainer $maximized={props.isMaximized}>

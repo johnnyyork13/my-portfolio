@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const DialogBox = styled.div<({$left: number, $top: number})>`
-    position: absolute;
-    left: ${(props => props.$left)}px;
-    top: ${(props => props.$top)}px;
-`
+// export const DialogBox = styled.div<({$left: number, $top: number})>`
+//     position: absolute;
+//     left: ${(props => props.$left)}px;
+//     top: ${(props => props.$top)}px;
+// `
 
 export const DialogBoxHeader = styled.div`
     width: 100%;
@@ -31,7 +31,7 @@ export const DialogBoxBodyContainer = styled.div`
 `
 
 export const MainDialogIconContainer = styled.div<({ $maximized: boolean})>`
-    width: ${props => props.$maximized ? "100%" : "600px"};
+    width: ${props => props.$maximized ? "100%" : "700px"};
     height: ${props => props.$maximized ? "100%" : "400px"};
     background-color: white;
     padding-bottom: ${props => props.$maximized ? "0px" : "100px"};
@@ -39,7 +39,8 @@ export const MainDialogIconContainer = styled.div<({ $maximized: boolean})>`
 
 export const DialogIcons = styled.div`
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, 150px);
+    width: 100%;
 `
 
 export const DialogIconsHeader = styled.div`
@@ -61,9 +62,9 @@ export const DialogIcon = styled.div<{ $selected?: boolean }>`
     align-items: center;
     margin: 5px;
     margin-top: 10px;
+    margin-bottom: 10px;
     p {
         margin-top: 5px;
-        padding: 5px;
         color: ${props => props.$selected ? "white" : "black"};
         background-color: ${props => props.$selected ? "var(--xp-blue)" : "white"};
         cursor: default;

@@ -65,8 +65,9 @@ const LargeBlueBorder = styled.div`
     div {
         margin-right: 50px;
         p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-top: 3px;
+            text-align: right;
         }
     }
     position: relative;

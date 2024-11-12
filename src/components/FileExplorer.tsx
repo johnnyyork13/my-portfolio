@@ -16,6 +16,7 @@ export default function FileExplorer(props: {
     setOpenedDialogBoxes: Function,
     setIsError: Function,
     setIsFullscreen?: Function,
+    setFileExplorerLoaded: Function,
 }) {
 
     const [isMaximized, setIsMaximized] = useState<boolean>(false);
@@ -60,11 +61,11 @@ export default function FileExplorer(props: {
             <DialogBoxBodyContainer>
                 <DialogSidebar/>
                 {currentPath[currentPath.length - 1] === "My Computer" && 
-                    <MyComputerContent isMaximized={isMaximized} selectedIcon={selectedIcon} handleIconClick={handleIconClick} handleIconDoubleClick={handleIconDoubleClick} setOpenedDialogBoxes={props.setOpenedDialogBoxes} setIsError={props.setIsError}/>}
+                    <MyComputerContent setFileExplorerLoaded={props.setFileExplorerLoaded} isMaximized={isMaximized} selectedIcon={selectedIcon} handleIconClick={handleIconClick} handleIconDoubleClick={handleIconDoubleClick} setOpenedDialogBoxes={props.setOpenedDialogBoxes} setIsError={props.setIsError}/>}
                 {currentPath[currentPath.length - 1] === `C:\\My Documents` && 
-                    <MyDocumentsContent isMaximized={isMaximized} selectedIcon={selectedIcon} handleIconClick={handleIconClick} handleIconDoubleClick={handleIconDoubleClick} />}
+                    <MyDocumentsContent setFileExplorerLoaded={props.setFileExplorerLoaded}  isMaximized={isMaximized} selectedIcon={selectedIcon} handleIconClick={handleIconClick} handleIconDoubleClick={handleIconDoubleClick} />}
                 {currentPath[currentPath.length - 1] === "C:\\My Documents\\My Projects" && 
-                    <ProjectsContent setIsFullscreen={props.setIsFullscreen ? props.setIsFullscreen : Function}isMaximized={isMaximized} selectedIcon={selectedIcon} handleIconClick={handleIconClick} />}
+                    <ProjectsContent setFileExplorerLoaded={props.setFileExplorerLoaded}  setIsFullscreen={props.setIsFullscreen ? props.setIsFullscreen : Function}isMaximized={isMaximized} selectedIcon={selectedIcon} handleIconClick={handleIconClick} />}
             </DialogBoxBodyContainer>
         </FileExplorerContainer>
     )

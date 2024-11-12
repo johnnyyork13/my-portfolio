@@ -72,6 +72,7 @@ export default function Desktop(props: {
   const [openStartMenu, setOpenStartMenu] = useState(false);
   const [movingClippy, setMovingClippy] = useState(false);
   const [showClippy, setShowClippy] = useState(true);
+  const [fileExplorerLoaded, setFileExplorerLoaded] = useState(false);
 
   //set initial login to false so the windows logo doesn't show again if the user logs off or changes users
   useEffect(() => {
@@ -83,7 +84,7 @@ export default function Desktop(props: {
     if (props.isError.status) {
       setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
         //make sure the dialog box isn't already open
-        const newDialog: DialogBoxInterface = {title: 'Error', status: "open", isFocused: true, maximize: false, icon: errorIcon};
+        const newDialog: DialogBoxInterface = {title: 'Error', status: "open", isFocused: true, maximize: false, icon: errorIcon, position: {x: 0, y: 0}};
         let updatedDialogs: DialogBoxInterface[] = [];
         let dialogBoxExists = false;
         for (let i = 0; i < prev.length; i++) {
@@ -230,6 +231,8 @@ export default function Desktop(props: {
           setIsDragging={setIsDragging} 
           setOpenedDialogBoxes={setOpenedDialogBoxes} 
           openedDialogBoxes={openedDialogBoxes}
+          fileExplorerLoaded={fileExplorerLoaded}
+          setFileExplorerLoaded={setFileExplorerLoaded}
           children={
             <FileExplorer 
               reference="My Computer"
@@ -237,6 +240,7 @@ export default function Desktop(props: {
               openedDialogBoxes={openedDialogBoxes}
               setOpenedDialogBoxes={setOpenedDialogBoxes}
               setIsError={props.setIsError}
+              setFileExplorerLoaded={setFileExplorerLoaded}
               />
           }>
         </DialogBox>} 
@@ -247,6 +251,8 @@ export default function Desktop(props: {
         setIsDragging={setIsDragging} 
         setOpenedDialogBoxes={setOpenedDialogBoxes} 
         openedDialogBoxes={openedDialogBoxes}
+        fileExplorerLoaded={fileExplorerLoaded}
+        setFileExplorerLoaded={setFileExplorerLoaded}
         children={
           <FileExplorer 
             reference="My Projects"
@@ -255,6 +261,7 @@ export default function Desktop(props: {
             setOpenedDialogBoxes={setOpenedDialogBoxes}
             setIsError={props.setIsError}
             setIsFullscreen={props.setIsFullscreen}
+            setFileExplorerLoaded={setFileExplorerLoaded}
             />
           }>
       </DialogBox>} 

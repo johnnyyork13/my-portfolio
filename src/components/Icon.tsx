@@ -53,12 +53,12 @@ export default function Icon(props: {
         }
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             //make sure the dialog box isn't already open
-            const newDialog = {title: props.name, status: "open", isFocused: true, icon: props.img};
+            const newDialog = {title: props.name, status: "open", isFocused: true, icon: props.img, position: {x: 0, y: 0}};
             let updatedDialogs = [];
             let dialogBoxExists = false;
             for (let i = 0; i < prev.length; i++) {
                 if (prev[i].title === props.name) {
-                    updatedDialogs.push({...prev[i], status: "open", isFocused: true, icon: props.img});
+                    updatedDialogs.push({...prev[i], status: "open", isFocused: true});
                     dialogBoxExists = true;
                 } else {
                     updatedDialogs.push({...prev[i], isFocused: false});

@@ -100,7 +100,7 @@ export default function StartMenu(props: {
     const [showConnectTo, setShowConnectTo] = useState(false);
 
     //handles when a program is selected in the start menu that has a corresponding dialog box or window to open
-    function handleStartMenuItemClick(name: string) {
+    function handleStartMenuItemClick(name: string, imgPath: string) {
         props.setOpenStartMenu(false);
         if (name === "my-resume.pdf") {
             window.open(myResume);
@@ -108,7 +108,7 @@ export default function StartMenu(props: {
         }
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             //make sure the dialog box isn't already open
-            const newDialog = {title: name, status: "open", isFocused: true};
+            const newDialog = {title: name, status: "open", isFocused: true, icon: imgPath, position: {x: 0, y: 0}};
             let updatedDialogs = [];
             let dialogBoxExists = false;
             for (let i = 0; i < prev.length; i++) {
@@ -140,31 +140,31 @@ export default function StartMenu(props: {
             <StartMenuBody>
                 <StartMenuLeft>
                     <div>
-                        <MenuIcon $doubleText={true} onClick={() => handleStartMenuItemClick('Email')}>
+                        <MenuIcon $doubleText={true} onClick={() => handleStartMenuItemClick('Email', emailIcon)}>
                             <img src={emailIcon} alt="Email" />
                             <MenuLeftTextSpecial>
                                 <p>Email</p>
                                 <p>Outlook Express</p>
                             </MenuLeftTextSpecial>
                         </MenuIcon>
-                        <MenuIcon onClick={() => handleStartMenuItemClick('Notepad')}>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('Notepad', notepadIcon)}>
                             <img src={notepadIcon} alt="Notepad" />
                             <p>Notepad</p>
                         </MenuIcon>
                         <Divider />
-                        <MenuIcon onClick={() => handleStartMenuItemClick('My Projects')}>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('My Projects', myDocumentsIcon)}>
                             <img src={myDocumentsIcon} alt="My Projects" />
                             <p>My Projects</p>
                         </MenuIcon>
-                        <MenuIcon onClick={() => handleStartMenuItemClick('My Skills')}>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('My Skills', controlPanelIcon)}>
                             <img src={controlPanelIcon} alt="My Skills" />
                             <p>My Skills</p>
                         </MenuIcon>
-                        <MenuIcon onClick={() => handleStartMenuItemClick('my-resume.pdf')}>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('my-resume.pdf', pdfIcon)}>
                             <img src={pdfIcon} alt="My Resume" style={{width: '32px', height: '32px'}}/>
                             <p>my-resume.pdf</p>
                         </MenuIcon>
-                        <MenuIcon onClick={() => handleStartMenuItemClick('about-me.txt')}>
+                        <MenuIcon onClick={() => handleStartMenuItemClick('about-me.txt', notepadIcon)}>
                             <img src={notepadIcon} alt="About Me"/>
                             <p>about-me.txt</p>
                         </MenuIcon>
@@ -465,23 +465,23 @@ export default function StartMenu(props: {
                         <p>Recent Documents</p>
                         <BlackRightArrow />
                         {showRecentDocuments && <RecentDocumentsWindow onMouseEnter={() => setShowRecentDocuments(true)} onMouseLeave={() => setShowRecentDocuments(false)}>
-                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('about-me.txt')}>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('about-me.txt', notepadIcon)}>
                                 <img src={notepadIcon} alt="About Me"/>
                                 <p>about-me.txt</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('My Projects')}>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('My Projects', myDocumentsIcon)}>
                                 <img src={myDocumentsIcon} alt="My Projects" />
                                 <p>My Projects</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('My Skills')}>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('My Skills', controlPanelIcon)}>
                                 <img src={controlPanelIcon} alt="My Skills" />
                                 <p>My Skills</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('my-resume.pdf')}>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('my-resume.pdf', pdfIcon)}>
                                 <img src={pdfIcon} alt="My Resume" />
                                 <p>my-resume.pdf</p>
                             </AllProgramsIcon>
-                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('Email')}>
+                            <AllProgramsIcon onClick={() => handleStartMenuItemClick('Email', emailIcon)}>
                                 <img src={emailIcon} alt="My Email" />
                                 <p>Email</p>
                             </AllProgramsIcon>

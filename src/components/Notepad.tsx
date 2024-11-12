@@ -38,7 +38,7 @@ I look forward to connecting with you, and I hope you enjoy my Windows XP-style 
 }
 
 const NotepadContainer = styled.div<({$maximized: boolean})>`
-    min-width: 800px;
+    width: ${props => props.$maximized ? "100%" : "700px"};
     height: ${props => props.$maximized ? "100%" : "500px"};
     display: flex;
     flex-direction: column;

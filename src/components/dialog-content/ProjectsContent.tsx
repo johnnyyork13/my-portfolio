@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import htmlIcon from '../../assets/dialog-icons/file_html.png'
 import githubIcon from '../../assets/dialog-icons/github-icon.svg'
 import linkedInIcon from '../../assets/dialog-icons/linkedin-icon.svg'
@@ -9,6 +10,7 @@ export default function ProjectsContent(props: {
     selectedIcon: string,
     handleIconClick: (e: any, name: string) => void,
     setIsFullscreen: Function,
+    setFileExplorerLoaded: Function
 }) {
 
     //opens new tab with the requested url
@@ -16,6 +18,10 @@ export default function ProjectsContent(props: {
         window.open(url);
         props.setIsFullscreen(false);
     }
+
+    useEffect(() => {
+        props.setFileExplorerLoaded(true);
+    }, [])
 
     return (
         <MainDialogIconContainer $maximized={props.isMaximized}>

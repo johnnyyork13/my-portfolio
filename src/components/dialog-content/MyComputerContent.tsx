@@ -4,6 +4,7 @@ import driveIcon from '../../assets/drive_disk.png'
 import opticalIcon from '../../assets/drive_optical.png'
 
 import {DialogIcon, DialogIcons, DialogIconsHeader, MainDialogIconContainer } from "../../styled-components/main";
+import { useEffect } from 'react';
 
 export default function MyComputerContent(props: {
     isMaximized: boolean,
@@ -11,8 +12,13 @@ export default function MyComputerContent(props: {
     handleIconClick: (e: any, name: string) => void,
     handleIconDoubleClick: (e: any, path: string[]) => void,
     setOpenedDialogBoxes: Function,
-    setIsError: Function
+    setIsError: Function,
+    setFileExplorerLoaded: Function
 }) {
+
+    useEffect(() => {
+        props.setFileExplorerLoaded(true);
+    }, [])
 
     return (
         <MainDialogIconContainer $maximized={props.isMaximized}>
