@@ -110,6 +110,19 @@ html, body, #root {
     }
 }
 
+@keyframes AnimateClippyClose {
+    0% {
+        transform: translateX(0) translateY(0) scale(1);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) scale(0);
+    }
+}
+
+.clippy-close {
+    animation: AnimateClippyClose .5s forwards;
+}
+
 .clippy-loading {
     display: flex;
     justify-content: center;

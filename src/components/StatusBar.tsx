@@ -2,10 +2,15 @@ import lanIcon from '../assets/dialog-icons/net_lan.png';
 import messengerIcon from '../assets/dialog-icons/messenger.png';
 import ejectIcon from '../assets/dialog-icons/eject.png';
 import speakerIcon from '../assets/dialog-icons/speaker.png';
+import paperclip from '../assets/paperclip.svg';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
-export default function StatusBar() {
+export default function StatusBar(props: {
+    showClippy: boolean,
+    setShowClippy: Function,
+    setPopup: Function,
+}) {
 
     const [currentTime, setCurrentTime] = useState("");
 
@@ -16,9 +21,15 @@ export default function StatusBar() {
         })
     }, [])
 
+    function toggleShowClippy() {
+        props.setShowClippy(true);
+        props.setPopup({show: false, text: ""});
+    }
+
     return (
-        <StatusBarContainer>
+        <StatusBarContainer $showClippy={props.showClippy}>
             <Icons>
+                {!props.showClippy && <ClippyIcon onDoubleClick={toggleShowClippy} src={paperclip} alt="Paperclip" />}
                 <img src={lanIcon} alt="LAN" />
                 <img src={messengerIcon} alt="Messenger" />
                 <img src={ejectIcon} alt="Eject" />
@@ -30,12 +41,12 @@ export default function StatusBar() {
 }
 
 
-const StatusBarContainer = styled.div`
+const StatusBarContainer = styled.div<({ $showClippy: boolean })>`
     z-index: 100;
     position: fixed;
     bottom: 0;
     right: 0;
-    width: 135px;
+    width: ${props => props.$showClippy ? "135px" : "150px"};
     height: 32px;
     border-left: 1px solid black;
     padding-left: 10px;
@@ -56,4 +67,9 @@ const StatusBarContainer = styled.div`
 const Icons = styled.div`
     display: flex;
     align-items: center;
+`
+
+const ClippyIcon = styled.img`
+    width: 16px;
+    height: 16px;
 `

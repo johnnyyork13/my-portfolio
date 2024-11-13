@@ -35,6 +35,11 @@ export const MainDialogIconContainer = styled.div<({ $maximized: boolean})>`
     height: ${props => props.$maximized ? "100%" : "400px"};
     background-color: white;
     padding-bottom: ${props => props.$maximized ? "0px" : "100px"};
+    @media (max-width: 1025px) {
+        width: ${props => props.$maximized ? "100%" : "400px"};
+        height: ${props => props.$maximized ? "100%" : "300px"};
+        overflow-y: auto;
+    }
 `
 
 export const DialogIcons = styled.div`

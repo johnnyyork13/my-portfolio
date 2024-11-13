@@ -23,7 +23,7 @@ export default function DialogBox(props: {
     const [offsetPosition, setOffsetPosition] = useState({x: 0, y: 0});
     const [showDialogBox, setShowDialogBox] = useState(false);
 
-    //delay update to prevent flickering
+    //delay showing dialog box to prevent flickering
     useEffect(() => {
         setTimeout(() => {
             setShowDialogBox(true);

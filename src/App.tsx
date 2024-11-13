@@ -35,7 +35,7 @@ function App() {
     if (isFullscreen) {
       document.documentElement.requestFullscreen();
     } else {
-      document.exitFullscreen();
+      if (document.fullscreenElement) document.exitFullscreen();
     }
   }, [isFullscreen])
 

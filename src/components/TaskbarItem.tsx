@@ -60,4 +60,7 @@ const TaskBarItemContainer = styled.div<{ $isFocused: boolean }>`
 
 const Title = styled.p`
     font-size: .7rem;
+    @media (max-width: 795px) {
+        font-size: .6rem;
+    }
 `

@@ -13,6 +13,7 @@ import MySkills from './MySkills';
 import ErrorDialogBox from './ErrorDialogBox';
 import StartMenu from './StartMenu';
 import Clippy from './Clippy';
+import Popup from './Popup';
 
 // Icon image imports
 import myComputer from '../assets/my-computer.png';
@@ -73,6 +74,10 @@ export default function Desktop(props: {
   const [movingClippy, setMovingClippy] = useState(false);
   const [showClippy, setShowClippy] = useState(true);
   const [fileExplorerLoaded, setFileExplorerLoaded] = useState(false);
+  const [popup, setPopup] = useState({
+    show: true,
+    text: "",
+  });
 
   //set initial login to false so the windows logo doesn't show again if the user logs off or changes users
   useEffect(() => {
@@ -200,7 +205,7 @@ export default function Desktop(props: {
   return (
     <MainContainer ref={appRef} onClick={() => setOpenStartMenu(false)} className={props.maxGrayscale ? "grayscale-all" : ""}>
       {props.allowAudio && <audio src={startupSound} autoPlay></audio>}
-      {showClippy && <Clippy url={url} setMovingClippy={setMovingClippy} setShowClippy={setShowClippy}/>}
+      {showClippy && <Clippy url={url} setMovingClippy={setMovingClippy} showClippy={showClippy} setShowClippy={setShowClippy} setPopup={setPopup}/>}
       <Selection 
         isDragging={isDragging} 
         isSelecting={isSelecting}
@@ -335,8 +340,9 @@ export default function Desktop(props: {
         </ErrorContainer>
         }
       {openStartMenu && <StartMenu setLogOffModal={props.setLogOffModal} setOpenedDialogBoxes={setOpenedDialogBoxes} setOpenStartMenu={setOpenStartMenu} setIsError={props.setIsError}/>}
+      {popup.show && <Popup popup={popup} setPopup={setPopup} />}
       <Footer setOpenStartMenu={setOpenStartMenu} openedDialogBoxes={openedDialogBoxes} setOpenedDialogBoxes={setOpenedDialogBoxes}/>
-      <StatusBar />
+      <StatusBar showClippy={showClippy} setShowClippy={setShowClippy} setPopup={setPopup}/>
     </MainContainer>
   );
 }

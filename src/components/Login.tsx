@@ -36,8 +36,8 @@ export default function Login(props: {
                     <p>Turn off computer</p>
                 </ShutdownButton>
                 <div>
-                    <p>Log on to my account to view my projects and skills.</p>
-                    <p>Thank you for viewing my portfolio, I hope you enjoy it!</p>
+                    <p>All images and audio are property of Microsoft. </p>
+                    <p>This application was designed to showcase my abilities and is not for profit. Happy Nostalgia!</p>
                 </div>
             </LargeBlueBorder>
         </LoginContainer>
@@ -65,7 +65,7 @@ const LargeBlueBorder = styled.div`
     div {
         margin-right: 50px;
         p {
-            font-size: 1rem;
+            font-size: .9rem;
             margin-top: 3px;
             text-align: right;
         }

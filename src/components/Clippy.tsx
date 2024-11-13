@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 export default function Clippy(props: {
     url: string,
     setMovingClippy: Function,
+    showClippy: boolean,
     setShowClippy: Function,
+    setPopup: Function,
 }) {
 
     interface Message {
@@ -13,12 +15,15 @@ export default function Clippy(props: {
         content: string,
     }
 
+    const ANIMATION_DELAY = 1000;
+
     const clippyRef = useRef<HTMLImageElement>(null);
 
     const [userInput, setUserInput] = useState('');
     const [sendUserInput, setSendUserInput] = useState(true);
     const [updatedMessages, setUpdatedMessages] = useState<Message[]>([]); 
     const [showLoading, setShowLoading] = useState(false);
+    const [showCloseClippyAnimation, setShowCloseClippyAnimation] = useState(false);
 
     //set clippy's default location based on screen size
     useEffect(() => {
@@ -93,15 +98,23 @@ export default function Clippy(props: {
         setSendUserInput(true);
     }
 
+    function handleCloseClippy() {
+        setShowCloseClippyAnimation(true);
+        setTimeout(() => {
+            props.setShowClippy(false);
+            props.setPopup({show: true, text: "Double click here to bring back Clippy at anytime."});
+        }, ANIMATION_DELAY)
+    }
+
     //return only clippy's responses in the chatbox
     const mappedResponse = updatedMessages.filter((response: {role: string, content: string}) => {
         return response.role === 'assistant';
     })
 
     return (
-        <ClippyContainer ref={clippyRef} onMouseDown={handleStartMovingDialogBox}>
+        <ClippyContainer ref={clippyRef} onMouseDown={handleStartMovingDialogBox} className={showCloseClippyAnimation ? 'clippy-close' : ''}>
             <ChatContainer>
-                <CloseClippy onClick={() => props.setShowClippy(false)}>X</CloseClippy>
+                <CloseClippy onClick={handleCloseClippy}>X</CloseClippy>
                 <ClippyText>
                     {!showLoading && mappedResponse.length > 0 && mappedResponse[mappedResponse.length - 1].content}
                     {showLoading && <div className="clippy-loading">
@@ -165,14 +178,18 @@ const TriangleShadow = styled(Triangle)`
     left: 63px;
 `
 
-const CloseClippy = styled.button`
-    position: absolute;import virusIcon from '../assets/dialog-icons/virus.png';
-    right: -20px;
-    top: 0;
-    background: none;
-    border: none;
+const CloseClippy = styled.div`
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    padding: 2px;
+    background-color: rgba(210, 210, 210, .5);
+    border: 1px solid rgba(210, 210, 210, 0.5);
+    border-radius: 2px;
+    color: rgba(130, 130, 130, 1);
     font-weight: bolder;
     font-size: 1rem;
+    cursor: default;
     &:hover {
         border: 1px solid rgba(0, 0, 0, 0.01) !important;
         box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.01) !important;

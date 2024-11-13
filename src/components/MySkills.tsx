@@ -30,7 +30,7 @@ export default function MySkills(props: {
 
     const [isMaximized, setIsMaximized] = useState<boolean>(false);
     const [selectedIcon, setSelectedIcon] = useState<string>("");
-    const [defaultView, setDefaultView] = useState<boolean>(false);
+    const [defaultView, setDefaultView] = useState<boolean>(true);
 
     useEffect(() => {
         setIsMaximized(props.openedDialogBoxes.find(dialog => dialog.title === "My Skills")?.maximize || false);
@@ -121,7 +121,7 @@ export default function MySkills(props: {
                 {!defaultView && <ControlPanelIconsContainerCategoryView $maximized={isMaximized}>
                     <Watermark src={controlPanelIcon} alt="Control Panel" draggable={false}/>
                     <CategoryViewHeader>Pick a category</CategoryViewHeader>
-                    <IconContainer>
+                    <CategoryViewIconContainer>
                         <IconColumn>
                             <IconAlternate onClick={(e) => handleIconClick(e, "HTML")} $selected={selectedIcon === "HTML" ? true : false}>
                             <img src={htmlIcon} alt="HTML"/>
@@ -194,7 +194,7 @@ export default function MySkills(props: {
                                 <p>Styled Components</p>
                             </IconAlternate>
                         </IconColumn>
-                    </IconContainer>
+                    </CategoryViewIconContainer>
                 </ControlPanelIconsContainerCategoryView>}
             </DialogBoxBodyContainer>
         </MySkillsContainer>
@@ -215,13 +215,12 @@ const MySkillsContainer = styled.div`
 
 const ControlPanelIconsContainer = styled(MainDialogIconContainer)`
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, 75px);
+    grid-auto-rows: 100px;
 `
 
 
 const ControlPanelIconsContainerCategoryView = styled(MainDialogIconContainer)`
-    grid-template-columns: 1fr 1fr;
     padding-left: 20px;
     background-color: rgb(103, 122, 225);
     overflow-y: auto;
@@ -258,6 +257,7 @@ const Watermark = styled.img`
     opacity: 0.07;
     width: 300px;
     height: 300px;
+    pointer-events: none;
 `   
 
 const IconAlternate = styled(DialogIcon)`
@@ -281,7 +281,7 @@ const IconAlternate = styled(DialogIcon)`
     }
 `
 
-const IconContainer = styled.div`
+const CategoryViewIconContainer = styled.div`
     margin-top: 10px;
     position: relative;
     z-index: 3;
@@ -291,5 +291,10 @@ const IconContainer = styled.div`
 const IconColumn = styled.div`
     &:last-child {
         margin-left: 100px;
+    }
+    @media (max-width: 1025px) {
+        &:last-child {
+            margin-left: 30px;
+        }
     }
 `

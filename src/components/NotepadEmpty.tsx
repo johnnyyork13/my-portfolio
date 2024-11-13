@@ -23,12 +23,16 @@ export default function NotepadEmpty(props: {
 }
 
 const NotepadContainer = styled.div<({$maximized: boolean})>`
-    min-width: 800px;
-    height: ${props => props.$maximized ? "100%" : "500px"};
+    width: ${props => props.$maximized ? "100%" : "700px"};
+    height: ${props => props.$maximized ? "100%" : "400px"};
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+    @media (max-width: 1025px) {
+        width: ${props => props.$maximized ? "100%" : "550px"};
+        height: ${props => props.$maximized ? "100%" : "300px"};
+    }
 `
 
 const NotepadBody = styled.textarea<({$maximized: boolean})>`
