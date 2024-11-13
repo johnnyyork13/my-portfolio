@@ -75,7 +75,7 @@ export default function Desktop(props: {
   const [showClippy, setShowClippy] = useState(true);
   const [fileExplorerLoaded, setFileExplorerLoaded] = useState(false);
   const [popup, setPopup] = useState({
-    show: true,
+    show: false,
     text: "",
   });
 
