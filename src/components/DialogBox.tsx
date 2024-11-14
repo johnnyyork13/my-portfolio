@@ -20,6 +20,7 @@ export default function DialogBox(props: {
     const dialogRef = useRef<HTMLDivElement>(null);
 
     const [isFocused, setIsFocused] = useState(false);
+    const [isMaximized, setIsMaximized] = useState(false);
     const [offsetPosition, setOffsetPosition] = useState({x: 0, y: 0});
     const [showDialogBox, setShowDialogBox] = useState(false);
 
@@ -32,8 +33,10 @@ export default function DialogBox(props: {
 
     //sets the position of the dialog box when it is opened to the center of the screen
     useEffect(() => {
+        let checkIfMaximized = false;
         if (mainRef.current && dialogRef.current) {
                 const dialog = props.openedDialogBoxes.find(dialog => dialog.title === props.title);
+                checkIfMaximized = dialog!.maximize;
                 if (dialog?.position.x !== 0 && dialog?.position.y !== 0) {
                     setOffsetPosition(props.openedDialogBoxes.find(dialog => dialog.title === props.title)!.position);
                 } else {
@@ -42,6 +45,7 @@ export default function DialogBox(props: {
                     const stagger = props.openedDialogBoxes.length * 15;
                     //delay update to allow time for children to render so the dialog box width can be calculated
                     setTimeout(() => {
+                        setOffsetPosition({x: x + stagger, y: y + stagger});
                         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
                         return prev.map((dialog: DialogBoxInterface) => {
                             if (dialog.title === props.title) {
@@ -56,6 +60,7 @@ export default function DialogBox(props: {
                     }, 100);
                 if (props.fileExplorerLoaded !== undefined && props.setFileExplorerLoaded !== undefined) props.setFileExplorerLoaded(false); //resets the file explorer loaded state if it was used so the file explorer width can be recalculated
             }
+            setIsMaximized(checkIfMaximized);
         }
     }, [props.openedDialogBoxes, props.fileExplorerLoaded])
 
@@ -70,6 +75,7 @@ export default function DialogBox(props: {
     
     //handles moving the dialog box around the screen
     function handleStartMovingDialogBox(e: React.MouseEvent) {
+        if (isMaximized) return;
         props.setOpenedDialogBoxes((prev: DialogBoxInterface[]) => {
             return prev.map((dialog: DialogBoxInterface) => {
                 if (dialog.title === props.title) {
@@ -141,22 +147,6 @@ export default function DialogBox(props: {
                 return dialog;
             })
         })
-        // if (dialogRef.current) {
-        //     const dialog = dialogRef.current.parentElement;
-        //     if (dialog) {
-        //         if (dialog.style.width === "100%") {
-        //             dialog.style.width = "fit-content";
-        //             dialog.style.height = "fit-content";
-        //             dialog.style.left = "25%";
-        //             dialog.style.top = "25%";
-        //         } else {
-        //             dialog.style.width = `100%`;
-        //             dialog.style.height = `${window.innerHeight - 30}px`;
-        //             dialog.style.left = "0";
-        //             dialog.style.top = "0";
-        //         }
-        //     }
-        // }
     }
 
     //focuses the dialog box when it is clicked on
@@ -178,6 +168,8 @@ export default function DialogBox(props: {
         }
     }, [props.openedDialogBoxes])
 
+
+
     return (
         <DialogBoxContainer 
             ref={mainRef}
@@ -187,6 +179,7 @@ export default function DialogBox(props: {
             $isFocused={isFocused}
             $offsetPosition={offsetPosition}
             $visible={showDialogBox}
+            $maximized={isMaximized}
         >
             <TitleBar 
                 className="title-bar" 
@@ -209,10 +202,19 @@ export default function DialogBox(props: {
     )
 }
 
-const DialogBoxContainer = styled.div<{ $isFocused: boolean, $offsetPosition: {x: number, y: number}, $visible: boolean}>`
+const DialogBoxContainer = styled.div<{ $isFocused: boolean, $offsetPosition: {x: number, y: number}, $visible: boolean, $maximized: boolean}>`
     position: absolute;
-    left: ${props => props.$offsetPosition.x}px;
-    top: ${props => props.$offsetPosition.y}px;
+    ${props => props.$maximized ? `
+        left: 1px !important;
+        top: 1px !important;
+        width: 100%;
+        height: 100%;
+    ` : `
+        width: auto;
+        height: auto;
+        left: ${props.$offsetPosition.x}px;
+        top: ${props.$offsetPosition.y}px;
+    `}
     z-index: ${props => props.$isFocused ? 100 : 99} !important;
     visibility: ${props => props.$visible ? "visible" : "hidden"};
     display: flex;
@@ -221,7 +223,6 @@ const DialogBoxContainer = styled.div<{ $isFocused: boolean, $offsetPosition: {x
 
 const TitleBar = styled.div<{ $isFocused: boolean }>`
     background: ${props => props.$isFocused ? ";" : `linear-gradient(rgb(118, 151, 231) 0%, rgb(126, 158, 227) 3%, rgb(148, 175, 232) 6%, rgb(151, 180, 233) 8%, rgb(130, 165, 228) 14%, rgb(124, 159, 226) 17%, rgb(121, 150, 222) 25%, rgb(123, 153, 225) 56%, rgb(130, 169, 233) 81%, rgb(128, 165, 231) 89%, rgb(123, 150, 225) 94%, rgb(122, 147, 223) 97%, rgb(171, 186, 227) 100%);`}
-    mouse-events: none;
 `
 
 const TitleBarText = styled.div`

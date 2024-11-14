@@ -13,6 +13,8 @@ import LogOffModal from './components/LogOffModal';
 import WindowsLoadingScreen from './components/WindowsLoadingScreen';
 
 function App() {
+
+  const [showLoadingScreen, setShowLoadingScreen] = useState(true);
   const [showLogin, setShowLogin] = useState(true);
   const [initialLogin, setInitialLogin] = useState(true);
   const [allowAudio, setAllowAudio] = useState(true);
@@ -23,7 +25,6 @@ function App() {
   });
   const [maxGrayscale, setMaxGrayscale] = useState(false);
   const [isError, setIsError] = useState({status: false, message: ""});
-  const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
   //removes windows loading screen after 7 seconds
   setTimeout(() => {
